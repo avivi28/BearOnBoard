@@ -1,0 +1,12 @@
+<%- include('header.ejs')%>
+		<h1>hi bear!</h1>
+		<% if (trytry.length){%> <% trytry.forEach(articles =>{%>
+		<h3>title: <%=articles.title%></h3>
+		<h3>author: <%=articles.author%></h3>
+		<%})%> <%}%>
+		<form action="/" method="POST">
+			name <input type="text" id="username" name="username"><br/>
+			password <input type="password" id="password" name="password"><br/>
+			<input type="submit" value="login">
+		</form>
+<%- include('footer.ejs')%>
