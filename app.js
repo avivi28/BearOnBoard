@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 		{ title: '456', author: 'panda' },
 		{ title: '789', author: 'icebear' },
 	];
-	res.render('index', { trytry: articles, title: 'homepage' });
+	res.render('index', { trytry: articles });
 }); //homepage
 
 app.post('/', (req, res) => {
