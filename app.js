@@ -5,7 +5,7 @@ app.use(express.static('public')); //make css & js file public
 app.use(express.urlencoded({ extended: true })); //for getting the data sent from client
 
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
-app.set('views', 'pages');
+app.set('views', 'views');
 
 app.use(
 	'/',
