@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%=title%></title>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, minimum-scale=1"
+		/>
+		<link rel="stylesheet" href="index.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<div class="entire_container">
+			<div class="biggest_bear_container">
+				<img src="/images/biggest_bear.png" />
+			</div>
+			<div class="login_container">
+				<div class="header_container">
+					<div class="logo_container">
+						<img src="/images/bear_transparent_logo.png" />
+					</div>
+					<div class="brandname">Bear On Board</div>
+				</div>
+				<form action="/" method="POST" id="login_form">
+					<input
+						type="text"
+						id="username"
+						name="username"
+						placeholder="email or username"
+					/>
+					<input
+						type="password"
+						id="password"
+						name="password"
+						placeholder="password"
+					/>
+					<input type="submit" id="submit_button" value="Login" />
+				</form>
+				<div class="or">
+					<span>OR</span>
+				</div>
+				<div class="google_logo_container">
+					<img src="/images/google-logo.png" />
+					<p class="login_by_google">Log in with Gmail</p>
+				</div>
+				<div class="no_account_container">
+					<p class="no_account">Don’t have an account?</p>
+					<p class="sign_up">Sign up</p>
+				</div>
+				<div class="paws_container">
+					<img src="/images/bearpaws.svg" />
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
