@@ -1,7 +1,21 @@
 const express = require('express');
 const app = express(); //產生express application物件
+const mysql = require('mysql');
+require('dotenv').config();
 
-app.use(express.static('public')); //make css & js file public
+var con = mysql.createConnection({
+	host: process.env.MYSQL_HOST,
+	user: process.env.MYSQL_USER,
+	password: process.env.MYSQL_PASSWORD,
+	database: process.env.MYSQL_DATABASE,
+});
+
+con.connect(function (err) {
+	if (err) throw err;
+	console.log('Connected!');
+});
+
+app.use(express.static('public')); //make css & js file accessible
 app.use(express.urlencoded({ extended: true })); //for getting the data sent from client
 
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
