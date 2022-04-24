@@ -65,6 +65,7 @@ p {
 	padding-top: 15px;
 }
 
+#email,
 #username,
 #password {
 	width: 428px;
@@ -111,91 +112,23 @@ p {
 	left: 0;
 }
 
-.or {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-
-.or span {
-	position: relative;
-	z-index: 1;
-	padding: 0 53px;
-	background-color: white;
-	font-weight: 600;
-	font-size: 32px;
-	line-height: (43 / 32);
-	color: #674115;
-}
-
-.or:before {
-	content: '';
-	position: absolute;
-	left: 45px;
-	right: 45px;
-	top: 50%;
-	transform: translateY(-50%);
-	height: 3px;
-	background-color: #a16825;
-	opacity: 0.62;
-}
-.google_logo_container > img {
-	width: 57px;
-	height: 57px;
-}
-.login_by_google {
-	margin-left: 15px;
-	font-weight: 400;
-	font-size: 24px;
-	background: linear-gradient(
-		270.07deg,
-		#4285f4 18.85%,
-		#34a853 43.25%,
-		#fbbc05 68.09%,
-		#dc1a46 92.86%
-	);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-}
-.google_logo_container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	cursor: pointer;
-}
-.no_account {
-	color: #674115;
-	font-size: 20px;
-	font-weight: 400;
-}
-.sign_up {
-	color: #f5a760;
-	font-size: 24px;
-	font-weight: 700;
-	margin-left: 10px;
-	cursor: pointer;
-}
-.no_account_container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	white-space: nowrap;
-}
 @media screen and (max-width: 575px) {
 	.entire_container {
 		width: 100%;
 		padding: 0 16px;
 	}
+
 	.login_container {
 		width: 100%;
 		padding-bottom: 120px;
 	}
+
+	#email,
 	#username,
 	#password {
 		width: 100%;
 	}
+
 	#login_form {
 		padding: 0 16px;
 	}
