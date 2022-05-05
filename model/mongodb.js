@@ -1,22 +1,23 @@
 const { MongoClient } = require('mongodb');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '.env' });
 
 mongoPw = process.env.MONGO_PASSWORD;
+console.log(mongoPw);
 mongoDB = process.env.MONGO_DATABASE;
-mongohost = process.env.MONGO_HOSTNAME;
 
-const uri = `mongodb+srv://bear:${mongoPw}@${mongohost}/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://bear:${mongoPw}@cluster0.8gjko.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, {
 	maxPoolSize: 10,
-	writeConcern: majority,
 });
 async function insertOne(tableName, userInfo) {
 	try {
 		await client.connect();
 		const database = client.db(mongoDB);
 		const table = database.collection(tableName);
-		const result = await table.insertOne(userInfo);
-		return result;
+		await table.insertOne(userInfo);
+		return { ok: true };
+	} catch (e) {
+		console.error(e);
 	} finally {
 		await client.close();
 	}
@@ -34,5 +35,5 @@ async function queryOne(tableName, queryInfo) {
 	}
 }
 
-exports.insertOne = 'insertOne';
-exports.queryOne = 'queryOne';
+exports.insertOne = insertOne;
+exports.queryOne = queryOne;

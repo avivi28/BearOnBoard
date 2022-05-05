@@ -1,22 +1,15 @@
 const express = require('express');
 const app = express(); //產生express application物件
-const mysql = require('mysql');
+const user = require('./controller/user');
+
 require('dotenv').config();
 
-var con = mysql.createConnection({
-	host: process.env.MYSQL_HOST,
-	user: process.env.MYSQL_USER,
-	password: process.env.MYSQL_PASSWORD,
-	database: process.env.MYSQL_DATABASE,
-});
-
-con.connect(function (err) {
-	if (err) throw err;
-	console.log('Connected!');
-});
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded());
+// Parse JSON bodies (as sent by API clients)
+app.use(express.json());
 
 app.use(express.static('public')); //make css & js file accessible
-app.use(express.urlencoded({ extended: true })); //for getting the data sent from client
 
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
 app.set('views', 'views');
@@ -42,15 +35,17 @@ app.get('/', (req, res) => {
 	res.render('index', { trytry: articles });
 }); //homepage
 
-app.post('/', (req, res) => {
-	console.log(req.body.username);
-});
+app.get('/register', (req, res) => {
+	res.render('register');
+}); //register
+
+app.use('/api/user', user);
 
 app.use((req, res) => {
 	res.status(404);
 });
 
-app.listen(3000, function () {
-	//port 3000
-	console.log('website is located in http://localhost:3000/');
+app.listen(9090, function () {
+	//port 80 default
+	console.log('website is located in http://localhost:9090/');
 });
