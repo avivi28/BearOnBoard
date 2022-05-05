@@ -22,6 +22,9 @@ p {
 
 .entire_container {
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .biggest_bear_container {
@@ -31,9 +34,12 @@ p {
 	transform: translateX(-50%);
 	z-index: 1;
 }
+.biggest_bear_container > img {
+	width: 250px;
+}
 
 .login_container {
-	width: 543px;
+	width: 380px;
 	padding-bottom: 60px;
 	background: #ffffff;
 	box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.25);
@@ -44,47 +50,54 @@ p {
 	text-align: center;
 	flex-direction: column;
 	align-items: center;
+	top: -82px;
 }
 
 .logo_container > img {
-	width: 77px;
-	height: 77px;
+	width: 55px;
+	height: 55px;
 }
 
 .brandname {
 	font-weight: 700;
-	font-size: 32px;
+	font-size: 24px;
 	color: #674115;
-	padding: 27px 10px 27px 18px;
+	padding: 15px 0px 15px 9px;
 }
 
 .header_container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-top: 15px;
+	padding-top: 8px;
+	text-decoration: none;
+	z-index: 10;
 }
 
 #email,
 #username,
 #password {
-	width: 428px;
-	height: 64px;
+	width: 302px;
+	height: 46px;
 	font-weight: 400;
 	background: rgba(242, 119, 7, 0.28);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 	border-radius: 5px;
 	border: none;
 	padding: 10px;
-	font-size: 24px;
+	font-size: 16px;
+}
+
+#email {
+	margin: 10px auto 15px auto;
 }
 
 #submit_button {
 	font-weight: 700;
-	font-size: 30px;
+	font-size: 24px;
 	color: #674115;
-	width: 285px;
-	height: 64px;
+	width: 173px;
+	height: 48px;
 	background: rgba(242, 119, 7, 0.75);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 	border-radius: 50px;
@@ -94,11 +107,11 @@ p {
 }
 
 #username {
-	margin: 27px auto 39px auto;
+	margin: 15px auto 25px auto;
 }
 
 #password {
-	margin: 0px auto 32px auto;
+	margin: 0px auto 25px auto;
 }
 
 #login_form {
@@ -108,28 +121,32 @@ p {
 
 .paws_container {
 	position: absolute;
-	bottom: 0;
-	left: 0;
+	bottom: 14px;
+	left: 12px;
 }
 
-@media screen and (max-width: 575px) {
+.paws_container > img {
+	width: 80px;
+}
+
+.copyright {
+	color: #665a5a;
+	position: absolute;
+	top: 469px;
+	font-size: 14px;
+}
+
+@media screen and (max-width: 390px) {
 	.entire_container {
 		width: 100%;
 		padding: 0 16px;
 	}
-
 	.login_container {
 		width: 100%;
-		padding-bottom: 120px;
+		padding-bottom: 80px;
 	}
-
-	#email,
-	#username,
-	#password {
-		width: 100%;
-	}
-
-	#login_form {
-		padding: 0 16px;
+	.paws_container {
+		bottom: 6px;
+		left: 0px;
 	}
 }

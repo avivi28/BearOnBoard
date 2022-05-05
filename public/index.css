@@ -71,6 +71,8 @@ p {
 	align-items: center;
 	justify-content: center;
 	padding-top: 8px;
+	text-decoration: none;
+	z-index: 10;
 }
 
 #username,
@@ -188,6 +190,7 @@ p {
 	font-weight: 700;
 	margin-left: 10px;
 	cursor: pointer;
+	text-decoration: none;
 }
 .no_account_container {
 	display: flex;
