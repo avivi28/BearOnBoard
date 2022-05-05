@@ -26,32 +26,39 @@
 					</div>
 					<p class="brandname">Bear On Board</p>
 				</a>
-				<form action="/" method="POST" id="login_form">
+				<form id="register_form">
 					<input
 						type="email"
 						id="email"
 						name="email"
 						placeholder="email address"
+						required
 					/>
 					<input
 						type="text"
 						id="username"
 						name="username"
 						placeholder="username"
+						required
 					/>
 					<input
 						type="password"
 						id="password"
 						name="password"
 						placeholder="password"
+						required
 					/>
 					<input type="submit" id="submit_button" value="Register" />
 				</form>
-				<div class="paws_container">
-					<img src="/images/bearpaws.svg" />
-				</div>
+				<a class="paws_container" href="/">
+					<img class="paw" src="/images/paw.svg" alt="back to previous page" />
+					<img class="paw" src="/images/paw.svg" alt="back to previous page" />
+				</a>
+				<div id="message_return"></div>
+				<img class="success_image" src="/images/happy_bear.gif" />
 			</div>
 			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
 		</div>
+		<script src="/register.js"></script>
 	</body>
 </html>

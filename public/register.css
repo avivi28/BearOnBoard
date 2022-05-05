@@ -121,12 +121,68 @@ p {
 
 .paws_container {
 	position: absolute;
+	width: 80px;
+	height: 80px;
 	bottom: 14px;
 	left: 12px;
 }
 
-.paws_container > img {
+.paw {
+	width: 40px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: rotate(340deg);
+}
+
+.paw + .paw {
+	inset: auto;
+	right: 0;
+	bottom: 0;
+	transform: rotate(320deg);
+}
+
+.paws_container:hover > .paw,
+.paws_container:focus > .paw {
+	animation: fadePaw 1.2s 0.6s infinite;
+}
+
+.paws_container:hover > .paw + .paw,
+.paws_container:focus > .paw + .paw {
+	animation-delay: 0s;
+}
+
+@keyframes fadePaw {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.2;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.success_message {
+	color: #34a853;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.success_image {
+	border-radius: 55%;
 	width: 80px;
+	position: absolute;
+	top: 344px;
+	right: 12px;
+	display: none;
+}
+
+.fail_message {
+	color: red;
+	font-weight: 700;
+	font-size: 18px;
 }
 
 .copyright {
@@ -134,6 +190,20 @@ p {
 	position: absolute;
 	top: 469px;
 	font-size: 14px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	border: 1px solid rgba(242, 119, 7, 0.75);
+	-webkit-text-fill-color: #666666;
+	transition: background-color 5000s ease-in-out 0s;
 }
 
 @media screen and (max-width: 390px) {
@@ -147,6 +217,9 @@ p {
 	}
 	.paws_container {
 		bottom: 6px;
-		left: 0px;
+		left: 6px;
+	}
+	.success_image {
+		top: 387px;
 	}
 }
