@@ -126,6 +126,7 @@ p {
 	height: 80px;
 	bottom: 14px;
 	left: 12px;
+	cursor: pointer;
 }
 
 .paw {
