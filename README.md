@@ -5,7 +5,7 @@ Purpose:
 - Social  Website
 
 Process Report:
-- [ ] Member System
+- [X] Member System
 - [ ] Post on Map
 - [ ] Add Friends
 - [ ] Get Friends' Posts
@@ -25,6 +25,7 @@ Techniques used:
 - member system
   - JWT
   - bcrypt
+  - google API
 - database
   - MongoDB
 - web server
