@@ -26,18 +26,20 @@
 					</div>
 					<p class="brandname">Bear On Board</p>
 				</a>
-				<form action="/" method="POST" id="login_form">
+				<form id="login_form">
 					<input
 						type="text"
 						id="username"
 						name="username"
-						placeholder="email or username"
+						placeholder="email address"
+						required
 					/>
 					<input
 						type="password"
 						id="password"
 						name="password"
 						placeholder="password"
+						required
 					/>
 					<input type="submit" id="submit_button" value="Login" />
 				</form>
@@ -55,5 +57,6 @@
 			</div>
 			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
 		</div>
+		<script src="/index.js"></script>
 	</body>
 </html>

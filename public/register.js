@@ -1,6 +1,7 @@
 const registerForm = document.getElementById('register_form');
 const messageReturn = document.getElementById('message_return');
 const entireContainer = document.getElementById('login_container');
+const successImage = document.querySelector('.success_image');
 
 registerForm.addEventListener('submit', function register(ev) {
 	ev.preventDefault();
@@ -27,10 +28,11 @@ registerForm.addEventListener('submit', function register(ev) {
 			if (okData == true) {
 				messageReturn.textContent = 'Welcome! New Bear!';
 				messageReturn.className = 'success_message';
-				const successImage = document.querySelector('.success_image');
 				successImage.style.display = 'block';
 			} else {
 				messageReturn.textContent = 'Sorry! Email has been used!';
+				successImage.style.display = 'none';
+				messageReturn.className = 'fail_message';
 			}
 		})
 		.catch((error) => console.log(error));
