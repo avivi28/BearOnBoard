@@ -75,7 +75,7 @@ p {
 	z-index: 10;
 }
 
-#username,
+#email,
 #password {
 	width: 302px;
 	height: 46px;
@@ -103,7 +103,7 @@ p {
 	cursor: pointer;
 }
 
-#username {
+#email {
 	margin: 15px auto 25px auto;
 }
 
@@ -220,6 +220,14 @@ select:-webkit-autofill:focus {
 	top: 420px;
 	font-size: 14px;
 }
+
+.fail_message {
+	color: red;
+	font-weight: 700;
+	font-size: 18px;
+	display: none;
+}
+
 @media screen and (max-width: 390px) {
 	.entire_container {
 		width: 100%;
