@@ -44,7 +44,7 @@ app.get('/register', (req, res) => {
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {
-		return res.sendStatus(403);
+		return res.status(403);
 	} else {
 		res.render('home');
 	}
@@ -57,6 +57,5 @@ app.use((req, res) => {
 });
 
 app.listen(9090, function () {
-	//port 80 default
 	console.log('website is located in http://localhost:9090/');
 });

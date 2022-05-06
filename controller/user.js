@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 const insertOne = require('../model/mongodb').insertOne;
 const queryOne = require('../model/mongodb').queryOne;
@@ -8,35 +9,27 @@ const queryOne = require('../model/mongodb').queryOne;
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
 
-//------verify user status API-------
-router.get('/', async (req, res) => {
-	const token = req.cookies.token;
-	if (!token) {
-		return res.sendStatus(403);
-	}
-	try {
-		const data = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-	} catch {
-		return res.sendStatus(403);
-	}
-});
-
 //---------login API-------------
 router.patch('/', async (req, res) => {
 	const emailInput = req.body.email;
+	const passwordInput = req.body.password;
 	const loginInfo = {
 		email: emailInput,
-		password: req.body.password,
 	};
 	const table = 'user';
 	const repeatedResult = await queryOne(table, loginInfo);
-	if (repeatedResult != null) {
+	console.log(repeatedResult);
+	//--------------Bcrypt Check Pw---------------
+	const salt = await bcrypt.genSalt(10);
+	const hash = bcrypt.hashSync(passwordInput, salt);
+	const bcryptResult = bcrypt.compare(passwordInput, hash);
+
+	if (repeatedResult != null && bcryptResult) {
 		jwt.sign({ emailInput }, process.env.JWT_TOKEN_SECRET, (err, token) => {
 			res.cookie('token', token, { httpOnly: true }).json({ ok: true });
 		});
 	} else {
-		res.status(400);
-		res.send(JSON.stringify({ error: 'wrong request' }));
+		res.status(400).json({ error: 'wrong request' });
 	}
 });
 
@@ -47,16 +40,21 @@ router.post('/', async (req, res) => {
 	const emailInfo = { email: emailInput };
 	const repeatedResult = await queryOne(table, emailInfo);
 	if (repeatedResult == null) {
+		const passwordInput = req.body.password;
+
+		//--------------Bcrypt Hash Pw---------------
+		const salt = await bcrypt.genSalt(10); // salt(random string) for hashing pw
+		hashedInput = await bcrypt.hash(passwordInput, salt);
+		console.log(passwordInput);
 		const registerInfo = {
 			email: emailInput,
 			name: req.body.username,
-			password: req.body.password,
+			password: hashedInput,
 		};
 		const result = await insertOne(table, registerInfo);
-		res.send(JSON.stringify(result));
+		res.json(result);
 	} else {
-		res.status(400);
-		res.send(JSON.stringify({ error: 'wrong request' }));
+		res.status(400).json({ error: 'wrong request' });
 	}
 });
 
