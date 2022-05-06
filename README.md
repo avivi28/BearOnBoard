@@ -1,5 +1,9 @@
 # BearOnBoard 🐻🐾 
 
+Purpose:
+- Hunting the closest bear with your friends
+- Social  Website
+
 Process Report:
 - [ ] Member System
 - [ ] Post on Map
@@ -11,7 +15,7 @@ Process Report:
 
 Extra Optimization:
 - [ ] Redis
-- [ ] Chatroom
+- [ ] Chatroom/ web sockets
 
 Tiny stuffs:
 - [ ] frontend & backend validation
