@@ -37,7 +37,11 @@ app.get('/', (req, res) => {
 
 app.get('/register', (req, res) => {
 	res.render('register');
-}); //register
+});
+
+app.get('/home', (req, res) => {
+	res.render('home');
+});
 
 app.use('/api/user', user);
 
