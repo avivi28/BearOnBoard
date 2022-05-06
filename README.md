@@ -20,3 +20,12 @@ Extra Optimization:
 Tiny stuffs:
 - [ ] frontend & backend validation
 - [ ] better loading effects
+
+Techniques used:
+- member system
+  - JWT
+  - bcrypt
+- database
+  - MongoDB
+- web server
+  - NodeJS/ Express
