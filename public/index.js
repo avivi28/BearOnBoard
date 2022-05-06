@@ -1,8 +1,5 @@
 const loginForm = document.getElementById('login_form');
 const messageReturn = document.getElementById('message_return');
-const queryString = location.search;
-const loginInput = queryString.split('/')[0];
-console.log(loginInput);
 
 loginForm.addEventListener('submit', function login(ev) {
 	ev.preventDefault();

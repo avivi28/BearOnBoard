@@ -40,7 +40,12 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-	res.render('home');
+	const token = req.cookies.token;
+	if (!token) {
+		return res.sendStatus(403);
+	} else {
+		res.render('home');
+	}
 });
 
 app.use('/api/user', user);

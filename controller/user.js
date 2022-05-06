@@ -1,24 +1,46 @@
 const express = require('express');
-const insertOne = require('../model/mongodb').insertOne;
-const queryOne = require('../model/mongodb').queryOne;
 const router = express.Router();
 
+const insertOne = require('../model/mongodb').insertOne;
+const queryOne = require('../model/mongodb').queryOne;
+
+//---------JWT token-------------
+const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: '.env' });
+
+//------verify user status API-------
+router.get('/', async (req, res) => {
+	const token = req.cookies.token;
+	if (!token) {
+		return res.sendStatus(403);
+	}
+	try {
+		const data = jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+	} catch {
+		return res.sendStatus(403);
+	}
+});
+
+//---------login API-------------
 router.patch('/', async (req, res) => {
+	const emailInput = req.body.email;
 	const loginInfo = {
-		email: req.body.email,
+		email: emailInput,
 		password: req.body.password,
 	};
 	const table = 'user';
-	console.log(loginInfo);
 	const repeatedResult = await queryOne(table, loginInfo);
 	if (repeatedResult != null) {
-		res.send(JSON.stringify({ ok: true }));
+		jwt.sign({ emailInput }, process.env.JWT_TOKEN_SECRET, (err, token) => {
+			res.cookie('token', token, { httpOnly: true }).json({ ok: true });
+		});
 	} else {
 		res.status(400);
 		res.send(JSON.stringify({ error: 'wrong request' }));
 	}
 });
 
+//---------register API-------------
 router.post('/', async (req, res) => {
 	const emailInput = req.body.email;
 	const table = 'user';
@@ -36,6 +58,11 @@ router.post('/', async (req, res) => {
 		res.status(400);
 		res.send(JSON.stringify({ error: 'wrong request' }));
 	}
+});
+
+//---------logout API-------------
+router.delete('/', async (req, res) => {
+	res.clearCookie('token').json({ ok: true });
 });
 
 module.exports = router;
