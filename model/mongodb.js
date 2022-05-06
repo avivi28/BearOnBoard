@@ -2,7 +2,6 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config({ path: '.env' });
 
 mongoPw = process.env.MONGO_PASSWORD;
-console.log(mongoPw);
 mongoDB = process.env.MONGO_DATABASE;
 
 const uri = `mongodb+srv://bear:${mongoPw}@cluster0.8gjko.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -28,7 +27,7 @@ async function queryOne(tableName, queryInfo) {
 		await client.connect();
 		const database = client.db(mongoDB);
 		const table = database.collection(tableName);
-		const result = await table.find(queryInfo);
+		const result = await table.findOne(queryInfo);
 		return result;
 	} finally {
 		await client.close();
