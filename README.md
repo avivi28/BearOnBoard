@@ -9,8 +9,9 @@ Process Report:
 - [ ] Post on Map
 - [ ] Add Friends
 - [ ] Get Friends' Posts
-- [ ] Interaction with fds (comment + like)
-- [ ] Shorest Location 
+- [ ] Interacte with fds (comment + like)
+- [ ] Get the shortest distance 
+- [ ] Share live location
 - [ ] Search Engine
 
 Extra Optimization:
@@ -20,6 +21,7 @@ Extra Optimization:
 Tiny stuffs:
 - [ ] frontend & backend validation
 - [ ] better loading effects
+- [ ] upload photos to S3 & pull from CDN
 
 Techniques used:
 - member system
