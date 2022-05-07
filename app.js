@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express(); //產生express application物件
-const user = require('./controller/user');
+const user = require('./model/user'); //router
+require('./model/auth');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
 
 require('dotenv').config();
+
+app.use(passport.initialize());
 
 app.use(cookieParser());
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -29,22 +34,44 @@ app.use(
 ); //middleware
 
 app.get('/', (req, res) => {
-	let articles = [
-		{ title: '123', author: 'bear' },
-		{ title: '456', author: 'panda' },
-		{ title: '789', author: 'icebear' },
-	];
-	res.render('index', { trytry: articles });
+	res.render('index');
 }); //homepage
 
 app.get('/register', (req, res) => {
 	res.render('register');
 });
 
+app.get(
+	'/auth/google',
+	passport.authenticate('google', {
+		session: false,
+		scope: ['email', 'profile'],
+	})
+);
+
+app.get(
+	'/auth/google/callback',
+	passport.authenticate('google', {
+		session: false,
+		failureRedirect: '/auth/failure',
+	}),
+	(req, res) => {
+		console.log(req.user);
+		const googleEmail = req.user.email;
+		jwt.sign({ googleEmail }, process.env.JWT_TOKEN_SECRET, (err, token) => {
+			res.cookie('token', token, { httpOnly: true }).redirect('/home');
+		});
+	}
+);
+
+app.get('/auth/failure', (req, res) => {
+	res.send('something went wrong...');
+});
+
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {
-		return res.status(403);
+		return res.sendStatus(403);
 	} else {
 		res.render('home');
 	}

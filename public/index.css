@@ -179,6 +179,7 @@ p {
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+	text-decoration: none;
 }
 .no_account {
 	color: #674115;

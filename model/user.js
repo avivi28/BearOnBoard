@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-const insertOne = require('../model/mongodb').insertOne;
-const queryOne = require('../model/mongodb').queryOne;
+const insertOne = require('./mongodb').insertOne;
+const queryOne = require('./mongodb').queryOne;
 
 //---------JWT token-------------
 const jwt = require('jsonwebtoken');
@@ -18,7 +18,6 @@ router.patch('/', async (req, res) => {
 	};
 	const table = 'user';
 	const repeatedResult = await queryOne(table, loginInfo);
-	console.log(repeatedResult);
 	//--------------Bcrypt Check Pw---------------
 	const salt = await bcrypt.genSalt(10);
 	const hash = bcrypt.hashSync(passwordInput, salt);
