@@ -25,8 +25,9 @@ Techniques used:
 - member system
   - JWT
   - bcrypt
-  - google API
+  - google Ouath2 (passportJS)
 - database
   - MongoDB
 - web server
   - NodeJS/ Express
+  - EJS
