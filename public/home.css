@@ -70,7 +70,7 @@ p {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding-top: 8px;
+	padding-top: 15px;
 	text-decoration: none;
 	z-index: 10;
 }
@@ -124,8 +124,8 @@ p {
 #search_submit {
 	background-image: url(/images/search_button.svg);
 	border: none;
-	height: 38px;
-	width: 38px;
+	height: 30px;
+	width: 30px;
 	background-color: white;
 }
 
@@ -136,6 +136,12 @@ p {
 	color: #a26825;
 	font-size: 16px;
 	padding: 10px;
+}
+
+#search_form {
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
 }
 
 input:-webkit-autofill,
@@ -153,10 +159,11 @@ select:-webkit-autofill:focus {
 }
 
 .caption,
-.photos {
+.photos_container {
 	font-weight: 700;
 	font-size: 16px;
 	color: #674115;
+	margin: 25px 33px;
 }
 
 .caption_content {
@@ -164,8 +171,10 @@ select:-webkit-autofill:focus {
 	font-size: 14px;
 }
 
-.caption {
-	margin: 10px;
+#post_image {
+	width: 275px;
+	height: auto;
+	border-radius: 10px;
 }
 
 #add_button {

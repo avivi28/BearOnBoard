@@ -24,7 +24,7 @@
 						</div>
 						<p class="brandname">Bear On Board</p>
 					</a>
-					<form>
+					<form id="search_form">
 						<input
 							type="text"
 							name="search"
@@ -33,14 +33,18 @@
 						/>
 						<input type="submit" id="search_submit" value="" />
 					</form>
-					<p class="caption">
-						Caption:<br />
-						<span class="caption_content"
-							>“If you live to be a hundred, I hope I live to be a hundred minus
-							one day, so that I never have to live a day without you.”</span
-						>
-					</p>
-					<p class="photos">Photos:<br /><img /></p>
+					<div class="caption">
+						<p>Caption:</p>
+						<br />
+						<p class="caption_content">
+							“If you live to be a hundred, I hope I live to be a hundred minus
+							one day, so that I never have to live a day without you.”
+						</p>
+					</div>
+					<div class="photos_container">
+						<p>Photos:</p>
+						<br /><img src="/images/example.jpg" id="post_image" />
+					</div>
 					<img src="/images/add_post.svg" id="add_button" />
 				</div>
 				<div class="paws_container" onclick="logout()">
