@@ -26,7 +26,6 @@ Techniques used:
   - JWT
   - bcrypt
   - google Ouath2 (passportJS)
-  - express-session
 - database
   - MongoDB
 - web server
