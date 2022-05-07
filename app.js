@@ -1,21 +1,15 @@
 const express = require('express');
 const app = express(); //產生express application物件
 const user = require('./model/user'); //router
+const auth = require('./model/auth');
 require('./model/auth');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
 
 require('dotenv').config();
 
-app.use(passport.initialize());
-
 app.use(cookieParser());
-// Parse URL-encoded bodies (as sent by HTML forms)
-app.use(express.urlencoded());
-// Parse JSON bodies (as sent by API clients)
-app.use(express.json());
-
+app.use(express.urlencoded()); // Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.json()); // Parse JSON bodies (as sent by API clients)
 app.use(express.static('public')); //make css & js file accessible
 
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
@@ -41,33 +35,6 @@ app.get('/register', (req, res) => {
 	res.render('register');
 });
 
-app.get(
-	'/auth/google',
-	passport.authenticate('google', {
-		session: false,
-		scope: ['email', 'profile'],
-	})
-);
-
-app.get(
-	'/auth/google/callback',
-	passport.authenticate('google', {
-		session: false,
-		failureRedirect: '/auth/failure',
-	}),
-	(req, res) => {
-		console.log(req.user);
-		const googleEmail = req.user.email;
-		jwt.sign({ googleEmail }, process.env.JWT_TOKEN_SECRET, (err, token) => {
-			res.cookie('token', token, { httpOnly: true }).redirect('/home');
-		});
-	}
-);
-
-app.get('/auth/failure', (req, res) => {
-	res.send('something went wrong...');
-});
-
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {
@@ -78,6 +45,7 @@ app.get('/home', (req, res) => {
 });
 
 app.use('/api/user', user);
+app.use('/auth', auth);
 
 app.use((req, res) => {
 	res.status(404);

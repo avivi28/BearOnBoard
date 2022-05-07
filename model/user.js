@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const insertOne = require('./mongodb').insertOne;
 const queryOne = require('./mongodb').queryOne;
 
+const table = 'user';
+
 //---------JWT token-------------
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
@@ -16,7 +18,6 @@ router.patch('/', async (req, res) => {
 	const loginInfo = {
 		email: emailInput,
 	};
-	const table = 'user';
 	const repeatedResult = await queryOne(table, loginInfo);
 	//--------------Bcrypt Check Pw---------------
 	const salt = await bcrypt.genSalt(10);
@@ -35,7 +36,6 @@ router.patch('/', async (req, res) => {
 //---------register API-------------
 router.post('/', async (req, res) => {
 	const emailInput = req.body.email;
-	const table = 'user';
 	const emailInfo = { email: emailInput };
 	const repeatedResult = await queryOne(table, emailInfo);
 	if (repeatedResult == null) {
@@ -44,7 +44,6 @@ router.post('/', async (req, res) => {
 		//--------------Bcrypt Hash Pw---------------
 		const salt = await bcrypt.genSalt(10); // salt(random string) for hashing pw
 		hashedInput = await bcrypt.hash(passwordInput, salt);
-		console.log(passwordInput);
 		const registerInfo = {
 			email: emailInput,
 			name: req.body.username,
