@@ -7,7 +7,7 @@ Purpose:
 
 UML:
 
-![bearonboardUML drawio](https://user-images.githubusercontent.com/95410966/167288195-517704f9-c781-4bcd-907e-f88f11887805.svg)
+![bearonboardUML drawio (1)](https://user-images.githubusercontent.com/95410966/167293150-71abd1c2-3f9c-4b31-a25a-65b15f2a21f2.svg)
 
 Processes Checklist: ==(compulsory)==
 - [X] Member System
