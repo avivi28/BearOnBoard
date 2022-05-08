@@ -2,7 +2,6 @@ const express = require('express');
 const app = express(); //產生express application物件
 const user = require('./model/user'); //router
 const auth = require('./model/auth');
-require('./model/auth');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
 
 require('dotenv').config();
@@ -38,7 +37,7 @@ app.get('/register', (req, res) => {
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {
-		return res.sendStatus(403);
+		return res.render(index);
 	} else {
 		res.render('home');
 	}
