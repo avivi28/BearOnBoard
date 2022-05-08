@@ -9,7 +9,7 @@ UML:
 
 ![bearonboardUML drawio (1)](https://user-images.githubusercontent.com/95410966/167293150-71abd1c2-3f9c-4b31-a25a-65b15f2a21f2.svg)
 
-Processes Checklist: ==(compulsory)==
+Processes Checklist: **(compulsory)**
 - [X] Member System
 - [ ] Post on Map
 - [ ] Add Friends 
@@ -19,7 +19,7 @@ Processes Checklist: ==(compulsory)==
 - [ ] Share live location
 - [ ] Search Engine
 
-Extra Optimization: ==(optional)==
+Extra Optimization: **(optional)**
 - [ ] Redis
 - [ ] Text-only Chatroom/ web sockets
 
