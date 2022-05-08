@@ -1,7 +1,6 @@
 body {
 	margin: 0px;
 	padding: 0px;
-	overflow-x: hidden;
 	background: #f5a760;
 	display: flex;
 	align-items: center;
@@ -181,4 +180,5 @@ select:-webkit-autofill:focus {
 	position: absolute;
 	right: 19px;
 	bottom: 20px;
+	cursor: pointer;
 }

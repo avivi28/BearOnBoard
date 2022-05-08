@@ -3,9 +3,11 @@ const app = express(); //產生express application物件
 const user = require('./model/user'); //router
 const auth = require('./model/auth');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
+const cors = require('cors');
 
 require('dotenv').config();
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.urlencoded()); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
