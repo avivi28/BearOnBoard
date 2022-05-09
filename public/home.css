@@ -50,7 +50,8 @@ p {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	position: relative;
+	position: absolute;
+	top: 0px;
 }
 
 .logo_container > img {
@@ -172,7 +173,7 @@ select:-webkit-autofill:focus {
 
 #post_image {
 	width: 275px;
-	height: auto;
+	height: 165px;
 	border-radius: 10px;
 }
 

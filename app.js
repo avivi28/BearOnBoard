@@ -39,7 +39,7 @@ app.get('/register', (req, res) => {
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {
-		return res.render(index);
+		return res.render('index');
 	} else {
 		res.render('home');
 	}
