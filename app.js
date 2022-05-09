@@ -36,6 +36,10 @@ app.get('/register', (req, res) => {
 	res.render('register');
 });
 
+app.get('/member', (req, res) => {
+	res.render('member');
+});
+
 app.get('/home', (req, res) => {
 	const token = req.cookies.token;
 	if (!token) {

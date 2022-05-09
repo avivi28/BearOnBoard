@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BearOnBoard</title>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, minimum-scale=1"
+		/>
+		<link rel="stylesheet" href="member.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="icon" type="image/x-icon" href="/images/favicon/favicon.ico" />
+	</head>
+	<body>
+		<div class="entire_container">
+			<div class="background">
+				<img src="/images/profile-icon.png" id="profile_icon" />
+				<div
+					id="googleMap"
+					style="
+						width: 570px;
+						height: 650px;
+						border-radius: 0px 50px 50px 0px;
+						position: absolute;
+						overflow: hidden;
+						right: 0px;
+					"
+				></div>
+				<div class="post_container">
+					<a href="/home" class="header_container">
+						<div class="logo_container">
+							<img src="/images/bear_transparent_logo.png" />
+						</div>
+						<p class="brandname">Bear On Board</p>
+					</a>
+					<img src="/images/edit-pen.svg" id="edit_pen" />
+					<img src="/images/profile-icon.png" id="edit_icon" />
+					<div class="edit_container">
+						<div class="edit_title">
+							Name:
+							<p>Bear</p>
+						</div>
+						<div class="edit_title">
+							Email:
+							<p>bear@bear.com</p>
+						</div>
+						<div class="edit_title">
+							BIO:
+							<p>I am a bear.</p>
+						</div>
+					</div>
+					<div class="friendslist_container">
+						<div class="friendslist">Friends list:</div>
+						<img src="/images/friends-icon.png" id="friends_icon" />
+						<p class="friends_name">Panda</p>
+						<p class="friends_bio">BIO: hihihi</p>
+						<img src="/images/friends_gps.svg" id="friends_jps" />
+						<img src="/images/delete_friends.svg" id="friends_delete" />
+					</div>
+					<img src="/images/add_friends.svg" id="friends_add" />
+					<div class="paws_container" onclick="logout()">
+						<img class="paw" src="/images/paw.svg" alt="logout" />
+						<img class="paw" src="/images/paw.svg" alt="logout" />
+					</div>
+				</div>
+			</div>
+			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
+		</div>
+		<script src="/member.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7B25nSjgIKPY8CIa4d_2wjTkHN0E6uf4&callback=initMap"></script>
+	</body>
+</html>
