@@ -52,3 +52,5 @@ Techniques used:
 - Other tools
   - `Nginx`
   - `Docker`
+  - `Figma`
+  - `Git`
