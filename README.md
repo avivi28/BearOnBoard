@@ -1,8 +1,8 @@
 # BearOnBoard 🐻🐾 
 
 Purpose:
-- Map-based social Website 🗺
-- Follow the paws you saved before on map 🐾 
+- As a map-based social Website 🗺
+- Follow the paws(posts) you saved before on map 🐾 
 - Hunt the closest bears(spots) with your friends 👩🏻‍🌾
 - Share the bear's location(spots' location) ⚠️
 
