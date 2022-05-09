@@ -13,10 +13,6 @@ function logout() {
 }
 
 function initMap() {
-	const mapProp = {
-		center: new google.maps.LatLng(51.508742, -0.12085),
-		zoom: 18,
-	};
 	infoWindow = new google.maps.InfoWindow();
 	const map = new google.maps.Map(document.getElementById('googleMap'), {
 		zoom: 18,
@@ -24,6 +20,9 @@ function initMap() {
 			lat: 25.0336962,
 			lng: 121.5643673,
 		},
+		fullscreenControl: false,
+		streetViewControl: false, //remove the default button
+		mapTypeControl: false,
 		styles: [
 			{
 				featureType: 'poi.business',

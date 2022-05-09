@@ -141,7 +141,7 @@ p {
 #search_form {
 	display: flex;
 	align-items: center;
-	margin-top: 20px;
+	margin-top: 8px;
 }
 
 input:-webkit-autofill,
@@ -163,7 +163,54 @@ select:-webkit-autofill:focus {
 	font-weight: 700;
 	font-size: 16px;
 	color: #674115;
-	margin: 25px 33px;
+	margin: 15px 33px;
+}
+
+.photos_container {
+	position: relative;
+}
+
+#arrow_left,
+#arrow-right {
+	cursor: pointer;
+}
+
+#arrow_left,
+#arrow-right,
+#likes,
+#profile_icon,
+#friends_icon {
+	position: absolute;
+}
+
+#profile_icon {
+	z-index: 1;
+	right: 12px;
+	width: 80px;
+	top: 10px;
+	cursor: pointer;
+}
+
+#arrow_left {
+	left: 10px;
+	top: 120px;
+}
+
+#arrow-right {
+	right: 10px;
+	top: 120px;
+}
+
+#likes {
+	right: 0px;
+	top: 217px;
+	cursor: pointer;
+}
+
+#friends_icon {
+	width: 42px;
+	left: 30px;
+	top: 250px;
 }
 
 .caption_content {
@@ -182,4 +229,16 @@ select:-webkit-autofill:focus {
 	right: 19px;
 	bottom: 20px;
 	cursor: pointer;
+}
+
+q {
+	position: absolute;
+	right: 16px;
+	top: 260px;
+}
+
+.dots {
+	position: absolute;
+	top: 222px;
+	left: 121px;
 }
