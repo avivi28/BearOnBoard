@@ -32,7 +32,7 @@ Extra Optimization: **(optional)**
 
 Tiny stuffs:
 - [ ] frontend & backend validation
-- [ ] better loading effects (e.g. loading page)
+- [ ] better loading effects (e.g. loading page & RWD)
 - [ ] upload photos to S3 & pull from CDN
 - [ ] debug & review
 ``` diff
