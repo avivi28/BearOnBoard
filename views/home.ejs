@@ -20,17 +20,7 @@
 				<a href="/member">
 					<img src="/images/profile-icon.png" id="profile_icon"
 				/></a>
-				<div
-					id="googleMap"
-					style="
-						width: 570px;
-						height: 650px;
-						border-radius: 0px 50px 50px 0px;
-						position: absolute;
-						overflow: hidden;
-						right: 0px;
-					"
-				></div>
+				<div id="googleMap"></div>
 				<div class="post_container">
 					<a href="/home" class="header_container">
 						<div class="logo_container">
@@ -69,7 +59,9 @@
 						<img src="/images/friends-icon.png" id="friends_icon" />
 						<q>what a lovely bear!!</q>
 					</div>
-					<img src="/images/add_post.svg" id="add_button" />
+					<button onclick="addPost()">
+						<img src="/images/add_post.svg" id="add_button" />
+					</button>
 				</div>
 				<div class="paws_container" onclick="logout()">
 					<img class="paw" src="/images/paw.svg" alt="logout" />
@@ -77,8 +69,42 @@
 				</div>
 			</div>
 			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
+			<div class="modal" id="modal">
+				<div class="modal-content">
+					<div class="modal-top"></div>
+					<button onclick="hidePost()">
+						<img src="/images/x.svg" id="x" />
+					</button>
+					<p>Add New Post</p>
+					<form id="postform">
+						<span
+							>Images:
+							<input
+								type="file"
+								id="img_input"
+								name="img"
+								accept="image/*"
+								required
+						/></span>
+						<span
+							>Location:
+							<input
+								id="pac-input"
+								class="controls"
+								type="text"
+								placeholder="Search Location"
+								required
+						/></span>
+						<span
+							>Captions:
+							<input type="text" name="caption" id="caption" required />
+						</span>
+						<input type="submit" value="Add Post" id="submit_newposts" />
+					</form>
+				</div>
+			</div>
 		</div>
 		<script src="/home.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7B25nSjgIKPY8CIa4d_2wjTkHN0E6uf4&callback=initMap"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7B25nSjgIKPY8CIa4d_2wjTkHN0E6uf4&callback=initMap&libraries=places"></script>
 	</body>
 </html>
