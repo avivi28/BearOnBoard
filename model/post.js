@@ -6,10 +6,14 @@ const queryOne = require('./mongodb').queryOne;
 
 const table = 'posts';
 
-router.get('/', async (req, res) => {
-	const img_url = req.params.img;
-	const caption = req.params.caption;
-	const location = req.params.location;
+router.post('/', async (req, res) => {
+	const postInfo = {
+		img_url: req.body.img_url,
+		caption: req.body.caption,
+		location: req.body.locatio,
+	};
+	const result = await insertOne(table, postInfo);
+	res.json(result);
 });
 
 module.exports = router;
