@@ -8,9 +8,11 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"aws-sdk": "^2.1132.0",
 		"bcrypt": "^5.0.1",
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
 		"dayjs": "^1.11.1",
 		"dotenv": "^16.0.0",
 		"ejs": "^3.1.7",
@@ -18,7 +20,8 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongodb": "^4.5.0",
 		"passport": "^0.5.2",
-		"passport-google-oauth2": "^0.2.0"
+		"passport-google-oauth2": "^0.2.0",
+		"util": "^0.12.4"
 	},
 	"description": ""
 }

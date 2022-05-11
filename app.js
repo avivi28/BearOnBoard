@@ -2,14 +2,16 @@ const express = require('express');
 const app = express(); //產生express application物件
 const user = require('./model/user'); //router
 const auth = require('./model/auth');
+const post = require('./model/post');
+const { generateUploadURL } = require('./model/s3');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
-const cors = require('cors');
+// const cors = require('cors');
 
 require('dotenv').config();
 
-app.use(cors());
+// app.use(cors());
 app.use(cookieParser());
-app.use(express.urlencoded()); // Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
 app.use(express.static('public')); //make css & js file accessible
 
@@ -49,7 +51,13 @@ app.get('/home', (req, res) => {
 	}
 });
 
+app.get('/s3Url', async (req, res) => {
+	const url = await generateUploadURL();
+	res.send({ url });
+}); //get secure url from s3 & return to frontend
+
 app.use('/api/user', user);
+app.use('/api/post', post);
 app.use('/auth', auth);
 
 app.use((req, res) => {

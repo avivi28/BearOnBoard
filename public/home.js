@@ -82,56 +82,12 @@ function initMap() {
 		searchBox.setBounds(map.getBounds());
 	});
 
-	let markers = [];
-
 	// Listen for the event fired when the user selects a prediction and retrieve
 	// more details for that place.
 	searchBox.addListener('places_changed', () => {
 		const places = searchBox.getPlaces();
 
-		if (places.length == 0) {
-			return;
-		}
-
-		// Clear out the old markers.
-		markers.forEach((marker) => {
-			marker.setMap(null);
-		});
-		markers = [];
-
-		// For each place, get the icon, name and location.
 		const bounds = new google.maps.LatLngBounds();
-
-		places.forEach((place) => {
-			if (!place.geometry || !place.geometry.location) {
-				console.log('Returned place contains no geometry');
-				return;
-			}
-
-			const icon = {
-				url: place.icon,
-				size: new google.maps.Size(71, 71),
-				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(17, 34),
-				scaledSize: new google.maps.Size(25, 25),
-			};
-
-			// Create a marker for each place.
-			markers.push(
-				new google.maps.Marker({
-					map,
-					icon,
-					title: place.name,
-					position: place.geometry.location,
-				})
-			);
-			if (place.geometry.viewport) {
-				// Only geocodes have viewport.
-				bounds.union(place.geometry.viewport);
-			} else {
-				bounds.extend(place.geometry.location);
-			}
-		});
 		map.fitBounds(bounds);
 	});
 }
@@ -146,3 +102,46 @@ function addPost() {
 function hidePost() {
 	modal.style.display = 'none';
 }
+
+//--------------Call API when add posts---------------
+const postForm = document.querySelector('#postform');
+const imageInput = document.querySelector('#img_input');
+
+postForm.addEventListener('submit', async (event) => {
+	event.preventDefault();
+	// const form = new FormData(postForm);
+	// const commentInput = new URLSearchParams(form);
+	// const postData = Object.fromEntries(commentInput.entries());
+	// const commentContent = postData['comment'];
+	// const bodyData = { comment: commentContent };
+
+	const file = imageInput.files[0];
+
+	//get secure url from my server
+	const { url } = await fetch('/s3Url').then((res) => res.json());
+	console.log(url);
+
+	//post the image directly to the s3 bucket
+	await fetch(url, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+		body: file,
+	}).then((res) => {
+		console.log(res);
+	});
+
+	// await fetch('/comment', {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json;charset=utf-8',
+	// 	},
+	// 	body: JSON.stringify(bodyData),
+	// });
+
+	const imageUrl = url.split('?')[0];
+
+	const imagePath = imageUrl.split('/')[3];
+	const cloudFrontUrl = 'https://d3qxlv297wj1rn.cloudfront.net/' + imagePath;
+});
