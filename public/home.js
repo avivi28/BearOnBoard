@@ -133,7 +133,7 @@ postForm.addEventListener('submit', async (event) => {
 	const commentInput = new URLSearchParams(form);
 	const postData = Object.fromEntries(commentInput.entries());
 	const locationContent = postData['location'];
-	const geoResult = await getGEO(locationContent);
+	const geoInfo = await getGEO(locationContent);
 
 	const file = imageInput.files[0];
 
@@ -178,3 +178,14 @@ postForm.addEventListener('submit', async (event) => {
 		})
 		.catch((e) => console.log(e));
 });
+
+//----------get all saved posts function-------------
+function getPosts() {
+	fetch('/api/post', { method: 'GET', credentials: 'include' })
+		.then((res) => res.json())
+		.then((res) => {
+			console.log(res);
+		});
+}
+
+getPosts();

@@ -34,5 +34,18 @@ async function queryOne(tableName, queryInfo) {
 	}
 }
 
+async function queryMany(tableName, queryInfo) {
+	try {
+		await client.connect();
+		const database = client.db(mongoDB);
+		const table = database.collection(tableName);
+		const result = await table.find(queryInfo).toArray();
+		return result;
+	} finally {
+		await client.close();
+	}
+}
+
 exports.insertOne = insertOne;
 exports.queryOne = queryOne;
+exports.queryMany = queryMany;
