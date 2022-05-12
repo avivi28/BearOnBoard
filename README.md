@@ -35,6 +35,8 @@ Tiny stuffs:
 - [ ] better loading effects (e.g. loading page & RWD)
 - [X] upload photos to S3 & pull from CDN
 - [ ] set static server with Nginx
+- [ ] update UML diagram
+- [ ] finish swagger API page
 - [ ] debug & review
 ``` diff
 ! FINISH these in last week 
