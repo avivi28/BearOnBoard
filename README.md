@@ -33,7 +33,8 @@ Extra Optimization: **(optional)**
 Tiny stuffs:
 - [ ] frontend & backend validation
 - [ ] better loading effects (e.g. loading page & RWD)
-- [ ] upload photos to S3 & pull from CDN
+- [X] upload photos to S3 & pull from CDN
+- [ ] set static server with Nginx
 - [ ] debug & review
 ``` diff
 ! FINISH these in last week 
