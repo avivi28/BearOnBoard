@@ -77,19 +77,6 @@ function initMap() {
 	const searchBox = new google.maps.places.SearchBox(input);
 
 	map.push(input);
-	// Bias the SearchBox results towards current map's viewport.
-	map.addListener('bounds_changed', () => {
-		searchBox.setBounds(map.getBounds());
-	});
-
-	// Listen for the event fired when the user selects a prediction and retrieve
-	// more details for that place.
-	searchBox.addListener('places_changed', () => {
-		const places = searchBox.getPlaces();
-
-		const bounds = new google.maps.LatLngBounds();
-		map.fitBounds(bounds);
-	});
 }
 
 window.initMap = initMap;
@@ -103,7 +90,22 @@ function hidePost() {
 	modal.style.display = 'none';
 }
 
-//--------------Call API when add posts---------------
+//----------get User info from JWT------------
+let JWTcookies = document.cookie;
+const base64Url = JWTcookies.split('.')[1];
+const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+const jsonPayload = decodeURIComponent(
+	atob(base64)
+		.split('')
+		.map(function (c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+		})
+		.join('')
+);
+const userData = JSON.parse(jsonPayload);
+const userId = userData['userId'];
+
+//--------------Add posts function---------------
 const postForm = document.querySelector('#postform');
 const imageInput = document.querySelector('#img_input');
 
@@ -136,6 +138,7 @@ postForm.addEventListener('submit', async (event) => {
 	const cloudFrontUrl = 'https://d3qxlv297wj1rn.cloudfront.net/' + imagePath;
 
 	const bodyData = {
+		userId: userId,
 		caption: captionContent,
 		location: locationContent,
 		img_url: cloudFrontUrl,
@@ -147,6 +150,11 @@ postForm.addEventListener('submit', async (event) => {
 		},
 		body: JSON.stringify(bodyData),
 	})
-		.then((res) => res.json)
-		.then((res) => console.log(res));
+		.then((res) => res.json())
+		.then((res) => {
+			if (res['ok'] == true) {
+				hidePost();
+			}
+		})
+		.catch((e) => console.log(e));
 });

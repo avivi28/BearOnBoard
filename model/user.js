@@ -25,9 +25,14 @@ router.patch('/', async (req, res) => {
 	const bcryptResult = bcrypt.compare(passwordInput, hash);
 
 	if (repeatedResult != null && bcryptResult) {
-		jwt.sign({ emailInput }, process.env.JWT_TOKEN_SECRET, (err, token) => {
-			res.cookie('token', token, { httpOnly: true }).json({ ok: true });
-		});
+		const userId = repeatedResult['_id'];
+		jwt.sign(
+			{ userId, emailInput },
+			process.env.JWT_TOKEN_SECRET,
+			(err, token) => {
+				res.cookie('token', token).json({ ok: true });
+			}
+		);
 	} else {
 		res.status(400).json({ error: 'wrong request' });
 	}
