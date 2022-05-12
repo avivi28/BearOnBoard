@@ -12,6 +12,11 @@ function logout() {
 		.catch((error) => console.log(error));
 }
 
+function googleAPI() {
+	initMap();
+	getGEO();
+}
+
 function initMap() {
 	infoWindow = new google.maps.InfoWindow();
 	const map = new google.maps.Map(document.getElementById('googleMap'), {
@@ -81,6 +86,19 @@ function initMap() {
 
 window.initMap = initMap;
 
+//---------Get geo location(lat,log)--------
+function getGEO(address) {
+	googleUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBF5RHa0xzEIOLhC-FUYL70lY-vh6xXbmg`;
+	return fetch(googleUrl, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((res) => {
+			geoInfo = res['results'][0]['geometry']['location'];
+			return geoInfo;
+		});
+}
+
 //----------------Posts Modal---------------
 const modal = document.getElementById('modal');
 function addPost() {
@@ -114,8 +132,8 @@ postForm.addEventListener('submit', async (event) => {
 	const form = new FormData(postForm);
 	const commentInput = new URLSearchParams(form);
 	const postData = Object.fromEntries(commentInput.entries());
-	const captionContent = postData['caption'];
 	const locationContent = postData['location'];
+	const geoResult = await getGEO(locationContent);
 
 	const file = imageInput.files[0];
 
@@ -139,9 +157,11 @@ postForm.addEventListener('submit', async (event) => {
 
 	const bodyData = {
 		userId: userId,
-		caption: captionContent,
+		caption: postData['caption'],
 		location: locationContent,
 		img_url: cloudFrontUrl,
+		lat: geoInfo['lat'],
+		lng: geoInfo['lng'],
 	};
 	await fetch('/api/post', {
 		method: 'POST',
