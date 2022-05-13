@@ -14,7 +14,7 @@ function logout() {
 
 function googleAPI() {
 	initMap();
-	getGEO();
+	showMarker();
 }
 
 function initMap() {
@@ -184,8 +184,71 @@ function getPosts() {
 	fetch('/api/post', { method: 'GET', credentials: 'include' })
 		.then((res) => res.json())
 		.then((res) => {
+			showMarker(res);
 			console.log(res);
 		});
 }
 
+function test(res) {
+	for (let i = 0; i < res.length; i++) {
+		const geoInfo = {
+			lat: res[i]['lat'],
+			lng: res[i]['lng'],
+		};
+		console.log(geoInfo);
+	}
+}
+
+function showMarker(res) {
+	const caption = document.getElementById('caption_content');
+	const postPhoto = document.getElementById('post_image');
+	const map = new google.maps.Map(document.getElementById('googleMap'), {
+		zoom: 18,
+		center: {
+			lat: 25.0336962,
+			lng: 121.5643673,
+		},
+		fullscreenControl: false,
+		streetViewControl: false, //remove the default button
+		mapTypeControl: false,
+		styles: [
+			{
+				featureType: 'poi.business',
+				stylers: [
+					{
+						visibility: 'off',
+					},
+				],
+			},
+			{
+				featureType: 'poi.park',
+				elementType: 'labels.text',
+				stylers: [
+					{
+						visibility: 'off',
+					},
+				],
+			},
+		],
+	});
+	for (let i = 0; i < res.length; i++) {
+		const geoInfo = {
+			lat: res[i]['lat'],
+			lng: res[i]['lng'],
+		};
+
+		const marker = new google.maps.Marker({
+			position: geoInfo,
+			map: map,
+		});
+
+		marker.addListener('click', () => {
+			caption.textContent = res[i]['caption'];
+			postPhoto.src = res[i]['img_url'];
+			map.setCenter(geoInfo);
+		});
+	}
+}
+
 getPosts();
+showMarker();

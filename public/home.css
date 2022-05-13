@@ -225,8 +225,13 @@ select:-webkit-autofill:focus {
 
 #post_image {
 	width: 275px;
-	height: 165px;
+	height: auto;
 	border-radius: 10px;
+}
+
+.imagesonly_container {
+	overflow: hidden;
+	height: 165px;
 }
 
 #add_button {
@@ -355,4 +360,8 @@ q {
 	top: 36px;
 	left: 249px;
 	cursor: pointer;
+}
+
+.caption {
+	width: 275px;
 }
