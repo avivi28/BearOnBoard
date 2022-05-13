@@ -12,7 +12,7 @@ UML diagram:
 
 Features checklist: **(compulsory)**
 - [X] Member System
-- [ ] Save posts on Map
+- [X] Save posts on Map
 - [ ] Add Friends 
 - [ ] Get Friends' Posts
 - [ ] Interacte with fds (comment + like)
