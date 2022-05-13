@@ -18,6 +18,41 @@ function googleAPI() {
 	showAllMarker();
 }
 
+let map;
+const chicago = { lat: 41.85, lng: -87.65 };
+
+function CenterControl(controlDiv, map) {
+	// Set CSS for the control border.
+	const controlUI = document.createElement('div');
+
+	controlUI.style.backgroundColor = '#fff';
+	controlUI.style.border = '2px solid #fff';
+	controlUI.style.borderRadius = '3px';
+	controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+	controlUI.style.cursor = 'pointer';
+	controlUI.style.marginTop = '8px';
+	controlUI.style.marginBottom = '22px';
+	controlUI.style.textAlign = 'center';
+	controlUI.title = 'Click to find yourself';
+	controlDiv.appendChild(controlUI);
+
+	// Set CSS for the control interior.
+	const controlText = document.createElement('div');
+
+	controlText.style.color = 'rgb(25,25,25)';
+	controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+	controlText.style.fontSize = '16px';
+	controlText.style.lineHeight = '38px';
+	controlText.style.paddingLeft = '5px';
+	controlText.style.paddingRight = '5px';
+	controlText.innerHTML = 'Your Location';
+	controlUI.appendChild(controlText);
+	// Setup the click event listeners: simply set the map to Chicago.
+	controlUI.addEventListener('click', () => {
+		getPosts();
+	});
+}
+
 const mapStyles = [
 	{
 		featureType: 'poi.business',
@@ -38,48 +73,9 @@ const mapStyles = [
 	},
 ];
 function initMap(map) {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				};
-
-				map = new google.maps.Map(document.getElementById('googleMap'), {
-					zoom: 18,
-					center: pos,
-					fullscreenControl: false,
-					streetViewControl: false, //remove the default button
-					mapTypeControl: false,
-					styles: mapStyles,
-				});
-				const userIcon = '/images/smaller-icon.png';
-
-				const marker = new google.maps.Marker({
-					position: pos,
-					map: map,
-					icon: userIcon,
-					animation: google.maps.Animation.BOUNCE,
-				});
-
-				// Create the search box and link it to the UI element.
-				const input = document.getElementById('pac-input');
-				const searchBox = new google.maps.places.SearchBox(input);
-
-				map.push(input);
-
-				map.setCenter(pos);
-				return map;
-			},
-			() => {
-				handleLocationError(true, infoWindow, map.getCenter());
-			}
-		);
-	} else {
-		// Browser doesn't support Geolocation
-		handleLocationError(false, infoWindow, map.getCenter());
-	}
+	// Create the search box and link it to the UI element.
+	const input = document.getElementById('pac-input');
+	const searchBox = new google.maps.places.SearchBox(input);
 }
 
 //---------Get geo location(lat,log)--------
@@ -188,6 +184,8 @@ function getPosts() {
 		});
 }
 
+getPosts();
+
 //---------------show marker after add new post------------------
 const locationContent = document.getElementById('location_content');
 const caption = document.getElementById('caption_content');
@@ -206,6 +204,12 @@ function showMarker(res) {
 		mapTypeControl: false,
 		styles: mapStyles,
 	});
+
+	// Create new control button on map
+	const centerControlDiv = document.createElement('div');
+
+	CenterControl(centerControlDiv, map);
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 
 	const pickedMarker = '/images/bear-mark.png';
 	const marker = new google.maps.Marker({
@@ -243,6 +247,14 @@ function showAllMarker(res) {
 					mapTypeControl: false,
 					styles: mapStyles,
 				});
+
+				// Create new control button on map
+				const centerControlDiv = document.createElement('div');
+
+				CenterControl(centerControlDiv, map);
+				map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+					centerControlDiv
+				);
 
 				const userIcon = '/images/smaller-icon.png';
 				const blackImage = '/images/black-mark.png';
