@@ -196,16 +196,6 @@ select:-webkit-autofill:focus {
 	cursor: pointer;
 }
 
-#arrow_left {
-	left: 10px;
-	top: 120px;
-}
-
-#arrow-right {
-	right: 10px;
-	top: 120px;
-}
-
 #likes {
 	right: 0px;
 	top: 217px;
@@ -245,12 +235,6 @@ q {
 	position: absolute;
 	right: 16px;
 	top: 260px;
-}
-
-.dots {
-	position: absolute;
-	top: 222px;
-	left: 121px;
 }
 
 #googleMap {
