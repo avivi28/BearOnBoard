@@ -15,40 +15,29 @@ function logout() {
 function googleAPI() {
 	initMap();
 	showMarker();
+	showAllMarker();
 }
 
-function initMap() {
-	infoWindow = new google.maps.InfoWindow();
-	const map = new google.maps.Map(document.getElementById('googleMap'), {
-		zoom: 18,
-		center: {
-			lat: 25.0336962,
-			lng: 121.5643673,
-		},
-		fullscreenControl: false,
-		streetViewControl: false, //remove the default button
-		mapTypeControl: false,
-		styles: [
+const mapStyles = [
+	{
+		featureType: 'poi.business',
+		stylers: [
 			{
-				featureType: 'poi.business',
-				stylers: [
-					{
-						visibility: 'off',
-					},
-				],
-			},
-			{
-				featureType: 'poi.park',
-				elementType: 'labels.text',
-				stylers: [
-					{
-						visibility: 'off',
-					},
-				],
+				visibility: 'off',
 			},
 		],
-	});
-	//get current location
+	},
+	{
+		featureType: 'poi.park',
+		elementType: 'labels.text',
+		stylers: [
+			{
+				visibility: 'off',
+			},
+		],
+	},
+];
+function initMap(map) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -57,16 +46,31 @@ function initMap() {
 					lng: position.coords.longitude,
 				};
 
-				const image = '/images/bear-mark.png';
+				map = new google.maps.Map(document.getElementById('googleMap'), {
+					zoom: 18,
+					center: pos,
+					fullscreenControl: false,
+					streetViewControl: false, //remove the default button
+					mapTypeControl: false,
+					styles: mapStyles,
+				});
+				const userIcon = '/images/smaller-icon.png';
 
 				const marker = new google.maps.Marker({
 					position: pos,
 					map: map,
-					icon: image,
+					icon: userIcon,
 					animation: google.maps.Animation.BOUNCE,
 				});
 
+				// Create the search box and link it to the UI element.
+				const input = document.getElementById('pac-input');
+				const searchBox = new google.maps.places.SearchBox(input);
+
+				map.push(input);
+
 				map.setCenter(pos);
+				return map;
 			},
 			() => {
 				handleLocationError(true, infoWindow, map.getCenter());
@@ -76,15 +80,7 @@ function initMap() {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
-
-	// Create the search box and link it to the UI element.
-	const input = document.getElementById('pac-input');
-	const searchBox = new google.maps.places.SearchBox(input);
-
-	map.push(input);
 }
-
-window.initMap = initMap;
 
 //---------Get geo location(lat,log)--------
 function getGEO(address) {
@@ -134,6 +130,9 @@ postForm.addEventListener('submit', async (event) => {
 	const postData = Object.fromEntries(commentInput.entries());
 	const locationContent = postData['location'];
 	const geoInfo = await getGEO(locationContent);
+	if (geoInfo == null) {
+		geoInfo = null;
+	}
 
 	const file = imageInput.files[0];
 
@@ -172,8 +171,9 @@ postForm.addEventListener('submit', async (event) => {
 	})
 		.then((res) => res.json())
 		.then((res) => {
-			if (res['ok'] == true) {
+			if (res != null) {
 				hidePost();
+				showMarker(res);
 			}
 		})
 		.catch((e) => console.log(e));
@@ -184,71 +184,104 @@ function getPosts() {
 	fetch('/api/post', { method: 'GET', credentials: 'include' })
 		.then((res) => res.json())
 		.then((res) => {
-			showMarker(res);
-			console.log(res);
+			showAllMarker(res);
 		});
 }
 
-function test(res) {
-	for (let i = 0; i < res.length; i++) {
-		const geoInfo = {
-			lat: res[i]['lat'],
-			lng: res[i]['lng'],
-		};
-		console.log(geoInfo);
-	}
-}
+//---------------show marker after add new post------------------
+const locationContent = document.getElementById('location_content');
+const caption = document.getElementById('caption_content');
+const postPhoto = document.getElementById('post_image');
 
 function showMarker(res) {
-	const caption = document.getElementById('caption_content');
-	const postPhoto = document.getElementById('post_image');
+	const newGeo = {
+		lat: res['lat'],
+		lng: res['lng'],
+	};
 	const map = new google.maps.Map(document.getElementById('googleMap'), {
 		zoom: 18,
-		center: {
-			lat: 25.0336962,
-			lng: 121.5643673,
-		},
+		center: newGeo,
 		fullscreenControl: false,
 		streetViewControl: false, //remove the default button
 		mapTypeControl: false,
-		styles: [
-			{
-				featureType: 'poi.business',
-				stylers: [
-					{
-						visibility: 'off',
-					},
-				],
-			},
-			{
-				featureType: 'poi.park',
-				elementType: 'labels.text',
-				stylers: [
-					{
-						visibility: 'off',
-					},
-				],
-			},
-		],
+		styles: mapStyles,
 	});
-	for (let i = 0; i < res.length; i++) {
-		const geoInfo = {
-			lat: res[i]['lat'],
-			lng: res[i]['lng'],
-		};
 
-		const marker = new google.maps.Marker({
-			position: geoInfo,
-			map: map,
+	const pickedMarker = '/images/bear-mark.png';
+	const marker = new google.maps.Marker({
+		position: newGeo,
+		map: map,
+		icon: pickedMarker,
+		animation: google.maps.Animation.DROP,
+	});
+	fetch('/api/post', { method: 'GET', credentials: 'include' })
+		.then((res) => res.json())
+		.then((res) => {
+			marker.addListener('click', () => {
+				const lastPost = res.length - 1;
+				caption.textContent = res[lastPost]['caption'];
+				postPhoto.src = res[lastPost]['img_url'];
+				locationContent.textContent = res[lastPost]['location'];
+			});
 		});
-
-		marker.addListener('click', () => {
-			caption.textContent = res[i]['caption'];
-			postPhoto.src = res[i]['img_url'];
-			map.setCenter(geoInfo);
-		});
-	}
 }
 
-getPosts();
-showMarker();
+function showAllMarker(res) {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				const pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+
+				const map = new google.maps.Map(document.getElementById('googleMap'), {
+					zoom: 18,
+					center: pos,
+					fullscreenControl: false,
+					streetViewControl: false, //remove the default button
+					mapTypeControl: false,
+					styles: mapStyles,
+				});
+
+				const userIcon = '/images/smaller-icon.png';
+				const blackImage = '/images/black-mark.png';
+
+				const Currentmarker = new google.maps.Marker({
+					position: pos,
+					map: map,
+					icon: userIcon,
+					animation: google.maps.Animation.BOUNCE,
+				});
+
+				for (let i = 0; i < res.length; i++) {
+					const geoInfo = {
+						lat: res[i]['lat'],
+						lng: res[i]['lng'],
+					};
+
+					const marker = new google.maps.Marker({
+						position: geoInfo,
+						map: map,
+						icon: blackImage,
+						animation: google.maps.Animation.DROP,
+					});
+
+					marker.addListener('click', () => {
+						caption.textContent = res[i]['caption'];
+						postPhoto.src = res[i]['img_url'];
+						locationContent.textContent = res[i]['location'];
+						map.setCenter(geoInfo);
+						map.setZoom(18);
+					});
+				}
+			},
+			() => {
+				handleLocationError(true, infoWindow, map.getCenter());
+			}
+		);
+	} else {
+		// Browser doesn't support Geolocation
+		handleLocationError(false, infoWindow, map.getCenter());
+	}
+}

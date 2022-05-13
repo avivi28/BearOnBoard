@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 		lng: req.body.lng,
 	};
 	await insertOne(table, postInfo);
-	res.json({ ok: true });
+	res.json({ lat: req.body.lat, lng: req.body.lng });
 });
 
 module.exports = router;

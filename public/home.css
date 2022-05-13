@@ -168,11 +168,23 @@ select:-webkit-autofill:focus {
 	font-weight: 700;
 	font-size: 16px;
 	color: #674115;
-	margin: 15px 33px;
+	margin: 5px 33px;
 }
 
 .photos_container {
 	position: relative;
+}
+
+.caption > p {
+	margin-top: 10px;
+}
+
+.caption_content {
+	margin: 5px 0px;
+}
+
+.photos_container > p {
+	margin-top: 10px;
 }
 
 #arrow_left,
@@ -197,15 +209,15 @@ select:-webkit-autofill:focus {
 }
 
 #likes {
-	right: 0px;
-	top: 217px;
+	right: 10px;
+	top: 156px;
 	cursor: pointer;
 }
 
 #friends_icon {
 	width: 42px;
 	left: 30px;
-	top: 250px;
+	top: 210px;
 }
 
 .caption_content {
@@ -234,7 +246,7 @@ select:-webkit-autofill:focus {
 q {
 	position: absolute;
 	right: 16px;
-	top: 260px;
+	top: 220px;
 }
 
 #googleMap {
