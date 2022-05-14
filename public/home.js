@@ -258,6 +258,7 @@ function showAllMarker(res) {
 
 				const userIcon = '/images/smaller-icon.png';
 				const blackImage = '/images/black-mark.png';
+				const pickedMarker = '/images/bear-mark.png';
 
 				const Currentmarker = new google.maps.Marker({
 					position: pos,
@@ -283,8 +284,12 @@ function showAllMarker(res) {
 						caption.textContent = res[i]['caption'];
 						postPhoto.src = res[i]['img_url'];
 						locationContent.textContent = res[i]['location'];
+						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);
+					});
+					marker.addListener('mouseout', () => {
+						marker.setIcon(blackImage);
 					});
 				}
 			},
