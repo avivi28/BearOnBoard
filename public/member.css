@@ -18,6 +18,11 @@ p {
 	font-family: 'Open Sans', sans-serif;
 }
 
+button {
+	border: none;
+	background: none;
+}
+
 .entire_container {
 	display: flex;
 	flex-direction: column;
@@ -233,4 +238,108 @@ select:-webkit-autofill:focus {
 	right: 15px;
 	bottom: 18px;
 	cursor: pointer;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 2; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	overflow-y: hidden;
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	width: 300px;
+	height: 320px;
+	border-radius: 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: hidden;
+	position: relative;
+}
+
+.modal-top {
+	background-color: #ffb939;
+	height: 24px;
+	border-radius: 32px 32px 0px 0px;
+	padding: 0px;
+	margin: 0px;
+	width: 359px;
+}
+
+.modal-content > p {
+	font-weight: 700;
+	font-size: 20px;
+	color: #674115;
+	margin: 10px 0px;
+}
+
+.modal-content > form > span {
+	font-weight: 400;
+	font-size: 14px;
+	color: #674115;
+	margin: 15px;
+	display: flex;
+	align-items: center;
+}
+
+#postform {
+	width: 300px;
+	padding: 0px 10px;
+}
+
+#caption,
+#pac-input {
+	border: 1px solid #a26825;
+	border-radius: 5px;
+	padding: 5px;
+	margin-left: 5px;
+}
+
+#img_input {
+	margin-left: 5px;
+}
+
+#id_input {
+	margin-left: 5px;
+}
+
+#caption {
+	width: 166px;
+	height: 85px;
+}
+
+#submit_newposts {
+	font-weight: 700;
+	font-size: 16px;
+	color: #674115;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+	padding: 5px;
+	background-color: #ffb939;
+	width: 172px;
+	margin: 0px 55px;
+	cursor: pointer;
+}
+
+#x {
+	position: absolute;
+	top: 36px;
+	left: 249px;
+	cursor: pointer;
+}
+
+.caption {
+	width: 275px;
 }
