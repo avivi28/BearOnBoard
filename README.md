@@ -52,8 +52,13 @@ Techniques used:
 - Web server
   - `NodeJS`/ `ExpressJS`
   - `EJS`
+- Cloud Service
+  - `S3`
+  - `EC2`
+  - `CloudFront`
 - Other tools
   - `Nginx`
   - `Docker`
   - `Figma`
   - `Git`
+  - `Google Maps API`
