@@ -12,7 +12,9 @@ UML diagram:
 
 Features checklist: **(compulsory)**
 - [X] Member System
-- [X] Save posts on Map
+(register, sign in, log out, log in with Gmail)
+- [X] Save posts on Map 
+(show all markers, return your current location)
 - [ ] Add Friends 
 - [ ] Get Friends' Posts
 - [ ] Interacte with fds (comment + like)
@@ -48,7 +50,7 @@ Techniques used:
   - `Bcrypt`
   - `Google Ouath2` (`passportJS`)
 - Database
-  - `MongoDB`
+  - `MongoDB` (`Mongoose`)
 - Web server
   - `NodeJS`/ `ExpressJS`
   - `EJS`
