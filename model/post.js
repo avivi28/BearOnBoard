@@ -3,10 +3,7 @@ const { ObjectId } = require('mongodb');
 const router = express.Router();
 const jwt_decode = require('jwt-decode');
 
-const insertOne = require('./mongodb').insertOne;
-const queryMany = require('./mongodb').queryMany;
-
-const table = 'posts';
+const Post = require('./dbSchema/postSchema.js');
 
 router.get('/', async (req, res) => {
 	const JWTcookies = req.cookies['token'];
@@ -15,20 +12,21 @@ router.get('/', async (req, res) => {
 	const userInfo = {
 		userId: ObjectId(userId),
 	};
-	const locationResult = await queryMany(table, userInfo);
+	const locationResult = await Post.find(userInfo);
 	res.json(locationResult);
 });
 
 router.post('/', async (req, res) => {
 	const postInfo = {
-		userId: ObjectId(req.body.userId),
+		userId: req.body.userId,
 		img_url: req.body.img_url,
 		caption: req.body.caption,
 		location: req.body.location,
 		lat: req.body.lat,
 		lng: req.body.lng,
 	};
-	await insertOne(table, postInfo);
+	const post = new Post(postInfo);
+	await post.save();
 	res.json({ lat: req.body.lat, lng: req.body.lng });
 });
 

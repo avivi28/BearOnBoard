@@ -2,14 +2,19 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
-const insertOne = require('./mongodb').insertOne;
-const queryOne = require('./mongodb').queryOne;
-
-const table = 'user';
+const User = require('./dbSchema/userSchema.js');
 
 //---------JWT token-------------
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
+
+//-------Get user info API-------
+router.get('/', async (req, res) => {
+	// const doc = new User({ email: '123@123.com', name: '123', password: '123' });
+	// await doc.save();
+	const result = await User.findOne({ name: 'pa123nda' });
+	res.send({ data: result });
+});
 
 //---------login API-------------
 router.patch('/', async (req, res) => {
@@ -18,7 +23,7 @@ router.patch('/', async (req, res) => {
 	const loginInfo = {
 		email: emailInput,
 	};
-	const repeatedResult = await queryOne(table, loginInfo);
+	const repeatedResult = await User.findOne(loginInfo);
 	//--------------Bcrypt Check Pw---------------
 	const salt = await bcrypt.genSalt(10);
 	const hash = bcrypt.hashSync(passwordInput, salt);
@@ -42,7 +47,8 @@ router.patch('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	const emailInput = req.body.email;
 	const emailInfo = { email: emailInput };
-	const repeatedResult = await queryOne(table, emailInfo);
+	const repeatedResult = await User.findOne(emailInfo);
+	console.log(repeatedResult);
 	if (repeatedResult == null) {
 		const passwordInput = req.body.password;
 
@@ -54,8 +60,9 @@ router.post('/', async (req, res) => {
 			name: req.body.username,
 			password: hashedInput,
 		};
-		const result = await insertOne(table, registerInfo);
-		res.json(result);
+		const user = new User(registerInfo);
+		await user.save();
+		res.json({ ok: true });
 	} else {
 		res.status(400).json({ error: 'wrong request' });
 	}
