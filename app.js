@@ -1,5 +1,15 @@
 const express = require('express');
 const app = express(); //產生express application物件
+
+const { createServer } = require('http');
+const { Server } = require('socket.io');
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+	cors: {
+		origin: 'http://localhost:9090',
+	},
+});
+
 const user = require('./model/user'); //router
 const auth = require('./model/auth');
 const post = require('./model/post');
@@ -11,12 +21,20 @@ require('dotenv').config();
 
 // app.use(cors());
 app.use(cookieParser());
-app.use(express.urlencoded()); // Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
 app.use(express.static('public')); //make css & js file accessible
 
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
 app.set('views', 'views');
+
+io.on('connection', (socket) => {
+	console.log('connected');
+
+	socket.on('disconnect', () => {
+		console.log('disconnected');
+	});
+});
 
 app.use(
 	'/',
@@ -39,7 +57,7 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/member', (req, res) => {
-	res.render('member');
+	res.render('member', { apikey: process.env.GOOGLE_MAP_KEY });
 });
 
 app.get('/home', (req, res) => {
@@ -64,6 +82,6 @@ app.use((req, res) => {
 	res.status(404);
 });
 
-app.listen(9090, function () {
+httpServer.listen(9090, function () {
 	console.log('website is located in http://localhost:9090/');
 });
