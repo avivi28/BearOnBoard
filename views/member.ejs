@@ -60,7 +60,9 @@
 						<img src="/images/friends_gps.svg" id="friends_jps" />
 						<img src="/images/delete_friends.svg" id="friends_delete" />
 					</div>
-					<img src="/images/add_friends.svg" id="friends_add" />
+					<button onclick="addFriend()">
+						<img src="/images/add_friends.svg" id="friends_add" />
+					</button>
 					<div class="paws_container" onclick="logout()">
 						<img class="paw" src="/images/paw.svg" alt="logout" />
 						<img class="paw" src="/images/paw.svg" alt="logout" />
@@ -68,8 +70,30 @@
 				</div>
 			</div>
 			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
+			<div class="modal" id="modal">
+				<div class="modal-content">
+					<div class="modal-top"></div>
+					<button onclick="hideFriend()">
+						<img src="/images/x.svg" id="x" />
+					</button>
+					<p>Add New Friends</p>
+					<form id="friendform">
+						<span
+							>Search:
+							<input
+								type="text"
+								id="friends_search"
+								name="friends_search"
+								placeholder="bear bear" /></span
+						><input type="submit" value="" id="submit_newfriends" />
+					</form>
+					<hr />
+					<div class="pending_list">Pending List:</div>
+				</div>
+			</div>
 		</div>
+		<script src="/map.js"></script>
 		<script src="/member.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7B25nSjgIKPY8CIa4d_2wjTkHN0E6uf4&callback=initMap"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=<%=apikey%>&callback=googleAPI&libraries=places"></script>
 	</body>
 </html>

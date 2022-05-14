@@ -288,49 +288,28 @@ select:-webkit-autofill:focus {
 	font-weight: 400;
 	font-size: 14px;
 	color: #674115;
-	margin: 15px;
+	margin: 10px;
 	display: flex;
 	align-items: center;
 }
 
-#postform {
+#friendform {
 	width: 300px;
 	padding: 0px 10px;
+	display: flex;
+	align-items: center;
 }
 
-#caption,
-#pac-input {
+#friends_search {
 	border: 1px solid #a26825;
 	border-radius: 5px;
 	padding: 5px;
 	margin-left: 5px;
 }
 
-#img_input {
-	margin-left: 5px;
-}
-
-#id_input {
-	margin-left: 5px;
-}
-
 #caption {
 	width: 166px;
 	height: 85px;
-}
-
-#submit_newposts {
-	font-weight: 700;
-	font-size: 16px;
-	color: #674115;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
-	padding: 5px;
-	background-color: #ffb939;
-	width: 172px;
-	margin: 0px 55px;
-	cursor: pointer;
 }
 
 #x {
@@ -342,4 +321,27 @@ select:-webkit-autofill:focus {
 
 .caption {
 	width: 275px;
+}
+
+hr {
+	width: 223px;
+	opacity: 0.5;
+	background-color: #674115;
+}
+
+.pending_list {
+	font-weight: 700;
+	font-size: 16px;
+	color: #674115;
+	display: flex;
+	justify-content: flex-start;
+	width: 261px;
+}
+
+#submit_newfriends {
+	background-image: url(/images/search_button.svg);
+	border: none;
+	height: 30px;
+	width: 30px;
+	background-color: white;
 }
