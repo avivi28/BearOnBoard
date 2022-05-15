@@ -23,6 +23,8 @@ function hideFriend() {
 }
 
 //------------Friends Search Engine-------------
+const friendsForm = document.getElementById('friendform');
+const noResult = document.createElement('p');
 function sendData(e) {
 	const searchResults = document.getElementById('search_results');
 	fetch('/api/friend', {
@@ -37,14 +39,20 @@ function sendData(e) {
 			const payload = res.payload;
 			searchResults.innerHTML = '';
 			if (payload.length < 1) {
-				searchResults.innerHTML += '<option>Sorry. Not Found</option>';
+				noResult.innerHTML = 'Sorry. Nothing Found 😭';
+				noResult.className = 'no_found';
+				noResult.style.display = 'block';
+				friendsForm.appendChild(noResult);
 				return;
+			} else {
+				payload.forEach((item, index) => {
+					noResult.style.display = 'none';
+					searchResults.innerHTML += `<option>${item.name}</option>`;
+					return;
+				});
 			}
-			payload.forEach((item, index) => {
-				searchResults.innerHTML += `<option>${item.name}</option>`;
-				return;
-			});
 		});
+	return;
 }
 
 //------------Friends Request System------------

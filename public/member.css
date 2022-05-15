@@ -296,6 +296,9 @@ select:-webkit-autofill:focus {
 	width: 300px;
 	padding: 0px 10px;
 	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 #friends_search {
@@ -354,7 +357,6 @@ hr {
 	flex-direction: column;
 }
 
-datalist {
-	margin-left: 5px;
-	margin-top: 5px;
+.no_found {
+	color: red;
 }
