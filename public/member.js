@@ -23,8 +23,16 @@ function hideFriend() {
 }
 
 //------------Friends Search Engine-------------
+const submitButton = document.getElementById('submit_newfriends');
+function disableSubmit() {
+	submitButton.disabled = true;
+	submitButton.style.cursor = 'not-allowed';
+}
+
 const friendsForm = document.getElementById('friendform');
 const noResult = document.createElement('p');
+disableSubmit();
+
 function sendData(e) {
 	const searchResults = document.getElementById('search_results');
 	fetch('/api/friend', {
@@ -40,6 +48,7 @@ function sendData(e) {
 			searchResults.innerHTML = '';
 			if (payload.length < 1) {
 				noResult.innerHTML = 'Sorry. Nothing Found 😭';
+				disableSubmit();
 				noResult.className = 'no_found';
 				noResult.style.display = 'block';
 				friendsForm.appendChild(noResult);
@@ -47,6 +56,8 @@ function sendData(e) {
 			} else {
 				payload.forEach((item, index) => {
 					noResult.style.display = 'none';
+					submitButton.disabled = false;
+					submitButton.style.cursor = 'pointer';
 					searchResults.innerHTML += `<option>${item.name}</option>`;
 					return;
 				});
