@@ -79,13 +79,16 @@
 					</button>
 					<p>Add New Friends</p>
 					<form id="friendform">
-						<span
-							>Search:
-							<input
-								type="text"
-								id="friends_search"
-								name="friends_search"
-								placeholder="bear bear" /></span
+						<span>
+							<span class="search_container">
+								<input
+									list="search_results"
+									type="text"
+									id="friends_search"
+									name="friends_search"
+									placeholder="Search..."
+									onkeyup="sendData(this)" />
+								<datalist id="search_results"></datalist></span></span
 						><input type="submit" value="" id="submit_newfriends" />
 					</form>
 					<hr />

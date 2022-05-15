@@ -13,6 +13,7 @@ const io = new Server(httpServer, {
 const user = require('./model/user'); //router
 const auth = require('./model/auth');
 const post = require('./model/post');
+const friend = require('./model/friend');
 const { generateUploadURL } = require('./model/s3');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
 // const cors = require('cors');
@@ -76,6 +77,7 @@ app.get('/s3Url', async (req, res) => {
 
 app.use('/api/user', user);
 app.use('/api/post', post);
+app.use('/api/friend', friend);
 app.use('/auth', auth);
 
 app.use((req, res) => {

@@ -10,9 +10,7 @@ require('dotenv').config({ path: '.env' });
 
 //-------Get user info API-------
 router.get('/', async (req, res) => {
-	// const doc = new User({ email: '123@123.com', name: '123', password: '123' });
-	// await doc.save();
-	const result = await User.findOne({ name: 'pa123nda' });
+	const result = await User.find().select({ name: 1, _id: 0 }); //return certain fields
 	res.send({ data: result });
 });
 

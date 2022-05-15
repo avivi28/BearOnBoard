@@ -290,21 +290,21 @@ select:-webkit-autofill:focus {
 	color: #674115;
 	margin: 10px;
 	display: flex;
-	align-items: center;
 }
 
 #friendform {
 	width: 300px;
 	padding: 0px 10px;
 	display: flex;
-	align-items: center;
 }
 
 #friends_search {
 	border: 1px solid #a26825;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 13px;
 	margin-left: 5px;
+	width: 250px;
+	padding-left: 45px;
 }
 
 #caption {
@@ -344,4 +344,17 @@ hr {
 	height: 30px;
 	width: 30px;
 	background-color: white;
+	position: absolute;
+	top: 90px;
+	left: 36px;
+}
+
+.search_container {
+	display: flex;
+	flex-direction: column;
+}
+
+datalist {
+	margin-left: 5px;
+	margin-top: 5px;
 }
