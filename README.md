@@ -16,6 +16,7 @@ Features checklist: **(compulsory)**
 - [X] Save posts on Map 
 (show all markers, return your current location)
 - [ ] Add Friends 
+(Search existing friends, Send friends' request)
 - [ ] Get Friends' Posts
 - [ ] Interacte with fds (comment + like)
 ``` diff
@@ -24,7 +25,7 @@ Features checklist: **(compulsory)**
 
 Extra Optimization: **(optional)**
 - [ ] Redis
-- [ ] Text-only Chatroom/ web sockets
+- [ ] Text-only Chatroom/ socket.io
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine
