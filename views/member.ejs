@@ -18,8 +18,11 @@
 	<body>
 		<div class="entire_container">
 			<div class="background">
-				<img src="/images/profile-icon.png" id="profile_icon" />
-				<div id="googleMap"></div>
+				<img id="bear-chat" src="/images/bear-chat.png" />
+				<div class="chat-message">Hello, Bear!</div>
+				<div class="chat-sentence">
+					Now send and receive messages by clicking your friend's icon.
+				</div>
 				<div class="post_container">
 					<a href="/home" class="header_container">
 						<div class="logo_container">
@@ -121,8 +124,6 @@
 				</div>
 			</div>
 		</div>
-		<script src="/map.js"></script>
 		<script src="/member.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=<%=apikey%>&callback=googleAPI&libraries=places"></script>
 	</body>
 </html>

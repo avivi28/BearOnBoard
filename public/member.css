@@ -39,6 +39,28 @@ button {
 	position: relative;
 }
 
+#bear-chat {
+	right: 25px;
+	position: absolute;
+	top: 60px;
+}
+
+.chat-message {
+	position: absolute;
+	right: 145px;
+	top: 145px;
+	font-size: 45px;
+	font-weight: 800;
+	color: #674115;
+}
+
+.chat-sentence {
+	position: absolute;
+	right: 45px;
+	top: 520px;
+	color: #674115;
+}
+
 .copyright {
 	color: #665a5a;
 	position: absolute;
@@ -140,7 +162,6 @@ select:-webkit-autofill:focus {
 	transition: background-color 5000s ease-in-out 0s;
 }
 
-#profile_icon,
 #edit_pen,
 #edit_icon {
 	position: absolute;
@@ -156,14 +177,6 @@ select:-webkit-autofill:focus {
 	width: 80px;
 	top: 105px;
 	left: 32px;
-}
-
-#profile_icon {
-	z-index: 1;
-	right: 12px;
-	width: 80px;
-	top: 10px;
-	cursor: pointer;
 }
 
 .edit_title {
@@ -348,15 +361,6 @@ hr {
 	position: absolute;
 	top: 90px;
 	right: 36px;
-}
-
-#googleMap {
-	width: 570px;
-	height: 650px;
-	border-radius: 0px 50px 50px 0px;
-	position: absolute;
-	overflow: hidden;
-	right: 0px;
 }
 
 .search_container {
