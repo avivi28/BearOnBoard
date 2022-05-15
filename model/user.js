@@ -8,10 +8,11 @@ const User = require('./dbSchema/userSchema.js');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '.env' });
 
-//-------Get user info API-------
+//-------Get user id API-------
 router.get('/', async (req, res) => {
-	const result = await User.find().select({ name: 1, _id: 0 }); //return certain fields
-	res.send({ data: result });
+	const username = req.query.username;
+	const result = await User.findOne({ name: username }).select({ name: 1 }); //return certain fields
+	res.json(result);
 });
 
 //---------login API-------------
@@ -46,7 +47,6 @@ router.post('/', async (req, res) => {
 	const emailInput = req.body.email;
 	const emailInfo = { email: emailInput };
 	const repeatedResult = await User.findOne(emailInfo);
-	console.log(repeatedResult);
 	if (repeatedResult == null) {
 		const passwordInput = req.body.password;
 

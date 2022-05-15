@@ -19,17 +19,7 @@
 		<div class="entire_container">
 			<div class="background">
 				<img src="/images/profile-icon.png" id="profile_icon" />
-				<div
-					id="googleMap"
-					style="
-						width: 570px;
-						height: 650px;
-						border-radius: 0px 50px 50px 0px;
-						position: absolute;
-						overflow: hidden;
-						right: 0px;
-					"
-				></div>
+				<div id="googleMap"></div>
 				<div class="post_container">
 					<a href="/home" class="header_container">
 						<div class="logo_container">
@@ -38,7 +28,7 @@
 						<p class="brandname">Bear On Board</p>
 					</a>
 					<img src="/images/edit-pen.svg" id="edit_pen" />
-					<img src="/images/profile-icon.png" id="edit_icon" />
+					<img src="/images/profile-icon.png" id="edit_icon" alt="edit" />
 					<div class="edit_container">
 						<div class="edit_title">
 							Name:
@@ -58,8 +48,12 @@
 						<img src="/images/friends-icon.png" id="friends_icon" />
 						<p class="friends_name">Panda</p>
 						<p class="friends_bio">BIO: hihihi</p>
-						<img src="/images/friends_gps.svg" id="friends_jps" />
-						<img src="/images/delete_friends.svg" id="friends_delete" />
+						<img src="/images/friends_gps.svg" id="friends_jps" alt="locate" />
+						<img
+							src="/images/delete_friends.svg"
+							id="friends_delete"
+							alt="delete"
+						/>
 					</div>
 					<button onclick="addFriend()">
 						<img src="/images/add_friends.svg" id="friends_add" />
@@ -85,7 +79,7 @@
 									list="search_results"
 									type="text"
 									id="friends_search"
-									name="friends_search"
+									name="username"
 									placeholder="Search..."
 									onkeyup="sendData(this)" />
 								<datalist id="search_results"></datalist></span></span
@@ -93,6 +87,37 @@
 					</form>
 					<hr />
 					<div class="pending_list">Pending List:</div>
+				</div>
+			</div>
+			<div class="modal" id="confirm_modal">
+				<div class="modal-content" id="request-container">
+					<div class="modal-top"></div>
+					<button onclick="hideConfirm()">
+						<img src="/images/x.svg" id="x" />
+					</button>
+					<p>Add New Friends</p>
+					<p class="bear-container" id="bear-container">
+						<img id="icon-confirm" src="images/normal-bear.png" />
+					</p>
+					<p id="confirm-text">Add Panda ?</p>
+					<p class="button-container" id="button-container">
+						<button
+							class="yes-button"
+							id="yes-button"
+							onmouseover="showHappy()"
+							onmouseout="showNormal()"
+						>
+							YES
+						</button>
+						<button
+							class="no-button"
+							onmouseover="showShock()"
+							onmouseout="showNormal()"
+							onclick="hideConfirm()"
+						>
+							NO
+						</button>
+					</p>
 				</div>
 			</div>
 		</div>

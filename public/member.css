@@ -305,9 +305,7 @@ select:-webkit-autofill:focus {
 	border: 1px solid #a26825;
 	border-radius: 5px;
 	padding: 13px;
-	margin-left: 5px;
 	width: 250px;
-	padding-left: 45px;
 }
 
 #caption {
@@ -349,7 +347,16 @@ hr {
 	background-color: white;
 	position: absolute;
 	top: 90px;
-	left: 36px;
+	right: 36px;
+}
+
+#googleMap {
+	width: 570px;
+	height: 650px;
+	border-radius: 0px 50px 50px 0px;
+	position: absolute;
+	overflow: hidden;
+	right: 0px;
 }
 
 .search_container {
@@ -359,4 +366,47 @@ hr {
 
 .no_found {
 	color: red;
+}
+
+.bear-container > img {
+	width: 100px;
+	height: auto;
+}
+
+#confirm-text {
+	font-size: 18px;
+	font-weight: 500;
+	margin: 0;
+}
+
+.yes-button {
+	width: 73px;
+	height: 50px;
+	border-radius: 10px;
+	background-color: #ffb939;
+	opacity: 0.8;
+	box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+	color: white;
+	font-weight: 800;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.no-button {
+	width: 73px;
+	height: 50px;
+	border-radius: 10px;
+	background-color: #674115;
+	opacity: 0.8;
+	box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+	color: white;
+	font-weight: 800;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	width: 204px;
 }
