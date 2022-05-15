@@ -143,22 +143,21 @@ function postFriend(Res) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			const okData = Res['ok'];
-			console.log(Res);
-			if (okData == true) {
-				confirmIcon.style.display = 'none';
-				newIcon.src = '/images/request-bear.png';
-				newIcon.style.display = 'block';
-				bearContainer.appendChild(newIcon);
-				buttonContainer.style.display = 'none';
-				confirmText.textContent = 'Request has been sent!';
-			} else {
+			const errorData = Res['error'];
+			if (errorData == true) {
 				confirmIcon.style.display = 'none';
 				newIcon.src = '/images/sad-bear.png';
 				newIcon.style.display = 'block';
 				bearContainer.appendChild(newIcon);
 				buttonContainer.style.display = 'none';
 				confirmText.textContent = 'This friend has been added!';
+			} else {
+				confirmIcon.style.display = 'none';
+				newIcon.src = '/images/request-bear.png';
+				newIcon.style.display = 'block';
+				bearContainer.appendChild(newIcon);
+				buttonContainer.style.display = 'none';
+				confirmText.textContent = 'Request has been sent!';
 			}
 		})
 		.catch((error) => console.log(error));
