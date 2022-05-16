@@ -17,7 +17,6 @@ function logout() {
 const modal = document.getElementById('modal');
 function addFriend() {
 	modal.style.display = 'block';
-	getPending();
 }
 function hideFriend() {
 	modal.style.display = 'none';
@@ -91,6 +90,7 @@ friendsForm.addEventListener('submit', function confirm(ev) {
 	buttonContainer.style.display = 'inherit';
 	confirmIcon.style.display = 'inherit';
 	newIcon.style.display = 'none';
+	reasonText.style.display = 'none';
 
 	let formData = new FormData(friendsForm);
 	const NameInput = new URLSearchParams(formData);
@@ -139,12 +139,14 @@ const buttonContainer = document.getElementById('button-container');
 const requestContainer = document.getElementById('request-container');
 const bearContainer = document.getElementById('bear-container');
 const newIcon = document.createElement('img');
+const reasonText = document.createElement('p');
 
 function postFriend(Res) {
 	const bodyData = {
 		userId: userId,
 		friendId: Res['_id'],
 	};
+	console.log(bodyData);
 
 	fetch('/api/friend', {
 		method: 'POST',
@@ -162,9 +164,15 @@ function postFriend(Res) {
 				newIcon.style.display = 'block';
 				bearContainer.appendChild(newIcon);
 				buttonContainer.style.display = 'none';
-				confirmText.textContent = 'This friend has been added!';
+				confirmText.textContent = `Sorry, you can't send this request!`;
+				reasonText.style =
+					'font-size: 12px;font-weight: 500;padding: 0px 25px;display:block;';
+				reasonText.textContent =
+					'Perhaps he/she has been your friend or the request you sent before is still pending!';
+				requestContainer.appendChild(reasonText);
 			} else {
 				confirmIcon.style.display = 'none';
+				reasonText.style.display = 'none';
 				newIcon.src = '/images/request-bear.png';
 				newIcon.style.display = 'block';
 				bearContainer.appendChild(newIcon);
@@ -189,8 +197,10 @@ function getPending() {
 		.catch((error) => console.log(error));
 }
 
+const yesConfirmButton = document.createElement('button');
+const noConfirmButton = document.createElement('button');
+const pendingContainer = document.createElement('p');
 function showPending(Res) {
-	const pendingContainer = document.createElement('p');
 	pendingContainer.className = 'pending_container';
 	const friendImage = document.createElement('img');
 	friendImage.src = '/images/friends-icon.png';
@@ -203,15 +213,14 @@ function showPending(Res) {
 	const pendingMessage = document.createElement('span');
 	pendingMessage.className = 'pending-content';
 
-	const yesButton = document.createElement('button');
-	yesButton.className = 'yes-confirm-button';
-	const noButton = document.createElement('button');
-	noButton.className = 'no-confirm-button';
+	yesConfirmButton.className = 'yes-confirm-button';
+	noConfirmButton.className = 'no-confirm-button';
 	const buttonContainer = document.createElement('span');
 	buttonContainer.className = 'yes-no-container';
 
 	for (let i = 0; i < Res.length; i++) {
-		const friendData = Res[i]['userId'][0]['name'];
+		const friendId = Res[i]['sender']['_id'];
+		const friendData = Res[i]['sender']['name'];
 		friendName.textContent = `Name: ${friendData}`;
 		pendingMessage.textContent = 'Incoming Friend Request';
 
@@ -220,11 +229,68 @@ function showPending(Res) {
 		pendingContentContainer.appendChild(friendName);
 		pendingContentContainer.appendChild(pendingMessage);
 		pendingContainer.appendChild(buttonContainer);
-		buttonContainer.appendChild(yesButton);
-		buttonContainer.appendChild(noButton);
+		buttonContainer.appendChild(yesConfirmButton);
+		buttonContainer.appendChild(noConfirmButton);
+		decideRequest(friendId);
 	}
 
 	pendingList.appendChild(pendingContainer);
+}
+
+getPending();
+
+//------Accept or Reject the friend request------
+function decideRequest(friendId) {
+	yesConfirmButton.addEventListener('click', function acceptRequest(ev) {
+		ev.preventDefault();
+
+		const bodyData = {
+			userId: friendId, // request sender
+			friendId: userId, // request receiver
+			status: 1,
+		};
+
+		fetch('/api/friend', {
+			method: 'PUT',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((Res) => Res.json())
+			.then((Res) => {
+				const okData = Res['ok'];
+				if (okData == true) {
+					pendingContainer.style.display = 'none';
+				}
+			})
+			.catch((error) => console.log(error));
+	});
+
+	noConfirmButton.addEventListener('click', function rejectRequest(ev) {
+		ev.preventDefault();
+		const bodyData = {
+			userId: friendId, // request sender
+			friendId: userId, // request receiver
+			status: -1,
+		};
+
+		fetch('/api/friend', {
+			method: 'PUT',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((Res) => Res.json())
+			.then((Res) => {
+				const okData = Res['ok'];
+				if (okData == true) {
+					pendingContainer.style.display = 'none';
+				}
+			})
+			.catch((error) => console.log(error));
+	});
 }
 
 //------------Chat room System------------

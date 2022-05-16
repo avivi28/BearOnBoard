@@ -8,14 +8,36 @@ const Friend = require('./dbSchema/friendSchema.js');
 //-----------get padding list OR friends list-------------
 router.get('/', async (req, res) => {
 	const friendInfo = {
-		friendId: ObjectId(req.query.userId),
+		recipient: ObjectId(req.query.userId),
 		status: req.query.status,
 	};
 	const friendResult = await Friend.find(friendInfo).populate({
-		path: 'userId',
+		path: 'sender',
 		select: 'name',
 	});
 	res.json(friendResult);
+});
+
+//---------accept or reject friend request API-------------
+router.put('/', async (req, res) => {
+	const friendInfo = {
+		sender: ObjectId(req.body.friendId),
+		recipient: ObjectId(req.body.userId),
+	};
+	const userInfo = {
+		sender: ObjectId(req.body.userId),
+		recipient: ObjectId(req.body.friendId),
+	};
+	const statusUpdate = {
+		status: req.body.status, //1:accept 0:reject}
+	};
+	await Friend.findOneAndUpdate(userInfo, statusUpdate, {
+		new: true,
+	});
+	await Friend.findOneAndUpdate(friendInfo, statusUpdate, {
+		new: true,
+	}); //(filter,update)
+	res.json({ ok: true });
 });
 
 //---------search engine of friend's name API-------------
@@ -36,19 +58,46 @@ router.patch('/', async (req, res) => {
 
 //---------successfully add as friends API-------------
 router.post('/', async (req, res) => {
-	const repeatedResult = {
-		userId: ObjectId(req.body.userId),
-		friendId: ObjectId(req.body.friendId),
+	const repeatedUserRequest = {
+		sender: ObjectId(req.body.userId),
+		recipient: ObjectId(req.body.friendId),
+		status: 0,
 	};
-	const checkedResult = await Friend.findOne(repeatedResult);
+	const repeatedFriendRequest = {
+		sender: ObjectId(req.body.friendId),
+		recipient: ObjectId(req.body.userId),
+		status: 0,
+	};
+	const addedUserRequest = {
+		sender: ObjectId(req.body.userId),
+		recipient: ObjectId(req.body.friendId),
+		status: 1,
+	};
+	const addedFriendRequest = {
+		sender: ObjectId(req.body.friendId),
+		recipient: ObjectId(req.body.userId),
+		status: 1,
+	};
+	const checkedResult = await Friend.findOne({
+		$or: [
+			repeatedUserRequest,
+			repeatedFriendRequest,
+			addedUserRequest,
+			addedFriendRequest,
+		],
+	});
 	if (checkedResult == null) {
-		const friendInfo = {
-			userId: ObjectId(req.body.userId),
-			friendId: ObjectId(req.body.friendId),
+		const userInfo = {
+			sender: ObjectId(req.body.userId),
+			recipient: ObjectId(req.body.friendId),
 			status: 0, //panding
 		};
-		const friend = new Friend(friendInfo);
-		await friend.save();
+		const friendInfo = {
+			sender: ObjectId(req.body.friendId),
+			recipient: ObjectId(req.body.userId),
+			status: 0, //panding
+		};
+		await Friend.insertMany([userInfo, friendInfo]);
 		res.json({ ok: true });
 	} else {
 		res.json({ error: true, message: 'repeated request' });
