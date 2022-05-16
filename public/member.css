@@ -349,7 +349,8 @@ hr {
 	color: #674115;
 	display: flex;
 	justify-content: flex-start;
-	width: 261px;
+	flex-direction: column;
+	width: 265px;
 }
 
 #submit_newfriends {
@@ -413,4 +414,48 @@ hr {
 	display: flex;
 	justify-content: space-between;
 	width: 204px;
+}
+
+.pending_container {
+	margin-top: 5px;
+	display: flex;
+	align-items: center;
+}
+
+.pending_container > img {
+	width: 50px;
+}
+
+.pending-content-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.pending-content {
+	font-size: 12px;
+	font-weight: 500;
+	margin-left: 5px;
+}
+
+.yes-no-container {
+	display: flex;
+	margin-left: 8px;
+	width: 62px;
+	height: 50px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.yes-confirm-button {
+	background-image: url(/images/yes.svg);
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+}
+
+.no-confirm-button {
+	background-image: url(/images/no.svg);
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
 }

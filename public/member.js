@@ -17,6 +17,7 @@ function logout() {
 const modal = document.getElementById('modal');
 function addFriend() {
 	modal.style.display = 'block';
+	getPending();
 }
 function hideFriend() {
 	modal.style.display = 'none';
@@ -172,6 +173,58 @@ function postFriend(Res) {
 			}
 		})
 		.catch((error) => console.log(error));
+}
+
+//------------Get Pending List------------
+const pendingList = document.getElementById('pending_list');
+function getPending() {
+	fetch(`/api/friend?userId=${userId}&status=0`, {
+		method: 'GET',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			console.log(Res);
+			showPending(Res);
+		})
+		.catch((error) => console.log(error));
+}
+
+function showPending(Res) {
+	const pendingContainer = document.createElement('p');
+	pendingContainer.className = 'pending_container';
+	const friendImage = document.createElement('img');
+	friendImage.src = '/images/friends-icon.png';
+
+	const pendingContentContainer = document.createElement('p');
+	pendingContentContainer.className = 'pending-content-container';
+
+	const friendName = document.createElement('span');
+	friendName.className = 'pending-content';
+	const pendingMessage = document.createElement('span');
+	pendingMessage.className = 'pending-content';
+
+	const yesButton = document.createElement('button');
+	yesButton.className = 'yes-confirm-button';
+	const noButton = document.createElement('button');
+	noButton.className = 'no-confirm-button';
+	const buttonContainer = document.createElement('span');
+	buttonContainer.className = 'yes-no-container';
+
+	for (let i = 0; i < Res.length; i++) {
+		const friendData = Res[i]['userId'][0]['name'];
+		friendName.textContent = `Name: ${friendData}`;
+		pendingMessage.textContent = 'Incoming Friend Request';
+
+		pendingContainer.appendChild(friendImage);
+		pendingContainer.appendChild(pendingContentContainer);
+		pendingContentContainer.appendChild(friendName);
+		pendingContentContainer.appendChild(pendingMessage);
+		pendingContainer.appendChild(buttonContainer);
+		buttonContainer.appendChild(yesButton);
+		buttonContainer.appendChild(noButton);
+	}
+
+	pendingList.appendChild(pendingContainer);
 }
 
 //------------Chat room System------------
