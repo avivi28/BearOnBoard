@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
 
 let userSchema = new mongoose.Schema(
 	{
@@ -14,6 +15,8 @@ let userSchema = new mongoose.Schema(
 		password: {
 			type: String,
 		},
+		post: [{ type: ObjectId, ref: 'Post' }],
+		friend: [{ type: ObjectId, ref: 'Friend' }],
 	},
 	{ collection: 'user' }
 );

@@ -5,6 +5,19 @@ const router = express.Router();
 const User = require('./dbSchema/userSchema.js');
 const Friend = require('./dbSchema/friendSchema.js');
 
+//-----------get padding list OR friends list-------------
+router.get('/', async (req, res) => {
+	const friendInfo = {
+		friendId: ObjectId(req.query.userId),
+		status: req.query.status,
+	};
+	const friendResult = await Friend.find(friendInfo).populate({
+		path: 'userId',
+		select: 'name',
+	});
+	res.json(friendResult);
+});
+
 //---------search engine of friend's name API-------------
 router.patch('/', async (req, res) => {
 	const payload = req.body.payload.trim(); //trim():remove all whitespace

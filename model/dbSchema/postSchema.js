@@ -6,7 +6,7 @@ let postSchema = new mongoose.Schema(
 		userId: {
 			type: ObjectId,
 			required: true,
-			ref: 'user',
+			ref: 'User',
 		},
 		img_url: {
 			type: String,

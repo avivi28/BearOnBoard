@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 
 let friendSchema = new mongoose.Schema(
 	{
-		userId: { type: ObjectId, required: true, ref: 'user' },
-		friendId: { type: ObjectId, required: true, ref: 'user' },
+		userId: [{ type: ObjectId, required: true, ref: 'User' }],
+		friendId: [{ type: ObjectId, required: true, ref: 'User' }],
 		status: { type: Number },
 	},
 	{ collection: 'friend_map' }
