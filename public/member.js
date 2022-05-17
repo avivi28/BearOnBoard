@@ -147,39 +147,47 @@ function postFriend(Res) {
 		friendId: Res['_id'],
 	};
 
-	fetch('/api/friend', {
-		method: 'POST',
-		headers: new Headers({
-			'Content-Type': 'application/json;charset=utf-8',
-		}),
-		body: JSON.stringify(bodyData),
-	})
-		.then((Res) => Res.json())
-		.then((Res) => {
-			const errorData = Res['error'];
-			if (errorData == true) {
-				confirmIcon.style.display = 'none';
-				newIcon.src = '/images/sad-bear.png';
-				newIcon.style.display = 'block';
-				bearContainer.appendChild(newIcon);
-				buttonContainer.style.display = 'none';
-				confirmText.textContent = `Sorry, you can't send this request!`;
-				reasonText.style =
-					'font-size: 12px;font-weight: 500;padding: 0px 25px;display:block;';
-				reasonText.textContent =
-					'Perhaps he/she has been your friend or the request you sent before is still pending!';
-				requestContainer.appendChild(reasonText);
-			} else {
-				confirmIcon.style.display = 'none';
-				reasonText.style.display = 'none';
-				newIcon.src = '/images/request-bear.png';
-				newIcon.style.display = 'block';
-				bearContainer.appendChild(newIcon);
-				buttonContainer.style.display = 'none';
-				confirmText.textContent = 'Request has been sent!';
-			}
+	if (userId == Res['_id']) {
+		showFailResult();
+	} else {
+		fetch('/api/friend', {
+			method: 'POST',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
 		})
-		.catch((error) => console.log(error));
+			.then((Res) => Res.json())
+			.then((Res) => {
+				const errorData = Res['error'];
+				if (errorData == true) {
+					showFailResult();
+				} else {
+					confirmIcon.style.display = 'none';
+					reasonText.style.display = 'none';
+					newIcon.src = '/images/request-bear.png';
+					newIcon.style.display = 'block';
+					bearContainer.appendChild(newIcon);
+					buttonContainer.style.display = 'none';
+					confirmText.textContent = 'Request has been sent!';
+				}
+			})
+			.catch((error) => console.log(error));
+	}
+}
+
+function showFailResult() {
+	confirmIcon.style.display = 'none';
+	newIcon.src = '/images/sad-bear.png';
+	newIcon.style.display = 'block';
+	bearContainer.appendChild(newIcon);
+	buttonContainer.style.display = 'none';
+	confirmText.textContent = `Sorry, you can't send this request!`;
+	reasonText.style =
+		'font-size: 12px;font-weight: 500;padding: 0px 25px;display:block;';
+	reasonText.textContent =
+		'Perhaps he/she has been your friend or the request you sent before is still pending!';
+	requestContainer.appendChild(reasonText);
 }
 
 //------------Get Pending List------------
@@ -259,7 +267,9 @@ function decideRequest(friendId) {
 			.then((Res) => {
 				const okData = Res['ok'];
 				if (okData == true) {
+					friendContainer.textContent = '';
 					pendingContainer.style.display = 'none';
+					getFriendLists();
 				}
 			})
 			.catch((error) => console.log(error));
@@ -305,9 +315,8 @@ function getFriendLists() {
 }
 getFriendLists();
 
+const friendContainer = document.getElementById('friendslist_container');
 function showFriendLists(Res) {
-	const friendContainer = document.getElementById('friendslist_container');
-
 	for (let j = 0; j < Res['friends'].length; j++) {
 		const detailContainer = document.createElement('div');
 		detailContainer.className = 'detail-container';
