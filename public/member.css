@@ -201,6 +201,17 @@ select:-webkit-autofill:focus {
 	font-weight: 700;
 	font-size: 16px;
 	color: #674115;
+	display: flex;
+	width: 280px;
+	height: 50px;
+	align-items: center;
+}
+
+.friends_name,
+.friends_bio {
+	color: #674115;
+	font-size: 16px;
+	font-weight: 500;
 }
 
 #friends_icon {
@@ -209,7 +220,6 @@ select:-webkit-autofill:focus {
 
 .friendslist_container {
 	width: 280px;
-	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
@@ -218,9 +228,9 @@ select:-webkit-autofill:focus {
 .detail-container {
 	display: flex;
 	width: 280px;
-	margin-top: 5px;
 	align-items: center;
 	justify-content: space-evenly;
+	margin-bottom: 5px;
 }
 
 .name-container {
@@ -460,4 +470,24 @@ hr {
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
+}
+
+#delete_name {
+	border: none;
+	font-weight: 700;
+	font-size: 20px;
+	color: #674115;
+	text-align: center;
+}
+
+#delete_form > p {
+	font-weight: 700;
+	font-size: 20px;
+	color: #674115;
+}
+
+#delete_form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

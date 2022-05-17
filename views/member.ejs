@@ -46,9 +46,8 @@
 							<p>I am a bear.</p>
 						</div>
 					</div>
-					<div class="friendslist_container" id="friendslist_container">
-						<div class="friendslist">My Friends:</div>
-					</div>
+					<div class="friendslist"><p>My Friends:</p></div>
+					<div class="friendslist_container" id="friendslist_container"></div>
 					<button onclick="addFriend()">
 						<img src="/images/add_friends.svg" id="friends_add" />
 					</button>
@@ -108,6 +107,44 @@
 							onmouseover="showShock()"
 							onmouseout="showNormal()"
 							onclick="hideConfirm()"
+						>
+							NO
+						</button>
+					</p>
+				</div>
+			</div>
+			<div class="modal" id="delete_modal">
+				<div class="modal-content" id="delete-container" style="height: 300px">
+					<div class="modal-top"></div>
+					<button onclick="hideDelete()">
+						<img src="/images/x.svg" id="x" />
+					</button>
+					<img
+						src="images/sad-bear.png"
+						style="margin-top: 15px; width: 100px"
+						id="delete_bear"
+					/>
+					<form id="delete_form">
+						<p>Are you sure to delete</p>
+						<p style="margin: 0">
+							<input type="text" name="delete_name" id="delete_name" />
+						</p>
+					</form>
+					<p class="button-container" id="button-container">
+						<button
+							class="yes-button"
+							id="yes-delete-button"
+							onmouseover="showCry()"
+							onmouseout="showSad()"
+						>
+							YES
+						</button>
+						<button
+							class="no-button"
+							id="no-delete-button"
+							onmouseover="showFine()"
+							onmouseout="showSad()"
+							onclick="hideDelete()"
 						>
 							NO
 						</button>

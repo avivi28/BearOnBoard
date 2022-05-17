@@ -316,6 +316,7 @@ function getFriendLists() {
 getFriendLists();
 
 const friendContainer = document.getElementById('friendslist_container');
+
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
 		const detailContainer = document.createElement('div');
@@ -343,8 +344,8 @@ function showFriendLists(Res) {
 		deleteFriend.setAttribute('alt', 'delete');
 
 		const realName = Res['friends'][j]['name'];
-		console.log(realName);
-		console.log(j);
+		const realId = Res['friends'][j]['_id'];
+
 		friendName.textContent = `Name: ${realName}`;
 		friendBio.textContent = `Let's be fluffy!`;
 
@@ -357,12 +358,82 @@ function showFriendLists(Res) {
 		clickContainer.appendChild(friendGps);
 		clickContainer.appendChild(deleteFriend);
 
-		decideFriendAction(Res);
+		decideFriendAction(realName, friendGps, deleteFriend);
 	}
 }
 
 //------------Delete Friends or Show your friends' saved posts on map----------
-function decideFriendAction() {}
+const deleteModal = document.getElementById('delete_modal');
+const deleteIcon = document.getElementById('delete_bear');
+
+function hideDelete() {
+	deleteModal.style.display = 'none';
+}
+function showFine() {
+	deleteIcon.src = '/images/normal-bear.png';
+}
+function showCry() {
+	deleteIcon.src = '/images/cry-bear.png';
+}
+function showSad() {
+	deleteIcon.src = '/images/sad-bear.png';
+}
+
+const yesDeleteButton = document.getElementById('yes-delete-button');
+const deleteForm = document.getElementById('delete_form');
+
+function decideFriendAction(realName, friendGps, deleteFriend) {
+	deleteFriend.addEventListener('click', function deleteFriend(ev) {
+		ev.preventDefault();
+
+		deleteModal.style.display = 'block';
+		document.getElementById('delete_name').value = `"${realName}" ?`;
+	});
+}
+
+yesDeleteButton.addEventListener('click', function deleteConfirm(ev) {
+	ev.preventDefault();
+
+	let formData = new FormData(deleteForm);
+	const NameInput = new URLSearchParams(formData);
+	const jsonData = Object.fromEntries(NameInput.entries());
+	const friendsName = jsonData['delete_name'].split(`"`)[1];
+
+	fetch(`/api/user?username=${friendsName}`, {
+		method: 'GET',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			const friendId = Res['_id'];
+			deleteAction(friendId);
+		})
+		.catch((error) => console.log(error));
+});
+
+function deleteAction(friendId) {
+	const bodyData = {
+		userId: userId,
+		friendId: friendId,
+	};
+
+	console.log(bodyData);
+
+	fetch('/api/friend', {
+		method: 'DELETE',
+		headers: new Headers({
+			'Content-Type': 'application/json;charset=utf-8',
+		}),
+		body: JSON.stringify(bodyData),
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			const okData = Res['ok'];
+			if (okData == true) {
+				location.reload();
+			}
+		})
+		.catch((error) => console.log(error));
+}
 
 //------------Chat room System------------
 const socket = io('http://localhost:9090');

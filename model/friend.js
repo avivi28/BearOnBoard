@@ -116,4 +116,31 @@ router.post('/', async (req, res) => {
 	}
 });
 
+//---------delete friends API-------------
+router.delete('/', async (req, res) => {
+	await Friend.findOneAndDelete({
+		sender: ObjectId(req.body.userId),
+		recipient: ObjectId(req.body.friendId),
+		status: 1,
+	});
+	await Friend.findOneAndDelete({
+		sender: ObjectId(req.body.friendId),
+		recipient: ObjectId(req.body.userId),
+		status: 1,
+	});
+	await User.findOneAndUpdate(
+		{
+			_id: ObjectId(req.body.userId),
+		},
+		{ $pull: { friends: ObjectId(req.body.friendId) } }
+	);
+	await User.findOneAndUpdate(
+		{
+			_id: ObjectId(req.body.friendId),
+		},
+		{ $pull: { friends: ObjectId(req.body.userId) } }
+	);
+	res.json({ ok: true });
+});
+
 module.exports = router;
