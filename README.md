@@ -17,7 +17,7 @@ Features checklist: **(compulsory)**
 (show all markers, return your current location)
 - [X] Create Friendship system 
 (Search existing friends, Send friends request(cannot send request to yourself OR added friend), Accept/Reject friends request, Delete friends)
-- [ ] Get Friends' Posts
+- [X] Get Friends' Posts
 - [ ] Interacte with fds (comment + like) on friends' saved posts
 ``` diff
 ! MUST finish within first two weeks
@@ -26,7 +26,7 @@ Features checklist: **(compulsory)**
 Extra Optimization: **(optional)**
 - [ ] Redis
 - [ ] Text-only Chatroom/ socket.io
-(Real-time Notification(chat, friends' request))
+(Real-time chat, friends' request)
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine
