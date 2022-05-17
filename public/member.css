@@ -201,48 +201,50 @@ select:-webkit-autofill:focus {
 	font-weight: 700;
 	font-size: 16px;
 	color: #674115;
-	position: absolute;
-	left: 24px;
-	top: 232px;
 }
 
 #friends_icon {
 	width: 60px;
-	position: absolute;
-	top: 266px;
-	left: 27px;
+}
+
+.friendslist_container {
+	width: 280px;
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.detail-container {
+	display: flex;
+	width: 280px;
+	margin-top: 5px;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.name-container {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+
+.click-container {
+	display: flex;
+	width: 60px;
+	margin-left: 8px;
+	justify-content: space-between;
 }
 
 .friendslist_container > p {
 	font-weight: 500;
 }
 
-.friends_name,
-.friends_bio {
-	position: absolute;
-}
-
-.friends_name {
-	left: 104px;
-	top: 274px;
-}
-
-.friends_bio {
-	top: 294px;
-	left: 104px;
-}
-
 #friends_jps {
-	position: absolute;
-	top: 278px;
-	right: 69px;
 	cursor: pointer;
 }
 
 #friends_delete {
-	position: absolute;
-	top: 278px;
-	right: 30px;
 	cursor: pointer;
 }
 

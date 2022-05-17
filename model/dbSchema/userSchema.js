@@ -16,7 +16,8 @@ let userSchema = new mongoose.Schema(
 			type: String,
 		},
 		post: [{ type: ObjectId, ref: 'Post' }],
-		friend: [{ type: ObjectId, ref: 'Friend' }],
+		friends: [{ type: ObjectId, ref: 'User' }],
+		bios: { type: String },
 	},
 	{ collection: 'user' }
 );

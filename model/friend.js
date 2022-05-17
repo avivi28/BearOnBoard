@@ -37,6 +37,18 @@ router.put('/', async (req, res) => {
 	await Friend.findOneAndUpdate(friendInfo, statusUpdate, {
 		new: true,
 	}); //(filter,update)
+	await User.findOneAndUpdate(
+		{
+			_id: ObjectId(req.body.userId),
+		},
+		{ $push: { friends: ObjectId(req.body.friendId) } }
+	); //add friend's id into User schema
+	await User.findOneAndUpdate(
+		{
+			_id: ObjectId(req.body.friendId),
+		},
+		{ $push: { friends: ObjectId(req.body.userId) } }
+	);
 	res.json({ ok: true });
 });
 
@@ -78,7 +90,7 @@ router.post('/', async (req, res) => {
 		recipient: ObjectId(req.body.userId),
 		status: 1,
 	};
-	const checkedResult = await Friend.findOne({
+	const checkedResult = await Friend.find({
 		$or: [
 			repeatedUserRequest,
 			repeatedFriendRequest,
@@ -86,7 +98,7 @@ router.post('/', async (req, res) => {
 			addedFriendRequest,
 		],
 	});
-	if (checkedResult == null) {
+	if (checkedResult.length === 0) {
 		const userInfo = {
 			sender: ObjectId(req.body.userId),
 			recipient: ObjectId(req.body.friendId),
@@ -100,7 +112,7 @@ router.post('/', async (req, res) => {
 		await Friend.insertMany([userInfo, friendInfo]);
 		res.json({ ok: true });
 	} else {
-		res.json({ error: true, message: 'repeated request' });
+		res.json({ error: true, message: 'repeated requests' });
 	}
 });
 

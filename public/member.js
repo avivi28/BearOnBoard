@@ -146,7 +146,6 @@ function postFriend(Res) {
 		userId: userId,
 		friendId: Res['_id'],
 	};
-	console.log(bodyData);
 
 	fetch('/api/friend', {
 		method: 'POST',
@@ -191,7 +190,6 @@ function getPending() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			console.log(Res);
 			showPending(Res);
 		})
 		.catch((error) => console.log(error));
@@ -268,7 +266,7 @@ function decideRequest(friendId) {
 	});
 
 	noConfirmButton.addEventListener('click', function rejectRequest(ev) {
-		ev.preventDefault();
+		ev.preventDefault(); //change to use delete method
 		const bodyData = {
 			userId: friendId, // request sender
 			friendId: userId, // request receiver
@@ -292,6 +290,70 @@ function decideRequest(friendId) {
 			.catch((error) => console.log(error));
 	});
 }
+
+//------------Show Friends lists----------
+function getFriendLists() {
+	fetch(`/api/user/${userId}`, {
+		method: 'GET',
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			console.log(Res);
+			showFriendLists(Res);
+		})
+		.catch((error) => console.log(error));
+}
+getFriendLists();
+
+function showFriendLists(Res) {
+	const friendContainer = document.getElementById('friendslist_container');
+
+	for (let j = 0; j < Res['friends'].length; j++) {
+		const detailContainer = document.createElement('div');
+		detailContainer.className = 'detail-container';
+		const nameContainer = document.createElement('p');
+		nameContainer.className = 'name-container';
+		const clickContainer = document.createElement('p');
+		clickContainer.className = 'click-container';
+
+		const friendImage = document.createElement('img');
+		friendImage.src = '/images/friends-icon.png';
+		friendImage.setAttribute('id', 'friends_icon');
+		const friendName = document.createElement('p');
+		friendName.className = 'friends_name';
+		const friendBio = document.createElement('p');
+		friendBio.className = 'friends_bio';
+
+		const friendGps = document.createElement('img');
+		friendGps.src = '/images/friends_gps.svg';
+		friendGps.setAttribute('id', 'friends_jps');
+		friendGps.setAttribute('alt', 'locate');
+		const deleteFriend = document.createElement('img');
+		deleteFriend.src = '/images/delete_friends.svg';
+		deleteFriend.setAttribute('id', 'friends_delete');
+		deleteFriend.setAttribute('alt', 'delete');
+
+		const realName = Res['friends'][j]['name'];
+		console.log(realName);
+		console.log(j);
+		friendName.textContent = `Name: ${realName}`;
+		friendBio.textContent = `Let's be fluffy!`;
+
+		friendContainer.appendChild(detailContainer);
+		detailContainer.appendChild(friendImage);
+		detailContainer.appendChild(nameContainer);
+		detailContainer.appendChild(clickContainer);
+		nameContainer.appendChild(friendName);
+		nameContainer.appendChild(friendBio);
+		clickContainer.appendChild(friendGps);
+		clickContainer.appendChild(deleteFriend);
+
+		decideFriendAction(Res);
+	}
+}
+
+//------------Delete Friends or Show your friends' saved posts on map----------
+function decideFriendAction() {}
 
 //------------Chat room System------------
 const socket = io('http://localhost:9090');

@@ -1,4 +1,5 @@
 const express = require('express');
+const { ObjectId } = require('mongodb');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 
@@ -12,6 +13,15 @@ require('dotenv').config({ path: '.env' });
 router.get('/', async (req, res) => {
 	const username = req.query.username;
 	const result = await User.findOne({ name: username }).select({ name: 1 }); //return certain fields
+	res.json(result);
+});
+
+router.get('/:userId', async (req, res) => {
+	const userId = ObjectId(req.params.userId);
+	const result = await User.findOne({ _id: userId }).populate({
+		path: 'friends',
+		select: 'name',
+	});
 	res.json(result);
 });
 
