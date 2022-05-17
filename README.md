@@ -15,10 +15,10 @@ Features checklist: **(compulsory)**
 (register, sign in, log out, log in with Gmail)
 - [X] Save posts on Map 
 (show all markers, return your current location)
-- [ ] Add Friends 
-(Search existing friends, Send friends' request)
+- [X] Create Friendship system 
+(Search existing friends, Send friends request, Accept/Reject friends request, Delete friends)
 - [ ] Get Friends' Posts
-- [ ] Interacte with fds (comment + like)
+- [ ] Interacte with fds (comment + like) on friends' saved posts
 ``` diff
 ! MUST finish within first two weeks
 ```
