@@ -24,12 +24,12 @@ Features checklist: **(compulsory)**
 ```
 
 Extra Optimization: **(optional)**
-- [ ] Redis
-- [ ] Text-only Chatroom/ socket.io
+- [ ] Redis ✓
+- [ ] Text-only Chatroom/ socket.io ✓
 (Real-time chat, friends' request)
 - [ ] Get the shortest distance 
 - [ ] Share live location
-- [ ] Search Engine
+- [ ] Search Engine(API) ✓
 ``` diff
 ! FINISH these after compulsory parts done
 ```
@@ -38,13 +38,19 @@ Tiny stuffs:
 - [ ] frontend & backend validation
 - [ ] better loading effects (e.g. loading page & RWD)
 - [X] upload photos to S3 & pull from CDN
-- [ ] set static server with Nginx
 - [ ] update UML diagram
 - [ ] finish swagger API page
 - [ ] debug & review
 ``` diff
 ! FINISH these in last week 
 ```
+
+Suggestions from TONY:
+- [ ] improve db query efficiency
+- [ ] handle overload when user click `likes` (message queue ?)
+- [ ] upload all images to S3
+- [ ] upload docker image to ECR(elastic container registry)
+
 
 Techniques used:
 - Member system
