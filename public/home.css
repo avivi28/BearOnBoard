@@ -365,3 +365,15 @@ q {
 .caption {
 	width: 275px;
 }
+
+#caption,
+#pac-input {
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+
+#caption:focus,
+#pac-input:focus {
+	border: 3px solid rgba(242, 119, 7, 0.75);
+}

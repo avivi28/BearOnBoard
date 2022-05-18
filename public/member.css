@@ -173,6 +173,13 @@ select:-webkit-autofill:focus {
 	transition: background-color 5000s ease-in-out 0s;
 }
 
+#friends_search,
+input {
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+
 #edit_pen,
 #edit_icon {
 	position: absolute;
@@ -506,7 +513,6 @@ hr {
 #likes {
 	cursor: pointer;
 	position: absolute;
-	top: 6px;
 }
 
 #likes:hover {
@@ -592,4 +598,19 @@ q {
 
 .tooltip:hover .tooltiptext {
 	visibility: visible;
+}
+
+.friends-comment > input {
+	border: 1px solid #a26825;
+	border-radius: 20px;
+	padding: 12px;
+	margin-left: 10px;
+	color: #674115;
+	width: 220px;
+	font-size: 14px;
+}
+
+#friends_search:focus,
+input:focus {
+	border: 3px solid rgba(242, 119, 7, 0.75);
 }
