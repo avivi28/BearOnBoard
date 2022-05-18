@@ -182,10 +182,18 @@
 								align-items: center;
 								justify-content: center;
 							"
-							><img id="friends-photos"
-						/></span>
+							><img id="friends-photos" />
+							<span class="tooltip">
+								<img
+									src="/images/unlikes.svg"
+									id="likes"
+									onmouseover="heartBeat()"
+									onmouseout="heartStop()"
+								/>
+								<span class="tooltiptext" id="tooltiptext">10 likes</span>
+							</span></span
+						>
 					</p>
-					<img src="/images/likes.svg" id="likes" />
 					<p class="friends-comment">
 						<img src="/images/friends-icon.png" id="friends_icon" />
 						<q>what a lovely bear!!</q>

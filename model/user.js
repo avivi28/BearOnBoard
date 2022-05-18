@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
 	res.json(result);
 });
 
+//-------Get friend's info API-------
 router.get('/:userId', async (req, res) => {
 	const userId = ObjectId(req.params.userId);
 	const result = await User.findOne({ _id: userId }).populate({

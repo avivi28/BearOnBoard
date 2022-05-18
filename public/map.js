@@ -80,7 +80,6 @@ function test() {
 
 //----------get friends' posts function-------------
 function getFriendPosts(friendId) {
-	console.log(friendId);
 	fetch(`/api/post/${friendId}`, { method: 'GET' })
 		.then((res) => res.json())
 		.then((res) => {
@@ -210,6 +209,8 @@ const postModal = document.getElementById('posts_modal');
 const locationFriendContent = document.getElementById('location-content');
 const captionFriendContent = document.getElementById('caption-content');
 const friendsPhotos = document.getElementById('friends-photos');
+const likes = document.getElementById('likes');
+const toolTipText = document.getElementById('tooltiptext');
 
 function showFriendsMarker(res) {
 	if (navigator.geolocation) {
@@ -262,14 +263,20 @@ function showFriendsMarker(res) {
 					});
 
 					marker.addListener('click', () => {
+						const postId = res[i]['_id'];
 						postModal.style.display = 'block';
 						captionFriendContent.textContent = res[i]['caption'];
 						friendsPhotos.src = res[i]['img_url'];
 						locationFriendContent.textContent = res[i]['location'];
+						const likesNumber = res[i]['likes'].length;
+						toolTipText.textContent = `${likesNumber} likes`;
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);
+
+						addLikes(postId, likesNumber);
 					});
+
 					marker.addListener('mouseout', () => {
 						marker.setIcon(blackImage);
 					});
@@ -283,4 +290,34 @@ function showFriendsMarker(res) {
 		// Browser doesn't support Geolocation
 		handleLocationError(false, infoWindow, map.getCenter());
 	}
+}
+
+//-----------------likes function--------------------
+function addLikes(postId, likesNumber) {
+	likes.addEventListener('click', () => {
+		const bodyData = {
+			userId: userId,
+			postId: postId,
+		};
+
+		fetch('/api/post', {
+			method: 'PUT',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				const okData = res['ok'];
+				if (okData == true) {
+					likes.src = '/images/likes.svg';
+					const updateLikes = likesNumber + 1;
+					toolTipText.textContent = `${updateLikes} likes`;
+				} else {
+					likes.src = '/images/unlikes.svg';
+					toolTipText.textContent = `${likesNumber} likes`;
+				}
+			});
+	});
 }

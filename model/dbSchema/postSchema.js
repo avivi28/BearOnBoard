@@ -26,6 +26,8 @@ let postSchema = new mongoose.Schema(
 		lng: {
 			type: Number,
 		},
+		likes: [{ type: ObjectId, ref: 'user' }],
+		comments: [{ type: String }],
 	},
 	{ collection: 'posts' }
 );

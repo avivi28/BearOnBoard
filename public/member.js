@@ -307,7 +307,6 @@ function getFriendLists() {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			console.log(Res);
 			showFriendLists(Res);
 		})
 		.catch((error) => console.log(error));
@@ -396,8 +395,6 @@ function decideFriendAction(realId, realName, friendGps, deleteFriend) {
 		googleMap.style.display = 'block';
 		getFriendPosts(realId);
 	});
-
-	// friendGps.setAttribute('onclick', `getFriendPosts(${realId})`);
 }
 
 //------------Delete Friends Function------------
@@ -449,6 +446,14 @@ function deleteAction(friendId) {
 const postsModal = document.getElementById('posts_modal');
 function hidePosts() {
 	postsModal.style.display = 'none';
+}
+
+//----------Heartbeat when mouseover 'likes'--------
+function heartBeat() {
+	likes.className = 'heart';
+}
+function heartStop() {
+	likes.className = '';
 }
 
 //------------Chat room System------------
