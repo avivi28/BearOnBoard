@@ -45,7 +45,7 @@ Tiny stuffs:
 ```
 
 Suggestions from TONY:
-- [ ] improve db query efficiency
+- [ ] improve db query efficiency (add index!)
 - [ ] handle overload when user click `likes` (message queue ?)
 - [ ] upload all images to S3
 - [ ] upload docker image to ECR(elastic container registry)
