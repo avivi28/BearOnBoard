@@ -74,6 +74,21 @@ function getPosts() {
 
 getPosts();
 
+function test() {
+	console.log('test');
+}
+
+//----------get friends' posts function-------------
+function getFriendPosts(friendId) {
+	console.log(friendId);
+	fetch(`/api/post/${friendId}`, { method: 'GET' })
+		.then((res) => res.json())
+		.then((res) => {
+			console.log(res);
+			showFriendsMarker(res);
+		});
+}
+
 //---------------show marker after add new post------------------
 const locationContent = document.getElementById('location_content');
 const caption = document.getElementById('caption_content');
@@ -172,6 +187,85 @@ function showAllMarker(res) {
 						caption.textContent = res[i]['caption'];
 						postPhoto.src = res[i]['img_url'];
 						locationContent.textContent = res[i]['location'];
+						marker.setIcon(pickedMarker);
+						map.setCenter(geoInfo);
+						map.setZoom(18);
+					});
+					marker.addListener('mouseout', () => {
+						marker.setIcon(blackImage);
+					});
+				}
+			},
+			() => {
+				handleLocationError(true, infoWindow, map.getCenter());
+			}
+		);
+	} else {
+		// Browser doesn't support Geolocation
+		handleLocationError(false, infoWindow, map.getCenter());
+	}
+}
+
+const postModal = document.getElementById('posts_modal');
+const locationFriendContent = document.getElementById('location-content');
+const captionFriendContent = document.getElementById('caption-content');
+const friendsPhotos = document.getElementById('friends-photos');
+
+function showFriendsMarker(res) {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				const pos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude,
+				};
+
+				const map = new google.maps.Map(document.getElementById('googleMap'), {
+					zoom: 18,
+					center: pos,
+					fullscreenControl: false,
+					streetViewControl: false, //remove the default button
+					mapTypeControl: false,
+					styles: mapStyles,
+				});
+
+				// Create new control button on map
+				const centerControlDiv = document.createElement('div');
+
+				CenterControl(centerControlDiv, map);
+				map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+					centerControlDiv
+				);
+
+				const userIcon = '/images/smaller-icon.png';
+				const blackImage = '/images/black-mark.png';
+				const pickedMarker = '/images/bear-mark.png';
+
+				const Currentmarker = new google.maps.Marker({
+					position: pos,
+					map: map,
+					icon: userIcon,
+					animation: google.maps.Animation.BOUNCE,
+				});
+
+				for (let i = 0; i < res.length; i++) {
+					const geoInfo = {
+						lat: res[i]['lat'],
+						lng: res[i]['lng'],
+					};
+
+					const marker = new google.maps.Marker({
+						position: geoInfo,
+						map: map,
+						icon: blackImage,
+						animation: google.maps.Animation.DROP,
+					});
+
+					marker.addListener('click', () => {
+						postModal.style.display = 'block';
+						captionFriendContent.textContent = res[i]['caption'];
+						friendsPhotos.src = res[i]['img_url'];
+						locationFriendContent.textContent = res[i]['location'];
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);

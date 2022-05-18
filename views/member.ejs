@@ -18,6 +18,7 @@
 	<body>
 		<div class="entire_container">
 			<div class="background">
+				<div id="googleMap"></div>
 				<img id="bear-chat" src="/images/bear-chat.png" />
 				<div class="chat-message">Hello, Bear!</div>
 				<div class="chat-sentence">
@@ -74,7 +75,8 @@
 									id="friends_search"
 									name="username"
 									placeholder="Search..."
-									onkeyup="sendData(this)" />
+									autocomplete="off"
+									onkeypress="sendData(this)" />
 								<datalist id="search_results"></datalist></span></span
 						><input type="submit" value="" id="submit_newfriends" />
 					</form>
@@ -151,7 +153,48 @@
 					</p>
 				</div>
 			</div>
+			<div class="modal" id="posts_modal">
+				<div
+					class="modal-content"
+					id="posts-container"
+					style="height: 400px; width: 350px"
+				>
+					<div class="modal-top"></div>
+					<button onclick="hidePosts()">
+						<img src="/images/x.svg" id="x" style="left: 305px" />
+					</button>
+					<p style="font-size: 16px; width: 310px; margin-top: 20px">
+						Location:<span
+							style="font-weight: 500; margin-left: 5px"
+							id="location-content"
+						></span>
+					</p>
+					<p style="font-size: 16px; width: 310px">
+						Caption:<span
+							style="font-weight: 500; margin-left: 5px"
+							id="caption-content"
+						></span>
+					</p>
+					<p class="friends-photo-container" style="font-size: 16px">
+						Photos:<span
+							style="
+								display: flex;
+								align-items: center;
+								justify-content: center;
+							"
+							><img id="friends-photos"
+						/></span>
+					</p>
+					<img src="/images/likes.svg" id="likes" />
+					<p class="friends-comment">
+						<img src="/images/friends-icon.png" id="friends_icon" />
+						<q>what a lovely bear!!</q>
+					</p>
+				</div>
+			</div>
 		</div>
+		<script src="/map.js"></script>
 		<script src="/member.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=<%=apikey%>&callback=googleAPI&libraries=places"></script>
 	</body>
 </html>

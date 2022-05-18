@@ -16,6 +16,12 @@ router.get('/', async (req, res) => {
 	res.json(locationResult);
 });
 
+router.get('/:friendId', async (req, res) => {
+	const friendId = ObjectId(req.params.friendId);
+	const result = await Post.find({ userId: friendId });
+	res.json(result);
+});
+
 router.post('/', async (req, res) => {
 	const postInfo = {
 		userId: req.body.userId,

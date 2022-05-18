@@ -29,7 +29,7 @@ router.put('/', async (req, res) => {
 		recipient: ObjectId(req.body.friendId),
 	};
 	const statusUpdate = {
-		status: req.body.status, //1:accept 0:reject}
+		status: req.body.status, //1:accept 0:panding
 	};
 	await Friend.findOneAndUpdate(userInfo, statusUpdate, {
 		new: true,

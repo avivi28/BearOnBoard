@@ -276,15 +276,14 @@ function decideRequest(friendId) {
 	});
 
 	noConfirmButton.addEventListener('click', function rejectRequest(ev) {
-		ev.preventDefault(); //change to use delete method
+		ev.preventDefault();
 		const bodyData = {
 			userId: friendId, // request sender
 			friendId: userId, // request receiver
-			status: -1,
 		};
 
 		fetch('/api/friend', {
-			method: 'PUT',
+			method: 'DELETE',
 			headers: new Headers({
 				'Content-Type': 'application/json;charset=utf-8',
 			}),
@@ -358,7 +357,7 @@ function showFriendLists(Res) {
 		clickContainer.appendChild(friendGps);
 		clickContainer.appendChild(deleteFriend);
 
-		decideFriendAction(realName, friendGps, deleteFriend);
+		decideFriendAction(realId, realName, friendGps, deleteFriend);
 	}
 }
 
@@ -382,15 +381,26 @@ function showSad() {
 const yesDeleteButton = document.getElementById('yes-delete-button');
 const deleteForm = document.getElementById('delete_form');
 
-function decideFriendAction(realName, friendGps, deleteFriend) {
+function decideFriendAction(realId, realName, friendGps, deleteFriend) {
 	deleteFriend.addEventListener('click', function deleteFriend(ev) {
 		ev.preventDefault();
 
 		deleteModal.style.display = 'block';
 		document.getElementById('delete_name').value = `"${realName}" ?`;
 	});
+
+	friendGps.addEventListener('click', function showFriendPost(ev) {
+		ev.preventDefault();
+
+		const googleMap = document.getElementById('googleMap');
+		googleMap.style.display = 'block';
+		getFriendPosts(realId);
+	});
+
+	// friendGps.setAttribute('onclick', `getFriendPosts(${realId})`);
 }
 
+//------------Delete Friends Function------------
 yesDeleteButton.addEventListener('click', function deleteConfirm(ev) {
 	ev.preventDefault();
 
@@ -433,6 +443,12 @@ function deleteAction(friendId) {
 			}
 		})
 		.catch((error) => console.log(error));
+}
+
+//--------------Hide posts modal Function-----------
+const postsModal = document.getElementById('posts_modal');
+function hidePosts() {
+	postsModal.style.display = 'none';
 }
 
 //------------Chat room System------------
