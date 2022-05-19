@@ -12,13 +12,24 @@ UML diagram:
 
 Features checklist: **(compulsory)**
 - [X] Member System
-(register, sign in, log out, log in with Gmail)
+
+(Register, Sign in, Log out, Log in with Gmail)
 - [X] Save posts on Map 
-(show all markers, return your current location)
+
+(Show all posts on Map, Show posts' details when clicked, Add new posts, Locate your current location)
 - [X] Create Friendship system 
+
+
 (Search existing friends, Send friends request(cannot send request to yourself OR added friend), Accept/Reject friends request, Delete friends)
 - [X] Get Friends' Posts
-- [ ] Interacte with fds (comment + like) on friends' saved posts
+
+
+(Show all friends' posts on map, Show posts' details when clicked)
+- [X] Interacte with fds (comment + like) on friends' saved posts
+
+
+(Like OR unlike function, Add comments function)
+
 ``` diff
 ! MUST finish within first two weeks
 ```
