@@ -423,8 +423,6 @@ function deleteAction(friendId) {
 		friendId: friendId,
 	};
 
-	console.log(bodyData);
-
 	fetch('/api/friend', {
 		method: 'DELETE',
 		headers: new Headers({
@@ -446,6 +444,7 @@ function deleteAction(friendId) {
 const postsModal = document.getElementById('posts_modal');
 function hidePosts() {
 	postsModal.style.display = 'none';
+	commentEntireContainer.textContent = '';
 }
 
 //----------Heartbeat when mouseover 'likes'--------

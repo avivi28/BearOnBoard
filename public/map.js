@@ -74,16 +74,11 @@ function getPosts() {
 
 getPosts();
 
-function test() {
-	console.log('test');
-}
-
 //----------get friends' posts function-------------
 function getFriendPosts(friendId) {
 	fetch(`/api/post/${friendId}`, { method: 'GET' })
 		.then((res) => res.json())
 		.then((res) => {
-			console.log(res);
 			showFriendsMarker(res);
 		});
 }
@@ -211,6 +206,7 @@ const captionFriendContent = document.getElementById('caption-content');
 const friendsPhotos = document.getElementById('friends-photos');
 const likes = document.getElementById('likes');
 const toolTipText = document.getElementById('tooltiptext');
+const commentInput = document.getElementById('comment-input');
 
 function showFriendsMarker(res) {
 	if (navigator.geolocation) {
@@ -270,11 +266,14 @@ function showFriendsMarker(res) {
 						locationFriendContent.textContent = res[i]['location'];
 						const likesNumber = res[i]['likes'].length;
 						toolTipText.textContent = `${likesNumber} likes`;
+
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);
 
 						addLikes(postId, likesNumber);
+						addComments(postId);
+						showComments(postId);
 					});
 
 					marker.addListener('mouseout', () => {
@@ -319,5 +318,78 @@ function addLikes(postId, likesNumber) {
 					toolTipText.textContent = `${likesNumber} likes`;
 				}
 			});
+	});
+}
+
+//---------------Comments function-----------------
+const modalContentContainer = document.getElementById('posts-container');
+const commentEntireContainer = document.getElementById(
+	'comment-entire-container'
+);
+
+function showComments(postId) {
+	fetch(`/api/comment/${postId}`, {
+		method: 'GET',
+	})
+		.then((res) => res.json())
+		.then((res) => {
+			for (let i = 0; i < res.length; i++) {
+				const commentTextContainer = document.createElement('p');
+				commentTextContainer.className = 'comment-text-container';
+
+				const newComment = document.createElement('span');
+				newComment.textContent = res[i]['comment'];
+				const commenter = document.createElement('strong');
+				commenter.textContent = res[i]['commenter']['name'];
+				const friendIcon = document.createElement('img');
+				friendIcon.src = '/images/friends-icon.png';
+				friendIcon.className = 'friends_icon';
+
+				const commentContainer = document.createElement('div');
+				commentContainer.className = 'comment-container';
+
+				commentEntireContainer.appendChild(commentContainer);
+				commentContainer.appendChild(friendIcon);
+				commentContainer.appendChild(commentTextContainer);
+				commentTextContainer.appendChild(commenter);
+				commentTextContainer.appendChild(newComment);
+			}
+		});
+}
+
+const commentForm = document.getElementById('comment-form');
+function addComments(postId) {
+	commentInput.addEventListener('keypress', function (event) {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			let formData = new FormData(commentForm);
+			const formInput = new URLSearchParams(formData);
+			const jsonData = Object.fromEntries(formInput.entries());
+			const comment = jsonData['comment'];
+
+			const bodyData = {
+				userId: userId,
+				postId: postId,
+				comment: comment,
+			};
+
+			fetch('/api/comment', {
+				method: 'PATCH',
+				headers: new Headers({
+					'Content-Type': 'application/json;charset=utf-8',
+				}),
+				body: JSON.stringify(bodyData),
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					const okData = res['ok'];
+					if (okData == true) {
+						commentEntireContainer.textContent = '';
+						commentInput.value = '';
+						commentInput.textContent = '';
+						showComments(postId);
+					}
+				});
+		}
 	});
 }

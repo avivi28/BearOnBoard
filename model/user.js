@@ -41,8 +41,9 @@ router.patch('/', async (req, res) => {
 
 	if (repeatedResult != null && bcryptResult) {
 		const userId = repeatedResult['_id'];
+		const userName = repeatedResult['name'];
 		jwt.sign(
-			{ userId, emailInput },
+			{ userId, emailInput, userName },
 			process.env.JWT_TOKEN_SECRET,
 			(err, token) => {
 				res.cookie('token', token).json({ ok: true });

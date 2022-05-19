@@ -4,23 +4,22 @@ const router = express.Router();
 const jwt_decode = require('jwt-decode');
 
 const Post = require('./dbSchema/postSchema.js');
+const Comment = require('./dbSchema/commentSchema.js');
 
 //------------get user's posts API--------------
 router.get('/', async (req, res) => {
 	const JWTcookies = req.cookies['token'];
 	const decoded = jwt_decode(JWTcookies);
 	const userId = decoded['userId'];
-	const userInfo = {
+	const locationResult = await Post.find({
 		userId: ObjectId(userId),
-	};
-	const locationResult = await Post.find(userInfo);
+	});
 	res.json(locationResult);
 });
 
 //------------get friends' posts API--------------
 router.get('/:friendId', async (req, res) => {
-	const friendId = ObjectId(req.params.friendId);
-	const result = await Post.find({ userId: friendId });
+	const result = await Post.find({ userId: ObjectId(req.params.friendId) });
 	res.json(result);
 });
 
@@ -55,15 +54,14 @@ router.put('/', async (req, res) => {
 
 //-----------upload new posts API-------------
 router.post('/', async (req, res) => {
-	const postInfo = {
+	const post = new Post({
 		userId: req.body.userId,
 		img_url: req.body.img_url,
 		caption: req.body.caption,
 		location: req.body.location,
 		lat: req.body.lat,
 		lng: req.body.lng,
-	};
-	const post = new Post(postInfo);
+	});
 	await post.save();
 	res.json({ lat: req.body.lat, lng: req.body.lng });
 });

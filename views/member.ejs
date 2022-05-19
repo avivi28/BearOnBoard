@@ -44,7 +44,7 @@
 						</div>
 						<div class="edit_title">
 							BIO:
-							<p>I am a bear.</p>
+							<p>Let's be fluffy!</p>
 						</div>
 					</div>
 					<div class="friendslist"><p>My Friends:</p></div>
@@ -157,11 +157,10 @@
 				<div
 					class="modal-content"
 					id="posts-container"
-					style="height: 400px; width: 350px"
+					style="height: 400px; width: 350px; max-height: calc(100vh - 210px)"
 				>
-					<div class="modal-top"></div>
 					<button onclick="hidePosts()">
-						<img src="/images/x.svg" id="x" style="left: 305px" />
+						<img src="/images/x.svg" id="x" style="left: 305px; top: 20px" />
 					</button>
 					<p style="font-size: 16px; width: 310px; margin-top: 20px">
 						Location:<span
@@ -194,16 +193,23 @@
 							</span></span
 						>
 					</p>
-					<p class="friends-comment">
-						<img src="/images/friends-icon.png" id="friends_icon" />
-						<input
-							type="text"
-							name="comment"
-							id="comment"
-							placeholder="Add a comment..."
-							autocomplete="off"
+					<div class="friends-comment" id="friends-comment">
+						<img
+							src="/images/friends-icon.png"
+							id="friends_icon"
+							class="friends_icon"
 						/>
-					</p>
+						<form id="comment-form">
+							<input
+								type="text"
+								name="comment"
+								id="comment-input"
+								placeholder="Add a comment..."
+								autocomplete="off"
+							/>
+						</form>
+					</div>
+					<div id="comment-entire-container"></div>
 				</div>
 			</div>
 		</div>
