@@ -22,6 +22,27 @@ function hideFriend() {
 	modal.style.display = 'none';
 }
 
+//----------get User info from JWT------------
+let JWTcookies = document.cookie;
+const base64Url = JWTcookies.split('.')[1];
+const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+const jsonPayload = decodeURIComponent(
+	atob(base64)
+		.split('')
+		.map(function (c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+		})
+		.join('')
+);
+const userData = JSON.parse(jsonPayload);
+const userId = userData['userId'];
+
+//------------Show current user Info-------------
+const editName = document.getElementById('edit_name');
+const editEmail = document.getElementById('edit_email');
+editName.textContent = userData['userName'];
+editEmail.textContent = userData['emailInput'];
+
 //------------Friends Search Engine-------------
 const submitButton = document.getElementById('submit_newfriends');
 function disableSubmit() {
@@ -101,21 +122,6 @@ friendsForm.addEventListener('submit', function confirm(ev) {
 
 	sendRequest(friendsName);
 });
-
-//----------get User info from JWT------------
-let JWTcookies = document.cookie;
-const base64Url = JWTcookies.split('.')[1];
-const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-const jsonPayload = decodeURIComponent(
-	atob(base64)
-		.split('')
-		.map(function (c) {
-			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-		})
-		.join('')
-);
-const userData = JSON.parse(jsonPayload);
-const userId = userData['userId'];
 
 //------------Friends Request System------------
 const yesButton = document.getElementById('yes-button');
@@ -203,33 +209,33 @@ function getPending() {
 		.catch((error) => console.log(error));
 }
 
-const yesConfirmButton = document.createElement('button');
-const noConfirmButton = document.createElement('button');
-const pendingContainer = document.createElement('p');
 function showPending(Res) {
-	pendingContainer.className = 'pending_container';
-	const friendImage = document.createElement('img');
-	friendImage.src = '/images/friends-icon.png';
-
-	const pendingContentContainer = document.createElement('p');
-	pendingContentContainer.className = 'pending-content-container';
-
-	const friendName = document.createElement('span');
-	friendName.className = 'pending-content';
-	const pendingMessage = document.createElement('span');
-	pendingMessage.className = 'pending-content';
-
-	yesConfirmButton.className = 'yes-confirm-button';
-	noConfirmButton.className = 'no-confirm-button';
-	const buttonContainer = document.createElement('span');
-	buttonContainer.className = 'yes-no-container';
-
 	for (let i = 0; i < Res.length; i++) {
+		const yesConfirmButton = document.createElement('button');
+		const noConfirmButton = document.createElement('button');
+		const pendingContainer = document.createElement('p');
+		pendingContainer.className = 'pending_container';
+		const friendImage = document.createElement('img');
+		friendImage.src = '/images/friends-icon.png';
+
+		const pendingContentContainer = document.createElement('p');
+		pendingContentContainer.className = 'pending-content-container';
+
+		const friendName = document.createElement('span');
+		friendName.className = 'pending-content';
+		const pendingMessage = document.createElement('span');
+		pendingMessage.className = 'pending-content';
+
+		yesConfirmButton.className = 'yes-confirm-button';
+		noConfirmButton.className = 'no-confirm-button';
+		const buttonContainer = document.createElement('span');
+		buttonContainer.className = 'yes-no-container';
 		const friendId = Res[i]['sender']['_id'];
 		const friendData = Res[i]['sender']['name'];
 		friendName.textContent = `Name: ${friendData}`;
 		pendingMessage.textContent = 'Incoming Friend Request';
 
+		pendingList.appendChild(pendingContainer);
 		pendingContainer.appendChild(friendImage);
 		pendingContainer.appendChild(pendingContentContainer);
 		pendingContentContainer.appendChild(friendName);
@@ -237,68 +243,64 @@ function showPending(Res) {
 		pendingContainer.appendChild(buttonContainer);
 		buttonContainer.appendChild(yesConfirmButton);
 		buttonContainer.appendChild(noConfirmButton);
-		decideRequest(friendId);
-	}
+		// decideRequest(friendId);
 
-	pendingList.appendChild(pendingContainer);
+		//------Accept or Reject the friend request------
+		yesConfirmButton.addEventListener('click', function acceptRequest(ev) {
+			ev.preventDefault();
+
+			const bodyData = {
+				userId: friendId, // request sender
+				friendId: userId, // request receiver
+				status: 1,
+			};
+
+			fetch('/api/friend', {
+				method: 'PUT',
+				headers: new Headers({
+					'Content-Type': 'application/json;charset=utf-8',
+				}),
+				body: JSON.stringify(bodyData),
+			})
+				.then((Res) => Res.json())
+				.then((Res) => {
+					const okData = Res['ok'];
+					if (okData == true) {
+						friendContainer.textContent = '';
+						pendingContainer.style.display = 'none';
+						getFriendLists();
+					}
+				})
+				.catch((error) => console.log(error));
+		});
+
+		noConfirmButton.addEventListener('click', function rejectRequest(ev) {
+			ev.preventDefault();
+			const bodyData = {
+				userId: friendId, // request sender
+				friendId: userId, // request receiver
+			};
+
+			fetch('/api/friend', {
+				method: 'DELETE',
+				headers: new Headers({
+					'Content-Type': 'application/json;charset=utf-8',
+				}),
+				body: JSON.stringify(bodyData),
+			})
+				.then((Res) => Res.json())
+				.then((Res) => {
+					const okData = Res['ok'];
+					if (okData == true) {
+						pendingContainer.style.display = 'none';
+					}
+				})
+				.catch((error) => console.log(error));
+		});
+	}
 }
 
 getPending();
-
-//------Accept or Reject the friend request------
-function decideRequest(friendId) {
-	yesConfirmButton.addEventListener('click', function acceptRequest(ev) {
-		ev.preventDefault();
-
-		const bodyData = {
-			userId: friendId, // request sender
-			friendId: userId, // request receiver
-			status: 1,
-		};
-
-		fetch('/api/friend', {
-			method: 'PUT',
-			headers: new Headers({
-				'Content-Type': 'application/json;charset=utf-8',
-			}),
-			body: JSON.stringify(bodyData),
-		})
-			.then((Res) => Res.json())
-			.then((Res) => {
-				const okData = Res['ok'];
-				if (okData == true) {
-					friendContainer.textContent = '';
-					pendingContainer.style.display = 'none';
-					getFriendLists();
-				}
-			})
-			.catch((error) => console.log(error));
-	});
-
-	noConfirmButton.addEventListener('click', function rejectRequest(ev) {
-		ev.preventDefault();
-		const bodyData = {
-			userId: friendId, // request sender
-			friendId: userId, // request receiver
-		};
-
-		fetch('/api/friend', {
-			method: 'DELETE',
-			headers: new Headers({
-				'Content-Type': 'application/json;charset=utf-8',
-			}),
-			body: JSON.stringify(bodyData),
-		})
-			.then((Res) => Res.json())
-			.then((Res) => {
-				const okData = Res['ok'];
-				if (okData == true) {
-					pendingContainer.style.display = 'none';
-				}
-			})
-			.catch((error) => console.log(error));
-	});
-}
 
 //------------Show Friends lists----------
 function getFriendLists() {

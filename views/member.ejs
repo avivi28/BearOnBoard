@@ -36,11 +36,11 @@
 					<div class="edit_container">
 						<div class="edit_title">
 							Name:
-							<p>Bear</p>
+							<p id="edit_name">Bear</p>
 						</div>
 						<div class="edit_title">
 							Email:
-							<p>bear@bear.com</p>
+							<p id="edit_email">bear@bear.com</p>
 						</div>
 						<div class="edit_title">
 							BIO:
@@ -60,10 +60,17 @@
 			</div>
 			<div class="copyright">@ Copyright 2022. Powered by Avivi Chan.</div>
 			<div class="modal" id="modal">
-				<div class="modal-content">
-					<div class="modal-top"></div>
+				<div
+					class="modal-content"
+					style="
+						overflow-y: scroll;
+						width: 303px;
+						height: 285px;
+						border-top: 24px solid #ffb939;
+					"
+				>
 					<button onclick="hideFriend()">
-						<img src="/images/x.svg" id="x" />
+						<img src="/images/x.svg" id="x" style="top: 13px" />
 					</button>
 					<p>Add New Friends</p>
 					<form id="friendform">
@@ -85,7 +92,11 @@
 				</div>
 			</div>
 			<div class="modal" id="confirm_modal">
-				<div class="modal-content" id="request-container">
+				<div
+					class="modal-content"
+					id="request-container"
+					style="width: 303px; height: 285px"
+				>
 					<div class="modal-top"></div>
 					<button onclick="hideConfirm()">
 						<img src="/images/x.svg" id="x" />
@@ -116,7 +127,11 @@
 				</div>
 			</div>
 			<div class="modal" id="delete_modal">
-				<div class="modal-content" id="delete-container" style="height: 300px">
+				<div
+					class="modal-content"
+					id="delete-container"
+					style="height: 285px; width: 300px"
+				>
 					<div class="modal-top"></div>
 					<button onclick="hideDelete()">
 						<img src="/images/x.svg" id="x" />
@@ -157,7 +172,13 @@
 				<div
 					class="modal-content"
 					id="posts-container"
-					style="height: 400px; width: 350px; max-height: calc(100vh - 210px)"
+					style="
+						height: 400px;
+						width: 350px;
+						max-height: calc(100vh - 210px);
+						border-top: 24px solid #ffb939;
+						overflow-y: scroll;
+					"
 				>
 					<button onclick="hidePosts()">
 						<img src="/images/x.svg" id="x" style="left: 305px; top: 20px" />
