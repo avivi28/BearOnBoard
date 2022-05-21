@@ -656,3 +656,14 @@ input:focus {
 	padding: 10px;
 	margin: 5px 0px 5px 10px;
 }
+
+.online-status {
+	background: #dcd5e7;
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	border-radius: 10px;
+	bottom: 8px;
+	border: 2px solid white;
+	right: 3px;
+}

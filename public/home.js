@@ -34,7 +34,7 @@ function hidePost() {
 	modal.style.display = 'none';
 }
 
-//----------get User info from JWT------------
+// ----------get User info from JWT------------
 let JWTcookies = document.cookie;
 const base64Url = JWTcookies.split('.')[1];
 const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -108,3 +108,17 @@ postForm.addEventListener('submit', async (event) => {
 		})
 		.catch((e) => console.log(e));
 });
+
+//----------socke.io----------
+const socket = io('http://localhost:9090');
+console.log(socket);
+
+let userName = '';
+
+const newUserConnected = () => {
+	userName = userData['userName'];
+	socket.emit('new user', userName);
+	showStatus(userName);
+};
+
+newUserConnected();

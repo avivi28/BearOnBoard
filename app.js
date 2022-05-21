@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express(); //產生express application物件
+const app = express(); //generate express application object
 
 const { createServer } = require('http');
 const { Server } = require('socket.io');
@@ -17,11 +17,9 @@ const comment = require('./model/comment');
 const friend = require('./model/friend');
 const { generateUploadURL } = require('./model/s3');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
-// const cors = require('cors');
 
 require('dotenv').config();
 
-// app.use(cors());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.json()); // Parse JSON bodies (as sent by API clients)
@@ -30,11 +28,19 @@ app.use(express.static('public')); //make css & js file accessible
 app.set('view engine', 'ejs'); //view engine = template engine, ejs(embedded js)
 app.set('views', 'views');
 
+const activeUsers = new Set();
 io.on('connection', (socket) => {
-	console.log('connected');
+	console.log('socket connected');
+	socket.on('new user', function (data) {
+		socket.userId = data;
+		activeUsers.add(data);
+		io.emit('new user', [...activeUsers]);
+	});
 
 	socket.on('disconnect', () => {
-		console.log('disconnected');
+		console.log('socket disconnected');
+		activeUsers.delete(socket.userId);
+		io.emit('user disconnected', socket.userId);
 	});
 });
 

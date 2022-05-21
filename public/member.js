@@ -326,6 +326,47 @@ function showFriendLists(Res) {
 		const clickContainer = document.createElement('p');
 		clickContainer.className = 'click-container';
 
+		const imageContainer = document.createElement('div');
+		imageContainer.style = 'position: relative;';
+
+		//---------check friends online or offline
+		const statusDot = document.createElement('p');
+		statusDot.className = 'online-status';
+		const friendStatusName = Res['friends'][j]['name'];
+		statusDot.setAttribute('id', `friendName${friendStatusName}`);
+
+		let userName = '';
+
+		const newUserConnected = () => {
+			userName = userData['userName'];
+			socket.emit('new user', userName);
+			showStatus(userName);
+		};
+
+		function showStatus(userName) {
+			if (!document.getElementById(`friendName${userName}`)) {
+				return;
+			}
+
+			document.getElementById(`friendName${userName}`).style.background =
+				'rgb(85 228 82)';
+		}
+		function showOffline(userName) {
+			document.getElementById(`friendName${userName}`).style.background =
+				'rgb(220 213 231)';
+		}
+
+		// new user is created so we generate nickname and emit event
+		newUserConnected();
+
+		socket.on('new user', function (data) {
+			data.map((userName) => showStatus(userName));
+		});
+
+		socket.on('user disconnected', function (userName) {
+			showOffline(userName);
+		});
+
 		const friendImage = document.createElement('img');
 		friendImage.src = '/images/friends-icon.png';
 		friendImage.setAttribute('id', 'friends_icon');
@@ -350,7 +391,9 @@ function showFriendLists(Res) {
 		friendBio.textContent = `Let's be fluffy!`;
 
 		friendContainer.appendChild(detailContainer);
-		detailContainer.appendChild(friendImage);
+		detailContainer.appendChild(imageContainer);
+		imageContainer.appendChild(friendImage);
+		imageContainer.appendChild(statusDot);
 		detailContainer.appendChild(nameContainer);
 		detailContainer.appendChild(clickContainer);
 		nameContainer.appendChild(friendName);
