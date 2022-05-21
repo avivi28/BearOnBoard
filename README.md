@@ -37,6 +37,7 @@ Features checklist: **(compulsory)**
 Extra Optimization: **(optional)**
 - [ ] Redis ✓
 - [ ] Text-only Chatroom/ socket.io ✓
+- [X] Show online/offline user status
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine(API) ✓
@@ -82,3 +83,4 @@ Techniques used:
   - `Figma`
   - `Git`
   - `Google Maps API`
+  - `socket.io`
