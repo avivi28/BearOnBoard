@@ -318,11 +318,12 @@ function addLikes(postId, likesNumber) {
 			.then((res) => {
 				const okData = res['ok'];
 				if (okData == true) {
-					likes.src = '/images/likes.svg';
+					likes.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/likes.svg';
 					const updateLikes = likesNumber + 1;
 					toolTipText.textContent = `${updateLikes} likes`;
 				} else {
-					likes.src = '/images/unlikes.svg';
+					likes.src =
+						'https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg';
 					toolTipText.textContent = `${likesNumber} likes`;
 				}
 			});
@@ -350,7 +351,8 @@ function showComments(postId) {
 				const commenter = document.createElement('strong');
 				commenter.textContent = res[i]['commenter']['name'];
 				const friendIcon = document.createElement('img');
-				friendIcon.src = '/images/friends-icon.png';
+				friendIcon.src =
+					'https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png';
 				friendIcon.className = 'friends_icon';
 
 				const commentContainer = document.createElement('div');

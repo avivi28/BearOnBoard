@@ -96,13 +96,16 @@ function hideConfirm() {
 	confirmModal.style.display = 'none';
 }
 function showNormal() {
-	confirmIcon.src = '/images/normal-bear.png';
+	confirmIcon.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/normal-bear.png';
 }
 function showHappy() {
-	confirmIcon.src = '/images/happy-bear.png';
+	confirmIcon.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/happy-bear.png';
 }
 function showShock() {
-	confirmIcon.src = '/images/cancel-bear.png';
+	confirmIcon.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/cancel-bear.png';
 }
 
 friendsForm.addEventListener('submit', function confirm(ev) {
@@ -171,7 +174,8 @@ function postFriend(Res) {
 				} else {
 					confirmIcon.style.display = 'none';
 					reasonText.style.display = 'none';
-					newIcon.src = '/images/request-bear.png';
+					newIcon.src =
+						'https://d3qxlv297wj1rn.cloudfront.net/images/request-bear.png';
 					newIcon.style.display = 'block';
 					bearContainer.appendChild(newIcon);
 					buttonContainer.style.display = 'none';
@@ -184,7 +188,7 @@ function postFriend(Res) {
 
 function showFailResult() {
 	confirmIcon.style.display = 'none';
-	newIcon.src = '/images/sad-bear.png';
+	newIcon.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/sad-bear.png';
 	newIcon.style.display = 'block';
 	bearContainer.appendChild(newIcon);
 	buttonContainer.style.display = 'none';
@@ -216,7 +220,8 @@ function showPending(Res) {
 		const pendingContainer = document.createElement('p');
 		pendingContainer.className = 'pending_container';
 		const friendImage = document.createElement('img');
-		friendImage.src = '/images/friends-icon.png';
+		friendImage.src =
+			'https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png';
 
 		const pendingContentContainer = document.createElement('p');
 		pendingContentContainer.className = 'pending-content-container';
@@ -368,7 +373,8 @@ function showFriendLists(Res) {
 		});
 
 		const friendImage = document.createElement('img');
-		friendImage.src = '/images/friends-icon.png';
+		friendImage.src =
+			'https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png';
 		friendImage.setAttribute('id', 'friends_icon');
 		const friendName = document.createElement('p');
 		friendName.className = 'friends_name';
@@ -376,11 +382,13 @@ function showFriendLists(Res) {
 		friendBio.className = 'friends_bio';
 
 		const friendGps = document.createElement('img');
-		friendGps.src = '/images/friends_gps.svg';
+		friendGps.src =
+			'https://d3qxlv297wj1rn.cloudfront.net/images/friends_gps.svg';
 		friendGps.setAttribute('id', 'friends_jps');
 		friendGps.setAttribute('alt', 'locate');
 		const deleteFriend = document.createElement('img');
-		deleteFriend.src = '/images/delete_friends.svg';
+		deleteFriend.src =
+			'https://d3qxlv297wj1rn.cloudfront.net/images/delete_friends.svg';
 		deleteFriend.setAttribute('id', 'friends_delete');
 		deleteFriend.setAttribute('alt', 'delete');
 
@@ -413,13 +421,14 @@ function hideDelete() {
 	deleteModal.style.display = 'none';
 }
 function showFine() {
-	deleteIcon.src = '/images/normal-bear.png';
+	deleteIcon.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/normal-bear.png';
 }
 function showCry() {
-	deleteIcon.src = '/images/cry-bear.png';
+	deleteIcon.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/cry-bear.png';
 }
 function showSad() {
-	deleteIcon.src = '/images/sad-bear.png';
+	deleteIcon.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/sad-bear.png';
 }
 
 const yesDeleteButton = document.getElementById('yes-delete-button');

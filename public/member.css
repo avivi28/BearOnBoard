@@ -407,7 +407,7 @@ hr {
 }
 
 #submit_newfriends {
-	background-image: url(/images/search_button.svg);
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/search_button.svg');
 	border: none;
 	height: 30px;
 	width: 30px;
@@ -500,14 +500,14 @@ hr {
 }
 
 .yes-confirm-button {
-	background-image: url(/images/yes.svg);
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/yes.svg');
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
 }
 
 .no-confirm-button {
-	background-image: url(/images/no.svg);
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/no.svg');
 	width: 25px;
 	height: 25px;
 	cursor: pointer;
@@ -540,7 +540,7 @@ hr {
 }
 
 #likes:hover {
-	background-image: url('/images/likes.svg');
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/likes.svg');
 	width: 38px;
 	height: 38px;
 	background-repeat: no-repeat;

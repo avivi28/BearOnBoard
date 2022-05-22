@@ -129,7 +129,7 @@ button {
 }
 
 #search_submit {
-	background-image: url(/images/search_button.svg);
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/search_button.svg');
 	border: none;
 	height: 30px;
 	width: 30px;
@@ -212,7 +212,7 @@ select:-webkit-autofill:focus {
 }
 
 #likes:hover {
-	background-image: url('/images/likes.svg');
+	background-image: url('https://d3qxlv297wj1rn.cloudfront.net/images/likes.svg');
 	width: 38px;
 	height: 38px;
 	background-repeat: no-repeat;

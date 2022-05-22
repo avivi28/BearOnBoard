@@ -12,14 +12,21 @@
 			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="icon" type="image/x-icon" href="/images/favicon/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/x-icon"
+			href="https://d3qxlv297wj1rn.cloudfront.net/images/favicon/favicon.ico"
+		/>
 		<script src="/socket.io/socket.io.js"></script>
 	</head>
 	<body>
 		<div class="entire_container">
 			<div class="background">
 				<div id="googleMap"></div>
-				<img id="bear-chat" src="/images/bear-chat.png" />
+				<img
+					id="bear-chat"
+					src="https://d3qxlv297wj1rn.cloudfront.net/images/bear-chat.png"
+				/>
 				<div class="chat-message">Hello, Bear!</div>
 				<div class="chat-sentence">
 					Now send and receive messages by clicking your friend's icon.
@@ -27,12 +34,21 @@
 				<div class="post_container">
 					<a href="/home" class="header_container">
 						<div class="logo_container">
-							<img src="/images/bear_transparent_logo.png" />
+							<img
+								src="https://d3qxlv297wj1rn.cloudfront.net/images/bear_transparent_logo.png"
+							/>
 						</div>
 						<p class="brandname">Bear On Board</p>
 					</a>
-					<img src="/images/edit-pen.svg" id="edit_pen" />
-					<img src="/images/profile-icon.png" id="edit_icon" alt="edit" />
+					<img
+						src="https://d3qxlv297wj1rn.cloudfront.net/images/edit-pen.svg"
+						id="edit_pen"
+					/>
+					<img
+						src="https://d3qxlv297wj1rn.cloudfront.net/images/profile-icon.png"
+						id="edit_icon"
+						alt="edit"
+					/>
 					<div class="edit_container">
 						<div class="edit_title">
 							Name:
@@ -50,11 +66,22 @@
 					<div class="friendslist"><p>My Friends:</p></div>
 					<div class="friendslist_container" id="friendslist_container"></div>
 					<button onclick="addFriend()">
-						<img src="/images/add_friends.svg" id="friends_add" />
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/add_friends.svg"
+							id="friends_add"
+						/>
 					</button>
 					<div class="paws_container" onclick="logout()">
-						<img class="paw" src="/images/paw.svg" alt="logout" />
-						<img class="paw" src="/images/paw.svg" alt="logout" />
+						<img
+							class="paw"
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/paw.svg"
+							alt="logout"
+						/>
+						<img
+							class="paw"
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/paw.svg"
+							alt="logout"
+						/>
 					</div>
 				</div>
 			</div>
@@ -70,7 +97,11 @@
 					"
 				>
 					<button onclick="hideFriend()">
-						<img src="/images/x.svg" id="x" style="top: 13px" />
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/x.svg"
+							id="x"
+							style="top: 13px"
+						/>
 					</button>
 					<p>Add New Friends</p>
 					<form id="friendform">
@@ -99,11 +130,17 @@
 				>
 					<div class="modal-top"></div>
 					<button onclick="hideConfirm()">
-						<img src="/images/x.svg" id="x" />
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/x.svg"
+							id="x"
+						/>
 					</button>
 					<p>Add New Friends</p>
 					<p class="bear-container" id="bear-container">
-						<img id="icon-confirm" src="images/normal-bear.png" />
+						<img
+							id="icon-confirm"
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/normal-bear.png"
+						/>
 					</p>
 					<p id="confirm-text">Add Panda ?</p>
 					<p class="button-container" id="button-container">
@@ -134,10 +171,13 @@
 				>
 					<div class="modal-top"></div>
 					<button onclick="hideDelete()">
-						<img src="/images/x.svg" id="x" />
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/x.svg"
+							id="x"
+						/>
 					</button>
 					<img
-						src="images/sad-bear.png"
+						src="https://d3qxlv297wj1rn.cloudfront.net/images/sad-bear.png"
 						style="margin-top: 15px; width: 100px"
 						id="delete_bear"
 					/>
@@ -181,7 +221,11 @@
 					"
 				>
 					<button onclick="hidePosts()">
-						<img src="/images/x.svg" id="x" style="left: 305px; top: 20px" />
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/x.svg"
+							id="x"
+							style="left: 305px; top: 20px"
+						/>
 					</button>
 					<p style="font-size: 16px; width: 310px; margin-top: 20px">
 						Location:<span
@@ -205,7 +249,7 @@
 							><img id="friends-photos" />
 							<span class="tooltip">
 								<img
-									src="/images/unlikes.svg"
+									src="https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg"
 									id="likes"
 									onmouseover="heartBeat()"
 									onmouseout="heartStop()"
@@ -216,7 +260,7 @@
 					</p>
 					<div class="friends-comment" id="friends-comment">
 						<img
-							src="/images/friends-icon.png"
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png"
 							id="friends_icon"
 							class="friends_icon"
 						/>
