@@ -120,9 +120,16 @@ function showMarker(res) {
 		.then((res) => {
 			marker.addListener('click', () => {
 				const lastPost = res.length - 1;
+				const postId = res[lastPost]['_id'];
 				caption.textContent = res[lastPost]['caption'];
 				postPhoto.src = res[lastPost]['img_url'];
 				locationContent.textContent = res[lastPost]['location'];
+
+				const likesNumber = res[lastPost]['likes'].length;
+				toolTipText.textContent = `${likesNumber} likes`;
+				addLikes(postId, likesNumber);
+				addComments(postId);
+				showComments(postId);
 			});
 		});
 }

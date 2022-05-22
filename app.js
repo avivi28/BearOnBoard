@@ -37,6 +37,10 @@ io.on('connection', (socket) => {
 		io.emit('new user', [...activeUsers]);
 	});
 
+	socket.on('chat message', function (data) {
+		io.emit('chat message', data);
+	});
+
 	socket.on('disconnect', () => {
 		console.log('socket disconnected');
 		activeUsers.delete(socket.userId);
