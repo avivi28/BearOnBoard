@@ -109,8 +109,16 @@ postForm.addEventListener('submit', async (event) => {
 		.catch((e) => console.log(e));
 });
 
+//----------Heartbeat when mouseover 'likes'--------
+function heartBeat() {
+	likes.className = 'heart';
+}
+function heartStop() {
+	likes.className = '';
+}
+
 //----------socke.io----------
-const socket = io('http://localhost:9090');
+const socket = io();
 console.log(socket);
 
 let userName = '';

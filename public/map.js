@@ -178,12 +178,20 @@ function showAllMarker(res) {
 					});
 
 					marker.addListener('click', () => {
+						const postId = res[i]['_id'];
 						caption.textContent = res[i]['caption'];
 						postPhoto.src = res[i]['img_url'];
 						locationContent.textContent = res[i]['location'];
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);
+
+						const likesNumber = res[i]['likes'].length;
+						toolTipText.textContent = `${likesNumber} likes`;
+
+						addLikes(postId, likesNumber);
+						addComments(postId);
+						showComments(postId);
 					});
 					marker.addListener('mouseout', () => {
 						marker.setIcon(blackImage);

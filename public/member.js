@@ -501,5 +501,5 @@ function heartStop() {
 }
 
 //------------Chat room System------------
-const socket = io('http://localhost:9090');
+const socket = io();
 console.log(socket);

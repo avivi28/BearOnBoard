@@ -51,17 +51,40 @@
 					</div>
 					<div class="photos_container">
 						<p>Photos:</p>
+						<p class="tooltip">
+							<img
+								src="/images/unlikes.svg"
+								id="likes"
+								onmouseover="heartBeat()"
+								onmouseout="heartStop()"
+							/>
+							<span class="tooltiptext" id="tooltiptext">99 likes</span>
+						</p>
 						<p class="imagesonly_container">
 							<img src="/images/example.jpg" id="post_image" />
 						</p>
-						<img src="/images/likes.svg" id="likes" />
-						<img src="/images/friends-icon.png" id="friends_icon" />
-						<q>what a lovely bear!!</q>
 					</div>
-					<button onclick="addPost()">
-						<img src="/images/add_post.svg" id="add_button" />
-					</button>
+					<div class="friends-comment" id="friends-comment">
+						<img
+							src="/images/friends-icon.png"
+							id="friends_icon"
+							class="friends_icon"
+						/>
+						<form id="comment-form">
+							<input
+								type="text"
+								name="comment"
+								id="comment-input"
+								placeholder="Add a comment..."
+								autocomplete="off"
+							/>
+						</form>
+					</div>
+					<div id="comment-entire-container"></div>
 				</div>
+				<button onclick="addPost()">
+					<img src="/images/add_post.svg" id="add_button" />
+				</button>
 				<div class="paws_container" onclick="logout()">
 					<img class="paw" src="/images/paw.svg" alt="logout" />
 					<img class="paw" src="/images/paw.svg" alt="logout" />
