@@ -2,12 +2,10 @@ const passport = require('passport');
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const insertOne = require('./mongodb').insertOne;
-const queryOne = require('./mongodb').queryOne;
+const User = require('./dbSchema/userSchema.js');
 
 require('dotenv').config({ path: '.env' });
 
-const table = 'user';
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 passport.use(
@@ -48,18 +46,38 @@ router.get(
 	}),
 	async (req, res) => {
 		const googleEmail = req.user.email;
-		const emailInfo = { email: googleEmail };
-		const repeatedResult = await queryOne(table, emailInfo);
+		const repeatedResult = await User.findOne({ email: googleEmail });
 		if (repeatedResult == null) {
-			const registerInfo = {
+			const user = new User({
 				email: googleEmail,
 				name: req.user.displayName,
-			};
-			await insertOne(table, registerInfo);
+			});
+			await user.save();
+			const newUserResult = await User.findOne({ email: googleEmail });
+			jwt.sign(
+				{
+					userId: newUserResult['_id'],
+					emailInput: googleEmail,
+					userName: newUserResult['name'],
+				},
+				process.env.JWT_TOKEN_SECRET,
+				(err, token) => {
+					res.cookie('token', token).redirect('/home');
+				}
+			);
+		} else {
+			jwt.sign(
+				{
+					userId: repeatedResult['_id'],
+					emailInput: googleEmail,
+					userName: repeatedResult['name'],
+				},
+				process.env.JWT_TOKEN_SECRET,
+				(err, token) => {
+					res.cookie('token', token).redirect('/home');
+				}
+			);
 		}
-		jwt.sign({ googleEmail }, process.env.JWT_TOKEN_SECRET, (err, token) => {
-			res.cookie('token', token, { httpOnly: true }).redirect('/home');
-		});
 	}
 );
 

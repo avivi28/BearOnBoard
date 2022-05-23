@@ -1,6 +1,15 @@
 const express = require('express');
 const app = express(); //generate express application object
 
+const mongoose = require('mongoose');
+require('dotenv').config();
+mongoose.connect(process.env.MONGO_ACCESS);
+const db = mongoose.connection;
+db.on('error', (error) => console.log(error));
+db.once('open', () => {
+	console.log('Connected to Mongoose');
+});
+
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const httpServer = createServer(app);
@@ -17,8 +26,6 @@ const comment = require('./model/comment');
 const friend = require('./model/friend');
 const { generateUploadURL } = require('./model/s3');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
-
-require('dotenv').config();
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false })); // Parse URL-encoded bodies (as sent by HTML forms)
