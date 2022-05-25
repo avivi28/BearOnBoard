@@ -36,7 +36,7 @@ Features checklist: **(compulsory)**
 
 Extra Optimization: **(optional)**
 - [ ] Redis ✓
-- [ ] Text-only Chatroom/ socket.io ✓
+- [X] Text-only Chatroom/ socket.io ✓
 - [X] Show online/offline user status
 - [ ] Get the shortest distance 
 - [ ] Share live location
