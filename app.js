@@ -59,10 +59,7 @@ io.on('connection', (socket) => {
 	socket.on('joinRoom', ({ userName, room }) => {
 		// userLeave(socket.id);
 		const user = userJoin(socket.id, userName, room);
-		const users = getRoomUsers();
-		// console.log({ userName, room });
-		// console.log(user);
-		// console.log(users);
+
 		socket.join(user.room);
 	});
 
@@ -76,10 +73,13 @@ io.on('connection', (socket) => {
 
 	socket.on('chatMessage', (msg, room) => {
 		const user = getCurrentUser(socket.id);
-		console.log(user);
 
 		io.to(user.room).emit('message', msg, user.room);
-		console.log(msg);
+	});
+
+	socket.on('typing', function (data, room) {
+		const user = getCurrentUser(socket.id);
+		io.to(user.room).emit('typing', data);
 	});
 });
 

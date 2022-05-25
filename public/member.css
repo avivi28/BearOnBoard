@@ -781,3 +781,15 @@ input:focus,
 	padding-left: 15px;
 	color: white;
 }
+
+.fallback {
+	width: 574px;
+	background: #efefef;
+	height: 40px;
+	position: absolute;
+	bottom: 89px;
+	left: 0px;
+	font-style: italic;
+	padding: 8px;
+	color: #674115;
+}

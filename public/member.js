@@ -1,3 +1,6 @@
+const socket = io();
+console.log(socket);
+
 //-----------logOut Function----------------
 function logout() {
 	fetch('/api/user', {
@@ -509,6 +512,39 @@ function sendMessage(Res, userName) {
 	});
 }
 
+//Get message from server
+socket.on('message', (data, room) => {
+	//catch return from server
+	addNewMessage(
+		{
+			userName: data.name,
+			message: data.message,
+		},
+		room
+	);
+});
+
+//------------Show typing status of user--------------
+const fallback = document.querySelector('.fallback');
+let userName = '';
+userName = userData['userName'];
+inputField.addEventListener('keyup', () => {
+	socket.emit('typing', {
+		isTyping: inputField.value.length > 0,
+		nick: userName,
+	});
+});
+
+socket.on('typing', function (data) {
+	const { isTyping, nick } = data;
+	if (!isTyping) {
+		fallback.innerHTML = '';
+		return;
+	}
+
+	fallback.innerHTML = `<p>${nick} is typing...</p>`;
+});
+
 //------------Delete Friends or Show your friends' saved posts on map----------
 const deleteModal = document.getElementById('delete_modal');
 const deleteIcon = document.getElementById('delete_bear');
@@ -604,21 +640,3 @@ function heartBeat() {
 function heartStop() {
 	likes.className = '';
 }
-
-//------------Chat room System------------
-const socket = io();
-console.log(socket);
-
-//Get message from server
-socket.on('message', (data, room) => {
-	//catch return from server
-	addNewMessage(
-		{
-			userName: data.name,
-			message: data.message,
-		},
-		room
-	);
-
-	console.log(data);
-});
