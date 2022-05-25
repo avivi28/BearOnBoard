@@ -322,6 +322,8 @@ getFriendLists();
 
 const friendContainer = document.getElementById('friendslist_container');
 
+const inputField = document.getElementById('message_input');
+const messageForm = document.getElementById('chatroom_form');
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
 		const detailContainer = document.createElement('div');
@@ -334,48 +336,54 @@ function showFriendLists(Res) {
 		const imageContainer = document.createElement('div');
 		imageContainer.style = 'position: relative;';
 
+		const friendImage = document.createElement('img');
+		friendImage.src =
+			'https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png';
+		friendImage.setAttribute('id', 'friends_icon');
 		//---------check friends online or offline
 		const statusDot = document.createElement('p');
 		statusDot.className = 'online-status';
 		const friendStatusName = Res['friends'][j]['name'];
 		statusDot.setAttribute('id', `friendName${friendStatusName}`);
+		showFriendsStatus();
 
-		let userName = '';
+		//------------show chatroom--------------
+		const userName = userData['userName'];
+		friendImage.addEventListener('click', () => {
+			let room = '';
+			const messageBoxContainer = document.getElementById(
+				'message_body_container'
+			);
+			messageBoxContainer.textContent = '';
+			const messageBox = document.createElement('div');
+			messageBoxContainer.appendChild(messageBox);
+			fetch(
+				`/api/chatroom?sender=${userData['userId']}&recipient=${Res['friends'][j]['_id']}`,
+				{
+					method: 'GET',
+				}
+			)
+				.then((Res) => Res.json())
+				.then((Res) => {
+					console.log(Res);
+					creatRoom(Res);
+					sendMessage(Res, userName);
+				})
+				.catch((error) => console.log(error));
 
-		const newUserConnected = () => {
-			userName = userData['userName'];
-			socket.emit('new user', userName);
-			showStatus(userName);
-		};
+			function creatRoom(Res) {
+				room = Res['roomId'];
+				console.log(Res['roomId']);
+				//Join chatrrom
+				socket.emit('joinRoom', { userName, room });
 
-		function showStatus(userName) {
-			if (!document.getElementById(`friendName${userName}`)) {
-				return;
+				document.getElementById('chatroom_container').style.display = 'block';
+				messageBox.textContent = '';
+				messageBox.className = 'message_body';
+				messageBox.setAttribute('id', `roomId:${room}`);
 			}
-
-			document.getElementById(`friendName${userName}`).style.background =
-				'rgb(85 228 82)';
-		}
-		function showOffline(userName) {
-			document.getElementById(`friendName${userName}`).style.background =
-				'rgb(220 213 231)';
-		}
-
-		// new user is created so we generate nickname and emit event
-		newUserConnected();
-
-		socket.on('new user', function (data) {
-			data.map((userName) => showStatus(userName));
 		});
 
-		socket.on('user disconnected', function (userName) {
-			showOffline(userName);
-		});
-
-		const friendImage = document.createElement('img');
-		friendImage.src =
-			'https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png';
-		friendImage.setAttribute('id', 'friends_icon');
 		const friendName = document.createElement('p');
 		friendName.className = 'friends_name';
 		const friendBio = document.createElement('p');
@@ -411,6 +419,94 @@ function showFriendLists(Res) {
 
 		decideFriendAction(realId, realName, friendGps, deleteFriend);
 	}
+}
+
+//---------check friends online or offline
+function showFriendsStatus() {
+	let userName = '';
+
+	const newUserConnected = () => {
+		userName = userData['userName'];
+		socket.emit('newUser', userName); //append new username into list on server
+		showStatus(userName);
+	};
+
+	function showStatus(userName) {
+		if (!document.getElementById(`friendName${userName}`)) {
+			return;
+		}
+		document.getElementById(`friendName${userName}`).style.background =
+			'rgb(85 228 82)';
+	}
+	function showOffline(userName) {
+		document.getElementById(`friendName${userName}`).style.background =
+			'rgb(220 213 231)';
+	}
+
+	// new user is created so we generate nickname and emit event
+	newUserConnected();
+
+	socket.on('newUser', function (data) {
+		data.map((userName) => showStatus(userName));
+	});
+
+	socket.on('user disconnected', function (userName) {
+		showOffline(userName);
+	});
+}
+
+//------------show chatroom--------------
+const addNewMessage = ({ userName, message }, room) => {
+	const time = new Date();
+	const formattedTime = time.toLocaleString('en-US', {
+		hour: 'numeric',
+		minute: 'numeric',
+	});
+
+	const receivedMsg = `
+	<div class="incoming__message">
+		<div class="received__message">
+		<p>${message}</p>
+		<div class="message__info">
+			<span class="message__author">${userName}</span>
+			<span class="time_date">${formattedTime}</span>
+		</div>
+		</div>
+	</div>`;
+
+	const myMsg = `
+	<div class="outgoing__message">
+		<div class="sent__message">
+		<p>${message}</p>
+		<div class="message__info">
+			<span class="time_date">${formattedTime}</span>
+		</div>
+		</div>
+	</div>`;
+
+	document.getElementById(`roomId:${room}`).innerHTML +=
+		userName === userData['userName'] ? myMsg : receivedMsg;
+
+	// Scroll down
+	document.getElementById(`roomId:${room}`).scrollTop = document.getElementById(
+		`roomId:${room}`
+	).scrollHeight;
+};
+
+function sendMessage(Res, userName) {
+	messageForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		if (!inputField.value) {
+			return;
+		}
+
+		socket.emit('chatMessage', {
+			message: inputField.value,
+			name: userName,
+		});
+
+		inputField.value = '';
+	});
 }
 
 //------------Delete Friends or Show your friends' saved posts on map----------
@@ -513,89 +609,16 @@ function heartStop() {
 const socket = io();
 console.log(socket);
 
-// const inboxPeople = document.querySelector('.inbox__people');
+//Get message from server
+socket.on('message', (data, room) => {
+	//catch return from server
+	addNewMessage(
+		{
+			userName: data.name,
+			message: data.message,
+		},
+		room
+	);
 
-// let userName = '';
-
-// const newUserConnected = (user) => {
-// 	userName = user || `User${Math.floor(Math.random() * 1000000)}`;
-// 	socket.emit('new user', userName);
-// 	addToUsersBox(userName);
-// };
-
-// const addToUsersBox = (userName) => {
-// 	if (!!document.querySelector(`.${userName}-userlist`)) {
-// 		return;
-// 	}
-
-// 	const userBox = `
-//     <div class="chat_ib ${userName}-userlist">
-//       <h5>${userName}</h5>
-//     </div>
-//   `;
-// 	inboxPeople.innerHTML += userBox;
-// };
-
-// // new user is created so we generate nickname and emit event
-// newUserConnected();
-
-// socket.on('new user', function (data) {
-// 	data.map((user) => addToUsersBox(user));
-// });
-
-// socket.on('user disconnected', function (userName) {
-// 	document.querySelector(`.${userName}-userlist`).remove();
-// });
-// //////////////////////////////////////////////////////////
-// const inputField = document.querySelector('.message_form__input');
-// const messageForm = document.querySelector('.message_form');
-// const messageBox = document.querySelector('.messages__history');
-
-// const addNewMessage = ({ user, message }) => {
-// 	const time = new Date();
-// 	const formattedTime = time.toLocaleString('en-US', {
-// 		hour: 'numeric',
-// 		minute: 'numeric',
-// 	});
-
-// 	const receivedMsg = `
-//   <div class="incoming__message">
-//     <div class="received__message">
-//       <p>${message}</p>
-//       <div class="message__info">
-//         <span class="message__author">${user}</span>
-//         <span class="time_date">${formattedTime}</span>
-//       </div>
-//     </div>
-//   </div>`;
-
-// 	const myMsg = `
-//   <div class="outgoing__message">
-//     <div class="sent__message">
-//       <p>${message}</p>
-//       <div class="message__info">
-//         <span class="time_date">${formattedTime}</span>
-//       </div>
-//     </div>
-//   </div>`;
-
-// 	messageBox.innerHTML += user === userName ? myMsg : receivedMsg;
-// };
-
-// messageForm.addEventListener('submit', (e) => {
-// 	e.preventDefault();
-// 	if (!inputField.value) {
-// 		return;
-// 	}
-
-// 	socket.emit('chat message', {
-// 		message: inputField.value,
-// 		nick: userName,
-// 	});
-
-// 	inputField.value = '';
-// });
-
-// socket.on('chat message', function (data) {
-// 	addNewMessage({ user: data.nick, message: data.message });
-// });
+	console.log(data);
+});

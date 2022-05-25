@@ -6,6 +6,7 @@ let friendSchema = new mongoose.Schema(
 		sender: { type: ObjectId, required: true, ref: 'User' },
 		recipient: { type: ObjectId, required: true, ref: 'User' },
 		status: { type: Number },
+		roomId: { type: ObjectId, ref: 'chatHistory' },
 	},
 	{ collection: 'friend_map' }
 );

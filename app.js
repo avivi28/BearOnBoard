@@ -5,7 +5,10 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_ACCESS);
 const db = mongoose.connection;
-db.on('error', (error) => console.log(error));
+db.on('error', (error) => {
+	console.log('Mongo connection has an error', error);
+	mongoose.disconnect();
+});
 db.once('open', () => {
 	console.log('Connected to Mongoose');
 });
@@ -24,7 +27,14 @@ const auth = require('./model/auth');
 const post = require('./model/post');
 const comment = require('./model/comment');
 const friend = require('./model/friend');
+const chatroom = require('./model/chatroom');
 const { generateUploadURL } = require('./model/s3');
+const {
+	userJoin,
+	getCurrentUser,
+	userLeave,
+	getRoomUsers,
+} = require('./utils/users');
 const cookieParser = require('cookie-parser'); //for getting cookies from client
 
 app.use(cookieParser());
@@ -37,21 +47,39 @@ app.set('views', 'views');
 
 const activeUsers = new Set();
 io.on('connection', (socket) => {
+	//connect to socket io server
 	console.log('socket connected');
-	socket.on('new user', function (data) {
+	socket.on('newUser', function (data) {
+		//listen event
 		socket.userId = data;
 		activeUsers.add(data);
-		io.emit('new user', [...activeUsers]);
+		io.emit('newUser', [...activeUsers]); //send to all clients
 	});
 
-	socket.on('chat message', function (data) {
-		io.emit('chat message', data);
+	socket.on('joinRoom', ({ userName, room }) => {
+		// userLeave(socket.id);
+		const user = userJoin(socket.id, userName, room);
+		const users = getRoomUsers();
+		// console.log({ userName, room });
+		// console.log(user);
+		// console.log(users);
+		socket.join(user.room);
 	});
 
 	socket.on('disconnect', () => {
+		const user = userLeave(socket.id);
 		console.log('socket disconnected');
-		activeUsers.delete(socket.userId);
-		io.emit('user disconnected', socket.userId);
+		if (user) {
+			io.to(user.room).emit('leftMessage', `${user.userName}has left the chat`);
+		}
+	});
+
+	socket.on('chatMessage', (msg, room) => {
+		const user = getCurrentUser(socket.id);
+		console.log(user);
+
+		io.to(user.room).emit('message', msg, user.room);
+		console.log(msg);
 	});
 });
 
@@ -97,6 +125,7 @@ app.use('/api/user', user);
 app.use('/api/post', post);
 app.use('/api/friend', friend);
 app.use('/api/comment', comment);
+app.use('/api/chatroom', chatroom);
 app.use('/auth', auth);
 
 app.use((req, res) => {
