@@ -4,23 +4,30 @@ const router = express.Router();
 const jwt_decode = require('jwt-decode');
 
 const Post = require('./dbSchema/postSchema.js');
-const Comment = require('./dbSchema/commentSchema.js');
 
 //------------get user's posts API--------------
 router.get('/', async (req, res) => {
-	const JWTcookies = req.cookies['token'];
-	const decoded = jwt_decode(JWTcookies);
-	const userId = decoded['userId'];
-	const locationResult = await Post.find({
-		userId: ObjectId(userId),
-	});
-	res.json(locationResult);
+	try {
+		const JWTcookies = req.cookies['token'];
+		const decoded = jwt_decode(JWTcookies);
+		const userId = decoded['userId'];
+		const locationResult = await Post.find({
+			userId: ObjectId(userId),
+		});
+		res.json(locationResult);
+	} catch (e) {
+		res.status(500).json({ error: true, message: 'server error' });
+	}
 });
 
 //------------get friends' posts API--------------
 router.get('/:friendId', async (req, res) => {
-	const result = await Post.find({ userId: ObjectId(req.params.friendId) });
-	res.json(result);
+	try {
+		const result = await Post.find({ userId: ObjectId(req.params.friendId) });
+		res.json(result);
+	} catch (e) {
+		res.status(500).json({ error: true, message: 'server error' });
+	}
 });
 
 //-------------posts' likes API---------------
@@ -47,23 +54,27 @@ router.put('/', async (req, res) => {
 			);
 			res.json({ error: true, message: 'duplicated request' });
 		}
-	} catch (error) {
-		res.json({ error: true, message: 'system error' });
+	} catch (e) {
+		res.status(500).json({ error: true, message: 'server error' });
 	}
 });
 
 //-----------upload new posts API-------------
 router.post('/', async (req, res) => {
-	const post = new Post({
-		userId: req.body.userId,
-		img_url: req.body.img_url,
-		caption: req.body.caption,
-		location: req.body.location,
-		lat: req.body.lat,
-		lng: req.body.lng,
-	});
-	await post.save();
-	res.json({ lat: req.body.lat, lng: req.body.lng });
+	try {
+		const post = new Post({
+			userId: req.body.userId,
+			img_url: req.body.img_url,
+			caption: req.body.caption,
+			location: req.body.location,
+			lat: req.body.lat,
+			lng: req.body.lng,
+		});
+		await post.save();
+		res.json({ lat: req.body.lat, lng: req.body.lng });
+	} catch (e) {
+		res.status(500).json({ error: true, message: 'server error' });
+	}
 });
 
 module.exports = router;

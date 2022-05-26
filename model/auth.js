@@ -45,38 +45,42 @@ router.get(
 		failureRedirect: '/auth/failure',
 	}),
 	async (req, res) => {
-		const googleEmail = req.user.email;
-		const repeatedResult = await User.findOne({ email: googleEmail });
-		if (repeatedResult == null) {
-			const user = new User({
-				email: googleEmail,
-				name: req.user.displayName,
-			});
-			await user.save();
-			const newUserResult = await User.findOne({ email: googleEmail });
-			jwt.sign(
-				{
-					userId: newUserResult['_id'],
-					emailInput: googleEmail,
-					userName: newUserResult['name'],
-				},
-				process.env.JWT_TOKEN_SECRET,
-				(err, token) => {
-					res.cookie('token', token).redirect('/home');
-				}
-			);
-		} else {
-			jwt.sign(
-				{
-					userId: repeatedResult['_id'],
-					emailInput: googleEmail,
-					userName: repeatedResult['name'],
-				},
-				process.env.JWT_TOKEN_SECRET,
-				(err, token) => {
-					res.cookie('token', token).redirect('/home');
-				}
-			);
+		try {
+			const googleEmail = req.user.email;
+			const repeatedResult = await User.findOne({ email: googleEmail });
+			if (repeatedResult == null) {
+				const user = new User({
+					email: googleEmail,
+					name: req.user.displayName,
+				});
+				await user.save();
+				const newUserResult = await User.findOne({ email: googleEmail });
+				jwt.sign(
+					{
+						userId: newUserResult['_id'],
+						emailInput: googleEmail,
+						userName: newUserResult['name'],
+					},
+					process.env.JWT_TOKEN_SECRET,
+					(err, token) => {
+						res.cookie('token', token).redirect('/home');
+					}
+				);
+			} else {
+				jwt.sign(
+					{
+						userId: repeatedResult['_id'],
+						emailInput: googleEmail,
+						userName: repeatedResult['name'],
+					},
+					process.env.JWT_TOKEN_SECRET,
+					(err, token) => {
+						res.cookie('token', token).redirect('/home');
+					}
+				);
+			}
+		} catch (e) {
+			res.status(500).json({ error: true, message: 'server error' });
 		}
 	}
 );
