@@ -46,52 +46,6 @@
 						/>
 						<input type="submit" id="search_submit" value="" />
 					</form>
-					<div class="caption">
-						<p>Location:</p>
-						<p class="caption_content" id="location_content">
-							“Bear Bear Museum”
-						</p>
-						<p>Caption:</p>
-						<p class="caption_content" id="caption_content">
-							“If you live to be a hundred, I hope I live to be a hundred minus
-							one day, so that I never have to live a day without you.”
-						</p>
-					</div>
-					<div class="photos_container">
-						<p>Photos:</p>
-						<p class="tooltip">
-							<img
-								src="https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg"
-								id="likes"
-								onmouseover="heartBeat()"
-								onmouseout="heartStop()"
-							/>
-							<span class="tooltiptext" id="tooltiptext">99 likes</span>
-						</p>
-						<p class="imagesonly_container">
-							<img
-								src="https://d3qxlv297wj1rn.cloudfront.net/images/example.jpg"
-								id="post_image"
-							/>
-						</p>
-					</div>
-					<div class="friends-comment" id="friends-comment">
-						<img
-							src="https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png"
-							id="friends_icon"
-							class="friends_icon"
-						/>
-						<form id="comment-form">
-							<input
-								type="text"
-								name="comment"
-								id="comment-input"
-								placeholder="Add a comment..."
-								autocomplete="off"
-							/>
-						</form>
-					</div>
-					<div id="comment-entire-container"></div>
 				</div>
 				<button
 					onclick="addPost()"
@@ -158,6 +112,75 @@
 						</span>
 						<input type="submit" value="Add Post" id="submit_newposts" />
 					</form>
+				</div>
+			</div>
+			<div class="modal" id="posts_modal">
+				<div
+					class="modal-content"
+					id="posts-container"
+					style="
+						height: 400px;
+						width: 350px;
+						max-height: calc(100vh - 210px);
+						border-top: 24px solid #ffb939;
+						overflow-y: scroll;
+					"
+				>
+					<button onclick="hidePosts()">
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/x.svg"
+							id="x"
+							style="left: 305px; top: 20px"
+						/>
+					</button>
+					<p style="font-size: 16px; width: 302px; margin-top: 20px">
+						Location:<span
+							style="font-weight: 500; margin-left: 5px"
+							id="location-content"
+						></span>
+					</p>
+					<p style="font-size: 16px; width: 310px">
+						Caption:<span
+							style="font-weight: 500; margin-left: 5px"
+							id="caption-content"
+						></span>
+					</p>
+					<p class="friends-photo-container" style="font-size: 14px">
+						Photos:<span
+							style="
+								display: flex;
+								align-items: center;
+								justify-content: center;
+							"
+							><img id="friends-photos" />
+							<span class="tooltip">
+								<img
+									src="https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg"
+									id="likes"
+									onmouseover="heartBeat()"
+									onmouseout="heartStop()"
+								/>
+								<span class="tooltiptext" id="tooltiptext">10 likes</span>
+							</span></span
+						>
+					</p>
+					<div class="friends-comment" id="friends-comment">
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/friends-icon.png"
+							id="friends_icon"
+							class="friends_icon"
+						/>
+						<form id="comment-form">
+							<input
+								type="text"
+								name="comment"
+								id="comment-input"
+								placeholder="Add a comment..."
+								autocomplete="off"
+							/>
+						</form>
+					</div>
+					<div id="comment-entire-container"></div>
 				</div>
 			</div>
 		</div>

@@ -68,7 +68,8 @@ function getPosts() {
 	fetch('/api/post', { method: 'GET', credentials: 'include' })
 		.then((res) => res.json())
 		.then((res) => {
-			showAllMarker(res);
+			// showAllMarker(res);
+			showFriendsMarker(res);
 		});
 }
 

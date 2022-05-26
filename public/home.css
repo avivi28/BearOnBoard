@@ -206,8 +206,8 @@ select:-webkit-autofill:focus {
 }
 
 #likes {
-	right: -270px;
-	top: 5px;
+	left: 18px;
+	top: 10px;
 	cursor: pointer;
 }
 
@@ -308,7 +308,7 @@ q {
 	margin: 15% auto;
 	width: 300px;
 	height: 320px;
-	border-radius: 32px;
+	border-radius: 25px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -430,6 +430,7 @@ input:focus {
 	align-items: center;
 	margin: 0px;
 	margin-top: 10px;
+	background: white;
 }
 
 .heart {
@@ -447,12 +448,13 @@ input:focus {
 .tooltip {
 	position: relative;
 	display: inline-block;
-	margin-bottom: -125px;
+	margin-bottom: -43px;
+	margin-left: 2px;
 }
 
 .tooltip .tooltiptext {
 	visibility: hidden;
-	width: 80px;
+	width: 70px;
 	background-color: #674115;
 	opacity: 0.8;
 	color: #fff;
@@ -462,7 +464,6 @@ input:focus {
 	position: absolute;
 	z-index: 1;
 	bottom: 200%;
-	margin-left: 210px;
 }
 
 .tooltip .tooltiptext::after {
@@ -509,5 +510,5 @@ input:focus {
 }
 
 #comment-entire-container {
-	margin-bottom: 100px;
+	margin-bottom: 20px;
 }

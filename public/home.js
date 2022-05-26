@@ -34,6 +34,10 @@ function hidePost() {
 	modal.style.display = 'none';
 }
 
+function hidePosts() {
+	document.getElementById('posts_modal').style.display = 'none';
+}
+
 const addPostButton = document.getElementById('add_button');
 function showAddPost() {
 	add_button.src =

@@ -373,6 +373,7 @@ input,
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-left: 18px;
 }
 
 #friends_search {
@@ -403,6 +404,7 @@ hr {
 	opacity: 0.5;
 	background-color: #674115;
 	margin-bottom: 20px;
+	margin-left: 22px;
 }
 
 .pending_list {
@@ -413,6 +415,7 @@ hr {
 	justify-content: flex-start;
 	flex-direction: column;
 	width: 265px;
+	margin-left: 10px;
 }
 
 #submit_newfriends {
