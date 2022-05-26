@@ -675,6 +675,17 @@ input:focus,
 	right: 3px;
 }
 
+.chatroom-online-status {
+	background: #dcd5e7;
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	border-radius: 10px;
+	bottom: 8px;
+	border: 2px solid white;
+	right: 3px;
+}
+
 #chatroom_container {
 	display: none;
 	width: 570px;
@@ -695,15 +706,24 @@ input:focus,
 	padding: 10px;
 }
 
-.header_chatroom > span {
+.header_chatroom > p > span {
 	font-weight: 700;
 	font-size: 20px;
 	color: #674115;
 	margin-left: 10px;
 }
 
+.name-and-status__container {
+	display: flex;
+	flex-direction: column;
+}
+
 #chatroom_icon {
 	width: 50px;
+}
+
+#chatroom_icon__container {
+	position: relative;
 }
 
 .message_body {
@@ -792,4 +812,9 @@ input:focus,
 	font-style: italic;
 	padding: 8px;
 	color: #674115;
+}
+
+#chatroom__status {
+	font-weight: 500;
+	font-size: 16px;
 }

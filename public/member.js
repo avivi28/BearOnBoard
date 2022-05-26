@@ -324,9 +324,13 @@ function getFriendLists() {
 getFriendLists();
 
 const friendContainer = document.getElementById('friendslist_container');
-
 const inputField = document.getElementById('message_input');
 const messageForm = document.getElementById('chatroom_form');
+const chatroomUser = document.getElementById('chatroom__name');
+const chatroomIconContainer = document.getElementById(
+	'chatroom_icon__container'
+);
+
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
 		const detailContainer = document.createElement('div');
@@ -348,11 +352,22 @@ function showFriendLists(Res) {
 		statusDot.className = 'online-status';
 		const friendStatusName = Res['friends'][j]['name'];
 		statusDot.setAttribute('id', `friendName${friendStatusName}`);
+
 		showFriendsStatus();
 
 		//------------show chatroom--------------
 		const userName = userData['userName'];
 		friendImage.addEventListener('click', () => {
+			const chatroomStatusDot = document.createElement('p');
+			chatroomStatusDot.className = 'chatroom-online-status';
+			chatroomStatusDot.setAttribute(
+				'id',
+				`friendChatroomName${Res['friends'][j]['name']}`
+			);
+			chatroomIconContainer.appendChild(chatroomStatusDot);
+
+			showChatroomFriendsStatus();
+
 			let room = '';
 			const messageBoxContainer = document.getElementById(
 				'message_body_container'
@@ -360,6 +375,7 @@ function showFriendLists(Res) {
 			messageBoxContainer.textContent = '';
 			const messageBox = document.createElement('div');
 			messageBoxContainer.appendChild(messageBox);
+			chatroomUser.textContent = friendStatusName;
 			fetch(
 				`/api/chatroom?sender=${userData['userId']}&recipient=${Res['friends'][j]['_id']}`,
 				{
@@ -368,7 +384,6 @@ function showFriendLists(Res) {
 			)
 				.then((Res) => Res.json())
 				.then((Res) => {
-					console.log(Res);
 					creatRoom(Res);
 					sendMessage(Res, userName);
 				})
@@ -376,7 +391,6 @@ function showFriendLists(Res) {
 
 			function creatRoom(Res) {
 				room = Res['roomId'];
-				console.log(Res['roomId']);
 				//Join chatrrom
 				socket.emit('joinRoom', { userName, room });
 
@@ -444,6 +458,43 @@ function showFriendsStatus() {
 	function showOffline(userName) {
 		document.getElementById(`friendName${userName}`).style.background =
 			'rgb(220 213 231)';
+	}
+
+	// new user is created so we generate nickname and emit event
+	newUserConnected();
+
+	socket.on('newUser', function (data) {
+		data.map((userName) => showStatus(userName));
+	});
+
+	socket.on('user disconnected', function (userName) {
+		showOffline(userName);
+	});
+}
+
+//---------check friends online or offline (for chatroom icon)
+const chatroomStatus = document.getElementById('chatroom__status');
+function showChatroomFriendsStatus() {
+	let userName = '';
+
+	const newUserConnected = () => {
+		userName = userData['userName'];
+		socket.emit('newUser', userName); //append new username into list on server
+		showStatus(userName);
+	};
+
+	function showStatus(userName) {
+		if (!document.getElementById(`friendChatroomName${userName}`)) {
+			return;
+		}
+		document.getElementById(`friendChatroomName${userName}`).style.background =
+			'rgb(85 228 82)';
+		chatroomStatus.textContent = 'online';
+	}
+	function showOffline(userName) {
+		document.getElementById(`friendChatroomName${userName}`).style.background =
+			'rgb(220 213 231)';
+		chatroomStatus.textContent = 'offline';
 	}
 
 	// new user is created so we generate nickname and emit event
