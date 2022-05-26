@@ -35,9 +35,8 @@ router.patch('/', async (req, res) => {
 	};
 	const repeatedResult = await User.findOne(loginInfo);
 	//--------------Bcrypt Check Pw---------------
-	const salt = await bcrypt.genSalt(10);
-	const hash = bcrypt.hashSync(passwordInput, salt);
-	const bcryptResult = bcrypt.compare(passwordInput, hash);
+	const truePw = repeatedResult['password'];
+	const bcryptResult = bcrypt.compareSync(passwordInput, truePw);
 
 	if (repeatedResult != null && bcryptResult) {
 		const userId = repeatedResult['_id'];

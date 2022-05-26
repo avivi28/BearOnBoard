@@ -57,7 +57,6 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('joinRoom', ({ userName, room }) => {
-		// userLeave(socket.id);
 		const user = userJoin(socket.id, userName, room);
 
 		socket.join(user.room);
@@ -96,7 +95,13 @@ app.use(
 ); //middleware
 
 app.get('/', (req, res) => {
-	res.render('index');
+	// res.render('index');
+	const token = req.cookies.token;
+	if (!token) {
+		return res.render('index');
+	} else {
+		res.render('home', { apikey: process.env.GOOGLE_MAP_KEY });
+	}
 }); //homepage
 
 app.get('/register', (req, res) => {
