@@ -245,10 +245,12 @@ input,
 }
 
 .friendslist_container {
-	width: 280px;
+	width: 330px;
 	display: flex;
+	height: 290px;
 	flex-direction: column;
 	align-items: flex-start;
+	overflow-y: scroll;
 }
 
 .detail-container {
@@ -257,6 +259,7 @@ input,
 	align-items: center;
 	margin-bottom: 5px;
 	position: relative;
+	margin-left: 20px;
 }
 
 .name-container {

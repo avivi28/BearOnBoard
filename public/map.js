@@ -143,6 +143,10 @@ function showAllMarker(res) {
 					lng: position.coords.longitude,
 				};
 
+				if (typeof google == 'undefined') {
+					location.reload();
+				}
+
 				const map = new google.maps.Map(document.getElementById('googleMap'), {
 					zoom: 18,
 					center: pos,

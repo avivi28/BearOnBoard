@@ -63,6 +63,9 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('disconnect', () => {
+		activeUsers.delete(socket.userId);
+		io.emit('user disconnected', socket.userId);
+
 		const user = userLeave(socket.id);
 		console.log('socket disconnected');
 		if (user) {

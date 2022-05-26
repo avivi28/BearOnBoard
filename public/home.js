@@ -34,6 +34,15 @@ function hidePost() {
 	modal.style.display = 'none';
 }
 
+const addPostButton = document.getElementById('add_button');
+function showAddPost() {
+	add_button.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/add_post_hover.svg';
+}
+function leaveAddPost() {
+	add_button.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/add_post.svg';
+}
+
 // ----------get User info from JWT------------
 let JWTcookies = document.cookie;
 const base64Url = JWTcookies.split('.')[1];
@@ -125,8 +134,8 @@ let userName = '';
 
 const newUserConnected = () => {
 	userName = userData['userName'];
-	socket.emit('new user', userName);
-	showStatus(userName);
+	socket.emit('newUser', userName);
+	// showStatus(userName);
 };
 
 newUserConnected();
