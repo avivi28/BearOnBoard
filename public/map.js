@@ -1,7 +1,7 @@
 function googleAPI() {
 	initMap();
 	showMarker();
-	showAllMarker();
+	showFriendsMarker();
 }
 
 let map;
@@ -68,7 +68,6 @@ function getPosts() {
 	fetch('/api/post', { method: 'GET', credentials: 'include' })
 		.then((res) => res.json())
 		.then((res) => {
-			// showAllMarker(res);
 			showFriendsMarker(res);
 		});
 }
@@ -120,11 +119,12 @@ function showMarker(res) {
 		.then((res) => res.json())
 		.then((res) => {
 			marker.addListener('click', () => {
+				postModal.style.display = 'block';
 				const lastPost = res.length - 1;
 				const postId = res[lastPost]['_id'];
-				caption.textContent = res[lastPost]['caption'];
-				postPhoto.src = res[lastPost]['img_url'];
-				locationContent.textContent = res[lastPost]['location'];
+				captionFriendContent.textContent = res[lastPost]['caption'];
+				friendsPhotos.src = res[lastPost]['img_url'];
+				locationFriendContent.textContent = res[lastPost]['location'];
 
 				const likesNumber = res[lastPost]['likes'].length;
 				toolTipText.textContent = `${likesNumber} likes`;
@@ -133,91 +133,6 @@ function showMarker(res) {
 				showComments(postId);
 			});
 		});
-}
-
-function showAllMarker(res) {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				const pos = {
-					lat: position.coords.latitude,
-					lng: position.coords.longitude,
-				};
-
-				if (typeof google == 'undefined') {
-					location.reload();
-				}
-
-				const map = new google.maps.Map(document.getElementById('googleMap'), {
-					zoom: 18,
-					center: pos,
-					fullscreenControl: false,
-					streetViewControl: false, //remove the default button
-					mapTypeControl: false,
-					styles: mapStyles,
-				});
-
-				// Create new control button on map
-				const centerControlDiv = document.createElement('div');
-
-				CenterControl(centerControlDiv, map);
-				map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-					centerControlDiv
-				);
-
-				const userIcon = '/images/smaller-icon.png';
-				const blackImage = '/images/black-mark.png';
-				const pickedMarker = '/images/bear-mark.png';
-
-				const Currentmarker = new google.maps.Marker({
-					position: pos,
-					map: map,
-					icon: userIcon,
-					animation: google.maps.Animation.BOUNCE,
-				});
-
-				for (let i = 0; i < res.length; i++) {
-					const geoInfo = {
-						lat: res[i]['lat'],
-						lng: res[i]['lng'],
-					};
-
-					const marker = new google.maps.Marker({
-						position: geoInfo,
-						map: map,
-						icon: blackImage,
-						animation: google.maps.Animation.DROP,
-					});
-
-					marker.addListener('click', () => {
-						const postId = res[i]['_id'];
-						caption.textContent = res[i]['caption'];
-						postPhoto.src = res[i]['img_url'];
-						locationContent.textContent = res[i]['location'];
-						marker.setIcon(pickedMarker);
-						map.setCenter(geoInfo);
-						map.setZoom(18);
-
-						const likesNumber = res[i]['likes'].length;
-						toolTipText.textContent = `${likesNumber} likes`;
-
-						addLikes(postId, likesNumber);
-						addComments(postId);
-						showComments(postId);
-					});
-					marker.addListener('mouseout', () => {
-						marker.setIcon(blackImage);
-					});
-				}
-			},
-			() => {
-				handleLocationError(true, infoWindow, map.getCenter());
-			}
-		);
-	} else {
-		// Browser doesn't support Geolocation
-		handleLocationError(false, infoWindow, map.getCenter());
-	}
 }
 
 const postModal = document.getElementById('posts_modal');
@@ -236,6 +151,10 @@ function showFriendsMarker(res) {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				};
+
+				if (typeof google == 'undefined') {
+					location.reload();
+				}
 
 				const map = new google.maps.Map(document.getElementById('googleMap'), {
 					zoom: 18,

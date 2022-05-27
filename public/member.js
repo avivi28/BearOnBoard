@@ -25,6 +25,25 @@ function hideFriend() {
 	modal.style.display = 'none';
 }
 
+const addFriendButton = document.getElementById('friends_add');
+function showAddFriend() {
+	addFriendButton.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/add_friends_hover.svg';
+}
+function hideAddFriend() {
+	addFriendButton.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/add_friends.svg';
+}
+
+const backLocation = document.getElementById('back_location');
+function showReturn() {
+	backLocation.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/back_to_location_hover.svg';
+}
+function hideReturn() {
+	backLocation.src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/back_to_location.svg';
+}
 //----------get User info from JWT------------
 let JWTcookies = document.cookie;
 const base64Url = JWTcookies.split('.')[1];

@@ -91,7 +91,21 @@
 					</div>
 					<div class="friendslist"><p>My Friends:</p></div>
 					<div class="friendslist_container" id="friendslist_container"></div>
-					<button onclick="addFriend()">
+					<a
+						href="/home"
+						onmousemove="showReturn()"
+						onmouseleave="hideReturn()"
+					>
+						<img
+							src="https://d3qxlv297wj1rn.cloudfront.net/images/back_to_location.svg"
+							id="back_location"
+						/>
+					</a>
+					<button
+						onclick="addFriend()"
+						onmousemove="showAddFriend()"
+						onmouseleave="hideAddFriend()"
+					>
 						<img
 							src="https://d3qxlv297wj1rn.cloudfront.net/images/add_friends.svg"
 							id="friends_add"

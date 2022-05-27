@@ -18,6 +18,45 @@
 			href="https://d3qxlv297wj1rn.cloudfront.net/images/favicon/favicon.ico"
 		/>
 		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			(function (g, u, i, d, e, s) {
+				g[e] = g[e] || [];
+				var f = u.getElementsByTagName(i)[0];
+				var k = u.createElement(i);
+				k.async = true;
+				k.src =
+					'https://static.userguiding.com/media/user-guiding-' +
+					s +
+					'-embedded.js';
+				f.parentNode.insertBefore(k, f);
+				if (g[d]) return;
+				var ug = (g[d] = { q: [] });
+				ug.c = function (n) {
+					return function () {
+						ug.q.push([n, arguments]);
+					};
+				};
+				var m = [
+					'previewGuide',
+					'finishPreview',
+					'track',
+					'identify',
+					'triggerNps',
+					'hideChecklist',
+					'launchChecklist',
+				];
+				for (var j = 0; j < m.length; j += 1) {
+					ug[m[j]] = ug.c(m[j]);
+				}
+			})(
+				window,
+				document,
+				'script',
+				'userGuiding',
+				'userGuidingLayer',
+				'993146527ID'
+			);
+		</script>
 	</head>
 	<body>
 		<div class="entire_container">
@@ -145,24 +184,27 @@
 							id="caption-content"
 						></span>
 					</p>
-					<p class="friends-photo-container" style="font-size: 14px">
-						Photos:<span
-							style="
-								display: flex;
-								align-items: center;
-								justify-content: center;
-							"
-							><img id="friends-photos" />
-							<span class="tooltip">
-								<img
-									src="https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg"
-									id="likes"
-									onmouseover="heartBeat()"
-									onmouseout="heartStop()"
-								/>
-								<span class="tooltiptext" id="tooltiptext">10 likes</span>
-							</span></span
-						>
+					<p class="friends-photo-container" style="font-size: 14px">Photos:</p>
+					<div
+						style="display: flex; align-items: center; justify-content: center"
+					>
+						<img id="friends-photos" />
+					</div>
+					<p style="display: flex; justify-content: flex-end; width: 305px">
+						<span class="tooltip">
+							<img
+								src="https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg"
+								id="likes"
+								onmouseover="heartBeat()"
+								onmouseout="heartStop()"
+							/>
+							<span class="tooltiptext" id="tooltiptext">10 likes</span>
+						</span>
+						<button style="cursor: pointer" onclick="deletePost()">
+							<img
+								src="https://d3qxlv297wj1rn.cloudfront.net/images/trash_bin.svg"
+							/>
+						</button>
 					</p>
 					<div class="friends-comment" id="friends-comment">
 						<img

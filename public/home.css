@@ -206,8 +206,8 @@ select:-webkit-autofill:focus {
 }
 
 #likes {
-	left: 18px;
-	top: 10px;
+	left: 22px;
+	top: 8px;
 	cursor: pointer;
 }
 
@@ -420,7 +420,9 @@ input:focus {
 }
 
 #friends-photos {
-	width: 160px;
+	width: 305px;
+	margin-left: 15px;
+	margin-top: 10px;
 	align-items: center;
 	justify-content: center;
 }
@@ -429,7 +431,6 @@ input:focus {
 	display: flex;
 	align-items: center;
 	margin: 0px;
-	margin-top: 10px;
 	background: white;
 }
 
@@ -448,13 +449,13 @@ input:focus {
 .tooltip {
 	position: relative;
 	display: inline-block;
-	margin-bottom: -43px;
-	margin-left: 2px;
+	margin-bottom: 53px;
+	margin-right: 70px;
 }
 
 .tooltip .tooltiptext {
 	visibility: hidden;
-	width: 70px;
+	width: 80px;
 	background-color: #674115;
 	opacity: 0.8;
 	color: #fff;

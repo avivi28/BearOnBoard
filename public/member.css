@@ -262,6 +262,11 @@ input,
 	margin-left: 20px;
 }
 
+.detail-container:hover {
+	background: #80808017;
+	border-radius: 50px;
+}
+
 .name-container {
 	display: flex;
 	flex-direction: column;
@@ -293,6 +298,13 @@ input,
 	position: absolute;
 	right: 15px;
 	bottom: 18px;
+	cursor: pointer;
+}
+
+#back_location {
+	position: absolute;
+	right: 80px;
+	bottom: 13px;
 	cursor: pointer;
 }
 
