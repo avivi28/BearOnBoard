@@ -349,6 +349,7 @@ const chatroomUser = document.getElementById('chatroom__name');
 const chatroomIconContainer = document.getElementById(
 	'chatroom_icon__container'
 );
+const chatroomContainer = document.getElementById('chatroom_container');
 
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
@@ -377,6 +378,7 @@ function showFriendLists(Res) {
 		//------------show chatroom--------------
 		const userName = userData['userName'];
 		friendImage.addEventListener('click', () => {
+			googleMap.style.display = 'none';
 			const chatroomStatusDot = document.createElement('p');
 			chatroomStatusDot.className = 'chatroom-online-status';
 			chatroomStatusDot.setAttribute(
@@ -413,7 +415,7 @@ function showFriendLists(Res) {
 				//Join chatrrom
 				socket.emit('joinRoom', { userName, room });
 
-				document.getElementById('chatroom_container').style.display = 'block';
+				chatroomContainer.style.display = 'block';
 				messageBox.textContent = '';
 				messageBox.className = 'message_body';
 				messageBox.setAttribute('id', `roomId:${room}`);
@@ -635,6 +637,7 @@ function showSad() {
 
 const yesDeleteButton = document.getElementById('yes-delete-button');
 const deleteForm = document.getElementById('delete_form');
+const googleMap = document.getElementById('googleMap');
 
 function decideFriendAction(realId, realName, friendGps, deleteFriend) {
 	deleteFriend.addEventListener('click', function deleteFriend(ev) {
@@ -647,8 +650,8 @@ function decideFriendAction(realId, realName, friendGps, deleteFriend) {
 	friendGps.addEventListener('click', function showFriendPost(ev) {
 		ev.preventDefault();
 
-		const googleMap = document.getElementById('googleMap');
 		googleMap.style.display = 'block';
+		chatroomContainer.style.display = 'none';
 		getFriendPosts(realId);
 	});
 }

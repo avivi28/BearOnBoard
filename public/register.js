@@ -2,6 +2,9 @@ const registerForm = document.getElementById('register_form');
 const messageReturn = document.getElementById('message_return');
 const entireContainer = document.getElementById('login_container');
 const successImage = document.querySelector('.success_image');
+const emailInput = document.getElementById('email');
+const userNameInput = document.getElementById('username');
+const pwInput = document.getElementById('password');
 
 registerForm.addEventListener('submit', function register(ev) {
 	ev.preventDefault();
@@ -29,6 +32,9 @@ registerForm.addEventListener('submit', function register(ev) {
 				messageReturn.textContent = 'Welcome! New Bear!';
 				messageReturn.className = 'success_message';
 				successImage.style.display = 'block';
+				emailInput.value = '';
+				userNameInput.value = '';
+				pwInput.value = '';
 			} else {
 				messageReturn.textContent = 'Sorry! Email has been used!';
 				successImage.style.display = 'none';

@@ -513,3 +513,36 @@ input:focus {
 #comment-entire-container {
 	margin-bottom: 20px;
 }
+
+#bear_banner {
+	width: 300px;
+	height: auto;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+
+.function_title {
+	color: #a26825;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+.function_text {
+	color: #a26825;
+	font-weight: 400;
+	font-size: 12px;
+}
+
+.function_container {
+	display: flex;
+	margin-left: 15px;
+	margin-top: 5px;
+}
+
+.function_text_container {
+	display: flex;
+	flex-direction: column;
+	margin-left: 10px;
+	margin-top: 10px;
+	width: 185px;
+}
