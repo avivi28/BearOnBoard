@@ -28,6 +28,7 @@ registerForm.addEventListener('submit', function register(ev) {
 		.then((Res) => Res.json())
 		.then((Res) => {
 			const okData = Res['ok'];
+			const idData = Res['id'];
 			if (okData == true) {
 				messageReturn.textContent = 'Welcome! New Bear!';
 				messageReturn.className = 'success_message';
@@ -35,6 +36,7 @@ registerForm.addEventListener('submit', function register(ev) {
 				emailInput.value = '';
 				userNameInput.value = '';
 				pwInput.value = '';
+				addFriendBot(idData);
 			} else {
 				messageReturn.textContent = 'Sorry! Email has been used!';
 				successImage.style.display = 'none';
@@ -43,3 +45,25 @@ registerForm.addEventListener('submit', function register(ev) {
 		})
 		.catch((error) => console.log(error));
 });
+
+//------adding default friend for user to test-----
+function addFriendBot(idData) {
+	const bodyData = {
+		userId: idData,
+		friendId: '628b2e8340cb83fbf83b7c2d', // userId of 'test'
+		status: 1,
+	};
+
+	fetch('/api/friend', {
+		method: 'PUT',
+		headers: new Headers({
+			'Content-Type': 'application/json;charset=utf-8',
+		}),
+		body: JSON.stringify(bodyData),
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			console.log(Res);
+		})
+		.catch((error) => console.log(error));
+}

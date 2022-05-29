@@ -144,6 +144,7 @@ const toolTipText = document.getElementById('tooltiptext');
 const commentInput = document.getElementById('comment-input');
 
 function showFriendsMarker(res) {
+	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -221,12 +222,16 @@ function showFriendsMarker(res) {
 				}
 			},
 			() => {
-				handleLocationError(true, infoWindow, map.getCenter());
+				alert(
+					'Oh no...Location access is disabled for the application. Go to your setting to enable location tracking.'
+				);
 			}
 		);
 	} else {
 		// Browser doesn't support Geolocation
-		handleLocationError(false, infoWindow, map.getCenter());
+		alert(
+			'Oh no...Location access is disabled for the application. Go to your setting to enable location tracking.'
+		);
 	}
 }
 
