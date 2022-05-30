@@ -350,6 +350,7 @@ const chatroomIconContainer = document.getElementById(
 	'chatroom_icon__container'
 );
 const chatroomContainer = document.getElementById('chatroom_container');
+const messageBoxContainer = document.getElementById('message_body_container');
 
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
@@ -390,23 +391,24 @@ function showFriendLists(Res) {
 			showChatroomFriendsStatus();
 
 			let room = '';
-			const messageBoxContainer = document.getElementById(
-				'message_body_container'
-			);
 			messageBoxContainer.textContent = '';
 			const messageBox = document.createElement('div');
 			messageBoxContainer.appendChild(messageBox);
 			chatroomUser.textContent = friendStatusName;
+			const friendId = Res['friends'][j]['_id'];
 			fetch(
-				`/api/chatroom?sender=${userData['userId']}&recipient=${Res['friends'][j]['_id']}`,
+				`/api/chatroom?sender=${userData['userId']}&recipient=${friendId}`,
 				{
 					method: 'GET',
 				}
 			)
 				.then((Res) => Res.json())
 				.then((Res) => {
+					const roomId = Res['roomId'];
 					creatRoom(Res);
-					sendMessage(Res, userName);
+					sendMessage(Res, friendId, userName);
+					showHistory(roomId);
+					loadMore(roomId);
 				})
 				.catch((error) => console.log(error));
 
@@ -568,12 +570,45 @@ const addNewMessage = ({ userName, message }, room) => {
 	).scrollHeight;
 };
 
-function sendMessage(Res, userName) {
+function sendMessage(Res, friendId, userName) {
 	messageForm.addEventListener('submit', (e) => {
 		e.preventDefault();
 		if (!inputField.value) {
 			return;
 		}
+
+		//-------input into database as chat history--------
+		const time = new Date();
+		const formattedTime = time.toLocaleString('en-US', {
+			hour: 'numeric',
+			minute: 'numeric',
+		});
+
+		const room = Res['roomId'];
+		let formData = new FormData(messageForm);
+		const messageInput = new URLSearchParams(formData);
+		const jsonData = Object.fromEntries(messageInput.entries());
+
+		let bodyData = {
+			message: jsonData['message'],
+			roomId: room,
+			time: formattedTime,
+			sender: userId,
+			recipient: friendId,
+		};
+
+		fetch('/api/chatroom', {
+			method: 'POST',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((Res) => Res.json())
+			.then((Res) => {
+				console.log(Res);
+			})
+			.catch((error) => console.log(error));
 
 		socket.emit('chatMessage', {
 			message: inputField.value,
@@ -595,6 +630,80 @@ socket.on('message', (data, room) => {
 		room
 	);
 });
+
+//------------Show history chat message---------------
+let count = 0;
+function showHistory(roomId) {
+	let bodyData = {
+		count: count,
+		roomId: roomId,
+	};
+
+	fetch(`/api/chatroom/`, {
+		method: 'PUT',
+		headers: new Headers({
+			'Content-Type': 'application/json;charset=utf-8',
+		}),
+		body: JSON.stringify(bodyData),
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			console.log(Res);
+			for (let i = Res.length - 1; i >= 0; i--) {
+				const receivedMsg = `
+			<div class="incoming__message">
+				<div class="received__message">
+				<p>${Res[i]['message']}</p>
+				<div class="message__info">
+					<span class="message__author">${Res[i]['sender']['name']}</span>
+					<span class="time_date">${Res[i]['time']}</span>
+				</div>
+				</div>
+			</div>`;
+
+				const myMsg = `
+			<div class="outgoing__message">
+				<div class="sent__message">
+				<p>${Res[i]['message']}</p>
+				<div class="message__info">
+					<span class="time_date">${Res[i]['time']}</span>
+				</div>
+				</div>
+			</div>`;
+
+				document.getElementById(`roomId:${roomId}`).innerHTML +=
+					Res[i]['sender']['name'] === userData['userName']
+						? myMsg
+						: receivedMsg;
+
+				// Scroll down first
+				document.getElementById(`roomId:${roomId}`).scrollTop =
+					document.getElementById(`roomId:${roomId}`).scrollHeight;
+			}
+		})
+		.catch((error) => console.log(error));
+}
+
+//-------scroll event------------
+let option = {
+	rootMargin: '100px',
+	threshold: 0.5,
+};
+
+function loadMore(roomId) {
+	let observer = new IntersectionObserver(onEnterView, option);
+	observer.observe(document.getElementById('scroll_bar_top')); // 設定觀察對象：告訴 observer 要觀察哪個目標元素
+	function onEnterView(entries, observer) {
+		entries.forEach((entry) => {
+			// entries 能拿到所有目標元素進出(intersect)變化的資訊
+			if (entry.isIntersecting) {
+				// 條件達成做什麼：符合設定條件下，目標進入或離開 viewport 時觸發此 callback 函式
+				showHistory(roomId);
+				pageData++;
+			}
+		});
+	}
+}
 
 //------------Show typing status of user--------------
 const fallback = document.querySelector('.fallback');

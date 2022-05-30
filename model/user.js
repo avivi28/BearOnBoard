@@ -12,10 +12,8 @@ require('dotenv').config({ path: '.env' });
 //-------Get user id API-------
 router.get('/', async (req, res) => {
 	try {
-		// const username = req.query.username;
-		// const result = await User.findOne({ name: username }).select({ name: 1 }); //return certain fields
-		const filter = {};
-		const result = await User.find(filter);
+		const username = req.query.username;
+		const result = await User.findOne({ name: username }).select({ name: 1 }); //return certain fields
 		res.json(result);
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });

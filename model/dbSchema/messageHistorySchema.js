@@ -6,10 +6,11 @@ let chatHistorySchema = new mongoose.Schema(
 		sender: { type: ObjectId, required: true, ref: 'User' },
 		recipient: { type: ObjectId, required: true, ref: 'User' },
 		message: { type: String },
-		time: { type: Date, default: Date.now },
-		roomId: { type: String },
+		order: { type: Date, default: Date.now },
+		time: { type: String },
+		roomId: { type: String, ref: 'Chatroom' },
 	},
-	{ collection: 'chat_history' }
+	{ collection: 'message_history' }
 );
 
 module.exports = mongoose.model('chatHistory', chatHistorySchema);

@@ -748,7 +748,8 @@ input:focus,
 	margin-top: 20px;
 	overflow-y: scroll;
 	margin-left: 20px;
-	height: 466px;
+	height: 414px;
+	padding-bottom: 10px;
 }
 
 .message__info {
