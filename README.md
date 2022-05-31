@@ -36,8 +36,10 @@ Features checklist: **(compulsory)**
 
 Extra Optimization: **(optional)**
 - [ ] Redis ✓
-- [X] Text-only Chatroom (join separated rooms, real-time text sending, show typing status)
+- [X] Text-only Chatroom (join separated rooms, real-time text sending, show typing status, show history chat with pagination)
 - [X] Show online/offline user status
+- [X] User Guide (software: `userguiding`)
+- [X] Handle Error when no location access
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine(API) ✓
@@ -58,7 +60,7 @@ Tiny stuffs:
 
 Suggestions from TONY:
 - [ ] improve db query efficiency (add index!)
-- [ ] handle overload when user click `likes` (message queue ?)
+- [ ] handle overload when user click `likes` (message queue)
 - [ ] upload all images to S3
 - [ ] upload docker image to ECR(elastic container registry)
 
@@ -73,6 +75,9 @@ Techniques used:
 - Web server
   - `NodeJS`/ `ExpressJS`
   - `EJS`
+- Cache
+  - `Redis`
+  - `Message Queue` (`Bull`)
 - Cloud Service
   - `S3`
   - `EC2`
