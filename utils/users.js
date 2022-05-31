@@ -26,17 +26,6 @@ function userLeave(id) {
 	}
 }
 
-//Get room users
-function getRoomUsers(id) {
-	// return users.filter((user) => user.room === room);
-	return users.filter(filterUser);
-}
-
-function filterUser(id) {
-	return users.id == id;
-}
-
 exports.getCurrentUser = getCurrentUser;
 exports.userJoin = userJoin;
 exports.userLeave = userLeave;
-exports.getRoomUsers = getRoomUsers;

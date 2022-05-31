@@ -108,7 +108,8 @@ function showMarker(res) {
 	CenterControl(centerControlDiv, map);
 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
 
-	const pickedMarker = '/images/bear-mark.png';
+	const pickedMarker =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/bear-mark.png';
 	const marker = new google.maps.Marker({
 		position: newGeo,
 		map: map,
@@ -174,9 +175,12 @@ function showFriendsMarker(res) {
 					centerControlDiv
 				);
 
-				const userIcon = '/images/smaller-icon.png';
-				const blackImage = '/images/black-mark.png';
-				const pickedMarker = '/images/bear-mark.png';
+				const userIcon =
+					'https://d3qxlv297wj1rn.cloudfront.net/images/smaller-icon.png';
+				const blackImage =
+					'https://d3qxlv297wj1rn.cloudfront.net/images/black-mark.png';
+				const pickedMarker =
+					'https://d3qxlv297wj1rn.cloudfront.net/images/bear-mark.png';
 
 				const Currentmarker = new google.maps.Marker({
 					position: pos,
