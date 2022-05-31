@@ -379,6 +379,9 @@ function showFriendLists(Res) {
 		//------------show chatroom--------------
 		const userName = userData['userName'];
 		friendImage.addEventListener('click', () => {
+			count = 0; //refresh page counting
+			nextPage = 1; //refresh scoll event
+
 			googleMap.style.display = 'none';
 			const chatroomStatusDot = document.createElement('p');
 			chatroomStatusDot.className = 'chatroom-online-status';
@@ -633,7 +636,11 @@ socket.on('message', (data, room) => {
 
 //------------Show history chat message---------------
 let count = 0;
+let nextPage = 1;
 function showHistory(roomId) {
+	const newContainer = document.createElement('div');
+	newContainer.setAttribute('id', `new_container:${roomId}`);
+
 	let bodyData = {
 		count: count,
 		roomId: roomId,
@@ -648,28 +655,27 @@ function showHistory(roomId) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			console.log(Res);
 			for (let i = Res.length - 1; i >= 0; i--) {
 				const receivedMsg = `
-			<div class="incoming__message">
-				<div class="received__message">
-				<p>${Res[i]['message']}</p>
-				<div class="message__info">
-					<span class="message__author">${Res[i]['sender']['name']}</span>
-					<span class="time_date">${Res[i]['time']}</span>
-				</div>
-				</div>
-			</div>`;
+				<div class="incoming__message">
+					<div class="received__message">
+					<p>${Res[i]['message']}</p>
+					<div class="message__info">
+						<span class="message__author">${Res[i]['sender']['name']}</span>
+						<span class="time_date">${Res[i]['time']}</span>
+					</div>
+					</div>
+				</div>`;
 
 				const myMsg = `
-			<div class="outgoing__message">
-				<div class="sent__message">
-				<p>${Res[i]['message']}</p>
-				<div class="message__info">
-					<span class="time_date">${Res[i]['time']}</span>
-				</div>
-				</div>
-			</div>`;
+				<div class="outgoing__message">
+					<div class="sent__message">
+					<p>${Res[i]['message']}</p>
+					<div class="message__info">
+						<span class="time_date">${Res[i]['time']}</span>
+					</div>
+					</div>
+				</div>`;
 
 				document.getElementById(`roomId:${roomId}`).innerHTML +=
 					Res[i]['sender']['name'] === userData['userName']
@@ -680,29 +686,79 @@ function showHistory(roomId) {
 				document.getElementById(`roomId:${roomId}`).scrollTop =
 					document.getElementById(`roomId:${roomId}`).scrollHeight;
 			}
+
+			document
+				.getElementById(`roomId:${roomId}`)
+				.insertBefore(
+					newContainer,
+					document.getElementById(`roomId:${roomId}`).firstChild
+				);
+		})
+		.catch((error) => console.log(error));
+}
+
+function showHistoryMore(roomId) {
+	let bodyData = {
+		count: count,
+		roomId: roomId,
+	};
+
+	fetch(`/api/chatroom/`, {
+		method: 'PUT',
+		headers: new Headers({
+			'Content-Type': 'application/json;charset=utf-8',
+		}),
+		body: JSON.stringify(bodyData),
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			if (Res.length < 6) {
+				nextPage = 0;
+			}
+			for (let i = Res.length - 1; i >= 0; i--) {
+				const receivedMsg = `
+				<div class="incoming__message">
+					<div class="received__message">
+					<p>${Res[i]['message']}</p>
+					<div class="message__info">
+						<span class="message__author">${Res[i]['sender']['name']}</span>
+						<span class="time_date">${Res[i]['time']}</span>
+					</div>
+					</div>
+				</div>`;
+
+				const myMsg = `
+				<div class="outgoing__message">
+					<div class="sent__message">
+					<p>${Res[i]['message']}</p>
+					<div class="message__info">
+						<span class="time_date">${Res[i]['time']}</span>
+					</div>
+					</div>
+				</div>`;
+
+				document.getElementById(`new_container:${roomId}`).innerHTML +=
+					Res[i]['sender']['name'] === userData['userName']
+						? myMsg
+						: receivedMsg;
+			}
 		})
 		.catch((error) => console.log(error));
 }
 
 //-------scroll event------------
-let option = {
-	rootMargin: '100px',
-	threshold: 0.5,
-};
-
 function loadMore(roomId) {
-	let observer = new IntersectionObserver(onEnterView, option);
-	observer.observe(document.getElementById('scroll_bar_top')); // 設定觀察對象：告訴 observer 要觀察哪個目標元素
-	function onEnterView(entries, observer) {
-		entries.forEach((entry) => {
-			// entries 能拿到所有目標元素進出(intersect)變化的資訊
-			if (entry.isIntersecting) {
-				// 條件達成做什麼：符合設定條件下，目標進入或離開 viewport 時觸發此 callback 函式
-				showHistory(roomId);
-				pageData++;
+	document
+		.getElementById(`roomId:${roomId}`)
+		.addEventListener('scroll', (evt) => {
+			if (evt.target.scrollTop === 0) {
+				if (nextPage == 0) {
+					return;
+				}
+				count++;
+				showHistoryMore(roomId);
 			}
 		});
-	}
 }
 
 //------------Show typing status of user--------------
