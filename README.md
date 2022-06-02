@@ -35,7 +35,7 @@ Features checklist: **(compulsory)**
 ```
 
 Extra Optimization: **(optional)**
-- [X] Redis ✓
+- [X] Redis (Posts caching & History message caching)
 - [X] Text-only Chatroom (join separated rooms, real-time text sending, show typing status, show history chat with pagination)
 - [X] Show online/offline user status
 - [X] User Guide (software: `userguiding`)
