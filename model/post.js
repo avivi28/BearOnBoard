@@ -3,6 +3,11 @@ const { ObjectId } = require('mongodb');
 const router = express.Router();
 const jwt_decode = require('jwt-decode');
 
+//connect to redis
+const redis = require('redis');
+const redisClient = redis.createClient(6379);
+redisClient.connect();
+
 const Post = require('./dbSchema/postSchema.js');
 
 //------------get user's posts API--------------
@@ -11,11 +16,23 @@ router.get('/', async (req, res) => {
 		const JWTcookies = req.cookies['token'];
 		const decoded = jwt_decode(JWTcookies);
 		const userId = decoded['userId'];
-		const locationResult = await Post.find({
-			userId: ObjectId(userId),
-		});
-		res.json(locationResult);
+
+		// Get from cache using the "Key"
+		const getRes = await redisClient.get(userId);
+		if (getRes) {
+			return res.json(JSON.parse(getRes));
+		} else {
+			// On cache-miss => query database
+			const locationResult = await Post.find({
+				userId: ObjectId(userId),
+			});
+
+			// Set cache
+			await redisClient.set(userId, JSON.stringify(locationResult));
+			return res.json(locationResult);
+		}
 	} catch (e) {
+		console.log(e);
 		res.status(500).json({ error: true, message: 'server error' });
 	}
 });

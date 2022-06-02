@@ -3,6 +3,11 @@ const { ObjectId } = require('mongodb');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 
+//connect to redis
+const redis = require('redis');
+const redisClient = redis.createClient(6379);
+redisClient.connect();
+
 const Chatroom = require('./dbSchema/chatroomSchema.js');
 const chatHistory = require('./dbSchema/messageHistorySchema.js');
 
@@ -42,18 +47,34 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	try {
 		const count = req.body.count * 6;
-		const chatroomHistory = await chatHistory
-			.find({
-				roomId: req.body.roomId,
-			})
-			.sort([['order', -1]])
-			.populate({
-				path: 'sender',
-				select: 'name',
-			})
-			.skip(count)
-			.limit(6);
-		res.json(chatroomHistory);
+		const roomId = req.body.roomId;
+
+		// Get from cache using the "Key"
+		const getRes = await redisClient.get(`${roomId}+count:${count}`);
+
+		if (getRes) {
+			return res.json(JSON.parse(getRes));
+		} else {
+			// On cache-miss => query database
+			const chatroomHistory = await chatHistory
+				.find({
+					roomId: roomId,
+				})
+				.sort([['order', -1]])
+				.populate({
+					path: 'sender',
+					select: 'name',
+				})
+				.skip(count)
+				.limit(6);
+
+			// Set cache
+			await redisClient.set(
+				`${roomId}+count:${count}`,
+				JSON.stringify(chatroomHistory)
+			);
+			return res.json(chatroomHistory);
+		}
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });
 	}
