@@ -35,7 +35,7 @@ Features checklist: **(compulsory)**
 ```
 
 Extra Optimization: **(optional)**
-- [ ] Redis ✓
+- [X] Redis ✓
 - [X] Text-only Chatroom (join separated rooms, real-time text sending, show typing status, show history chat with pagination)
 - [X] Show online/offline user status
 - [X] User Guide (software: `userguiding`)
@@ -85,6 +85,7 @@ Techniques used:
 - Other tools
   - `Nginx`
   - `Docker`
+  - `Docker-Compose`
   - `Figma`
   - `Git`
   - `Google Maps API`
