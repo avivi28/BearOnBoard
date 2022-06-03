@@ -275,6 +275,31 @@
 					<div id="comment-entire-container"></div>
 				</div>
 			</div>
+			<div class="modal" id="no_location_modal">
+				<div
+					class="modal-content"
+					id="posts-container"
+					style="
+						height: 315px;
+						width: 350px;
+						max-height: calc(100vh - 210px);
+						border-top: 24px solid #ffb939;
+					"
+				>
+					<img
+						src="https://d3qxlv297wj1rn.cloudfront.net/images/sad-bear.png"
+						style="width: 120px; margin-top: 10px"
+					/>
+					<p
+						class="alert_sentence"
+						style="margin-left: 10px; margin-right: 10px; font-size: 18px"
+					>
+						'Oh no...Location access is disabled for the application. Go to your
+						setting to enable location tracking.'
+					</p>
+					<button onclick="closeNoGps()" id="no_location_button">OK!</button>
+				</div>
+			</div>
 		</div>
 		<script src="/map.js"></script>
 		<script src="/home.js"></script>

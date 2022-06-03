@@ -569,3 +569,21 @@ input:focus {
 	text-align: center;
 	color: #aeb3b7;
 }
+
+.alert_sentence {
+	text-align: center;
+	margin-top: 100px;
+}
+
+#no_location_button {
+	width: 100px;
+	background: #ffb939;
+	font-weight: 700;
+	font-size: 20px;
+	color: #674115;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px rgb(0 0 0 / 25%);
+	cursor: pointer;
+	padding: 5px;
+	margin-top: 10px;
+}

@@ -144,6 +144,7 @@ const friendsPhotos = document.getElementById('friends-photos');
 const likes = document.getElementById('likes');
 const toolTipText = document.getElementById('tooltiptext');
 const commentInput = document.getElementById('comment-input');
+const noLocationAlert = document.getElementById('no_location_modal');
 
 function showFriendsMarker(res) {
 	// Try HTML5 geolocation.
@@ -211,6 +212,7 @@ function showFriendsMarker(res) {
 						locationFriendContent.textContent = res[i]['location'];
 						const likesNumber = res[i]['likes'].length;
 						toolTipText.textContent = `${likesNumber} likes`;
+						commentEntireContainer.textContent = ''; //reset the content
 
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
@@ -227,17 +229,17 @@ function showFriendsMarker(res) {
 				}
 			},
 			() => {
-				alert(
-					'Oh no...Location access is disabled for the application. Go to your setting to enable location tracking.'
-				);
+				noLocationAlert.style.display = 'block';
 			}
 		);
 	} else {
 		// Browser doesn't support Geolocation
-		alert(
-			'Oh no...Location access is disabled for the application. Go to your setting to enable location tracking.'
-		);
+		noLocationAlert.style.display = 'block';
 	}
+}
+
+function closeNoGps() {
+	noLocationAlert.style.display = 'none';
 }
 
 //-----------------likes function--------------------
