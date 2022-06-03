@@ -75,6 +75,11 @@ router.put('/', async (req, res) => {
 //-----------upload new posts API-------------
 router.post('/', async (req, res) => {
 	try {
+		const JWTcookies = req.cookies['token'];
+		const decoded = jwt_decode(JWTcookies);
+		const userId = decoded['userId'];
+		await redisClient.del(userId);
+
 		const post = new Post({
 			userId: req.body.userId,
 			img_url: req.body.img_url,

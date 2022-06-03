@@ -13,6 +13,8 @@ function logout() {
 }
 
 //---------Get geo location(lat,log)--------
+const postContent = document.getElementById('post_content');
+
 function getGEO(address) {
 	googleUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBF5RHa0xzEIOLhC-FUYL70lY-vh6xXbmg`;
 	return fetch(googleUrl, {
@@ -22,6 +24,14 @@ function getGEO(address) {
 		.then((res) => {
 			geoInfo = res['results'][0]['geometry']['location'];
 			return geoInfo;
+		})
+		.catch((e) => {
+			if (e instanceof TypeError) {
+				const noPlace = document.createElement('div');
+				noPlace.textContent = 'Sorry...No location found';
+				noPlace.className = 'no_place';
+				postContent.appendChild(noPlace);
+			}
 		});
 }
 
@@ -72,11 +82,11 @@ postForm.addEventListener('submit', async (event) => {
 	const commentInput = new URLSearchParams(form);
 	const postData = Object.fromEntries(commentInput.entries());
 	const locationContent = postData['location'];
-	const geoInfo = await getGEO(locationContent);
+	let geoInfo = await getGEO(locationContent);
 	if (geoInfo == null) {
 		geoInfo = null;
+		return;
 	}
-
 	const file = imageInput.files[0];
 
 	//get secure url from my server
@@ -111,6 +121,7 @@ postForm.addEventListener('submit', async (event) => {
 			'Content-Type': 'application/json;charset=utf-8',
 		},
 		body: JSON.stringify(bodyData),
+		credentials: 'include',
 	})
 		.then((res) => res.json())
 		.then((res) => {
