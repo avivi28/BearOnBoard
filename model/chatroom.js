@@ -2,11 +2,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-
-//connect to redis
-const redis = require('redis');
-const redisClient = redis.createClient(6379);
-redisClient.connect();
+const { redisClient } = require('../redis');
 
 const Chatroom = require('./dbSchema/chatroomSchema.js');
 const chatHistory = require('./dbSchema/messageHistorySchema.js');
@@ -69,10 +65,11 @@ router.put('/', async (req, res) => {
 				.limit(6);
 
 			// Set cache
-			await redisClient.set(
+			await redisClient.setEx(
 				`${roomId}+count:${count}`,
+				3600,
 				JSON.stringify(chatroomHistory)
-			);
+			); //TTL: 1 hour
 			return res.json(chatroomHistory);
 		}
 	} catch (e) {

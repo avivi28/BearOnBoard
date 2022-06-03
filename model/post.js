@@ -2,11 +2,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const router = express.Router();
 const jwt_decode = require('jwt-decode');
-
-//connect to redis
-const redis = require('redis');
-const redisClient = redis.createClient(6379);
-redisClient.connect();
+const { redisClient } = require('../redis');
 
 const Post = require('./dbSchema/postSchema.js');
 
@@ -28,7 +24,7 @@ router.get('/', async (req, res) => {
 			});
 
 			// Set cache
-			await redisClient.set(userId, JSON.stringify(locationResult));
+			await redisClient.setEx(userId, 3600, JSON.stringify(locationResult));
 			return res.json(locationResult);
 		}
 	} catch (e) {

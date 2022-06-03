@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  redis:
+    image: redis
+    container_name: redis
+    networks:
+      - bearonboard-network
+
+  app:
+    build: .
+    image: avivi28/bearonboard
+    container_name: bearonboard
+    depends_on:
+      - redis
+    links:
+      - redis
+    ports:
+      - 9090:9090
+    networks:
+      - bearonboard-network
+
+networks:
+  bearonboard-network:
+    name: bearonboard-network
