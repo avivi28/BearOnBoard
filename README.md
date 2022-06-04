@@ -40,6 +40,7 @@ Extra Optimization: **(optional)**
 - [X] Show online/offline user status
 - [X] User Guide (software: `userguiding`)
 - [X] Handle Error when no location access
+- [X] Message Queue (send meesage in chatroom)
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine(API) ✓
