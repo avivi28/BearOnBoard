@@ -13,7 +13,7 @@ function logout() {
 }
 
 //---------Get geo location(lat,log)--------
-const postContent = document.getElementById('post_content');
+// const postContent = document.getElementById('post_content');
 
 function getGEO(address) {
 	googleUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBF5RHa0xzEIOLhC-FUYL70lY-vh6xXbmg`;
@@ -28,9 +28,10 @@ function getGEO(address) {
 		.catch((e) => {
 			if (e instanceof TypeError) {
 				const noPlace = document.createElement('div');
+				noPlace.setAttribute('id', 'no_place');
 				noPlace.textContent = 'Sorry...No location found';
 				noPlace.className = 'no_place';
-				postContent.appendChild(noPlace);
+				postForm.appendChild(noPlace);
 			}
 		});
 }
@@ -39,6 +40,10 @@ function getGEO(address) {
 const modal = document.getElementById('modal');
 function addPost() {
 	modal.style.display = 'block';
+	postForm.style.display = 'block';
+	document.getElementById('post-title').style.display = 'block';
+	document.getElementById('bear_loader').style.display = 'none';
+	document.getElementById('loading').style.display = 'none';
 }
 function hidePost() {
 	modal.style.display = 'none';
@@ -78,6 +83,11 @@ const imageInput = document.querySelector('#img_input');
 
 postForm.addEventListener('submit', async (event) => {
 	event.preventDefault();
+
+	if (document.getElementById('no_place')) {
+		document.getElementById('no_place').style.display = 'none';
+	}
+
 	const form = new FormData(postForm);
 	const commentInput = new URLSearchParams(form);
 	const postData = Object.fromEntries(commentInput.entries());
@@ -87,6 +97,12 @@ postForm.addEventListener('submit', async (event) => {
 		geoInfo = null;
 		return;
 	}
+
+	postForm.style.display = 'none';
+	document.getElementById('post-title').style.display = 'none';
+	document.getElementById('bear_loader').style.display = 'block';
+	document.getElementById('loading').style.display = 'block';
+
 	const file = imageInput.files[0];
 
 	//get secure url from my server
