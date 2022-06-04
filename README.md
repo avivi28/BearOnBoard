@@ -47,7 +47,7 @@ Extra Optimization: **(optional)**
 - [ ] CICD
 - [ ] Get the shortest distance 
 - [ ] Share live location
-- [ ] Search Engine(API) ✓
+- [ ] Search Engine(API) ✓ (trie search OR elastic search)
 ``` diff
 ! FINISH these after compulsory parts done
 ```
