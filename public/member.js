@@ -697,7 +697,20 @@ function showHistory(roomId) {
 		.catch((error) => console.log(error));
 }
 
-function showHistoryMore(roomId) {
+function showHistoryMore(roomId, count) {
+	const newHistoryContainer = document.createElement('div');
+	newHistoryContainer.setAttribute(
+		'id',
+		`new_container:${roomId}&count:${count}`
+	);
+
+	document
+		.getElementById(`roomId:${roomId}`)
+		.insertBefore(
+			newHistoryContainer,
+			document.getElementById(`roomId:${roomId}`).firstChild
+		);
+
 	let bodyData = {
 		count: count,
 		roomId: roomId,
@@ -712,7 +725,7 @@ function showHistoryMore(roomId) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
-			if (Res.length < 6) {
+			if (Res.length <= 5) {
 				nextPage = 0;
 			}
 			for (let i = Res.length - 1; i >= 0; i--) {
@@ -737,7 +750,9 @@ function showHistoryMore(roomId) {
 					</div>
 				</div>`;
 
-				document.getElementById(`new_container:${roomId}`).innerHTML +=
+				document.getElementById(
+					`new_container:${roomId}&count:${count}`
+				).innerHTML +=
 					Res[i]['sender']['name'] === userData['userName']
 						? myMsg
 						: receivedMsg;
@@ -751,12 +766,12 @@ function loadMore(roomId) {
 	document
 		.getElementById(`roomId:${roomId}`)
 		.addEventListener('scroll', (evt) => {
-			if (evt.target.scrollTop === 0) {
+			if (document.getElementById(`roomId:${roomId}`).scrollTop === 0) {
 				if (nextPage == 0) {
 					return;
 				}
 				count++;
-				showHistoryMore(roomId);
+				showHistoryMore(roomId, count);
 			}
 		});
 }

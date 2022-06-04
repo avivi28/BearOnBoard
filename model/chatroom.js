@@ -2,7 +2,7 @@ const express = require('express');
 const { ObjectId } = require('mongodb');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { redisClient } = require('../redis');
+const { redisClient, chatroomQueue } = require('../redis');
 
 const Chatroom = require('./dbSchema/chatroomSchema.js');
 const chatHistory = require('./dbSchema/messageHistorySchema.js');
@@ -45,33 +45,19 @@ router.put('/', async (req, res) => {
 		const count = req.body.count * 6;
 		const roomId = req.body.roomId;
 
-		// Get from cache using the "Key"
-		const getRes = await redisClient.get(`${roomId}+count:${count}`);
+		const chatroomHistory = await chatHistory
+			.find({
+				roomId: roomId,
+			})
+			.sort([['order', -1]])
+			.populate({
+				path: 'sender',
+				select: 'name',
+			})
+			.skip(count)
+			.limit(6);
 
-		if (getRes) {
-			return res.json(JSON.parse(getRes));
-		} else {
-			// On cache-miss => query database
-			const chatroomHistory = await chatHistory
-				.find({
-					roomId: roomId,
-				})
-				.sort([['order', -1]])
-				.populate({
-					path: 'sender',
-					select: 'name',
-				})
-				.skip(count)
-				.limit(6);
-
-			// Set cache
-			await redisClient.setEx(
-				`${roomId}+count:${count}`,
-				3600,
-				JSON.stringify(chatroomHistory)
-			); //TTL: 1 hour
-			return res.json(chatroomHistory);
-		}
+		return res.json(chatroomHistory);
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });
 	}
@@ -80,14 +66,25 @@ router.put('/', async (req, res) => {
 //-----------save history message into database-------------
 router.post('/', async (req, res) => {
 	try {
-		const room = new chatHistory({
-			sender: req.body.sender,
-			recipient: req.body.recipient,
-			message: req.body.message,
-			time: req.body.time,
-			roomId: req.body.roomId,
+		const main = async () => {
+			await chatroomQueue.add({
+				sender: req.body.sender,
+				recipient: req.body.recipient,
+				message: req.body.message,
+				time: req.body.time,
+				roomId: req.body.roomId,
+			});
+		};
+
+		chatroomQueue.process(async (job, done) => {
+			console.log(job.data);
+			const room = new chatHistory(job.data);
+			await room.save();
+			done();
 		});
-		await room.save();
+
+		main().catch(console.error);
+
 		res.json({ ok: true });
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });
