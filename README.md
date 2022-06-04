@@ -6,9 +6,12 @@ Purpose:
 - Hunt the closest bears(spots) with your friends 👩🏻‍🌾
 - Share the bear's location(spots' location) ⚠️
 
-UML diagram:
+### UML diagram:
 
 ![bearonboardUML drawio (1)](https://user-images.githubusercontent.com/95410966/167293150-71abd1c2-3f9c-4b31-a25a-65b15f2a21f2.svg)
+
+### Architecture Diagram:
+![Untitled presentation](https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png)
 
 Features checklist: **(compulsory)**
 - [X] Create member System
@@ -41,6 +44,7 @@ Extra Optimization: **(optional)**
 - [X] User Guide (software: `userguiding`)
 - [X] Handle Error when no location access
 - [X] Message Queue (send meesage in chatroom)
+- [ ] CICD
 - [ ] Get the shortest distance 
 - [ ] Share live location
 - [ ] Search Engine(API) ✓
@@ -53,6 +57,7 @@ Tiny stuffs:
 - [ ] better loading effects (e.g. loading page & RWD)
 - [X] upload photos to S3 & pull from CDN
 - [ ] update UML diagram
+- [X] update Architecture Diagram
 - [ ] finish swagger API page
 - [ ] debug & review
 ``` diff
