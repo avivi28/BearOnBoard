@@ -67,9 +67,9 @@ Tiny stuffs:
 
 Suggestions from TONY:
 - [ ] improve db query efficiency (add index!)
-- [ ] handle overload when user click `likes` (message queue)
-- [ ] upload all images to S3
-- [ ] upload docker image to ECR(elastic container registry)
+- [X] handle overload when user click `likes` (message queue)
+- [X] upload all images to S3
+- [X] upload docker image to ECR(elastic container registry)
 
 
 Techniques used:
