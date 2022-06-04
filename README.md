@@ -54,7 +54,8 @@ Extra Optimization: **(optional)**
 
 Tiny stuffs:
 - [ ] frontend & backend validation
-- [ ] better loading effects (e.g. loading page & RWD)
+- [ ] RWD
+- [X] better loading effects
 - [X] upload photos to S3 & pull from CDN
 - [ ] update UML diagram
 - [X] update Architecture Diagram
