@@ -13,7 +13,7 @@ function logout() {
 }
 
 //---------Get geo location(lat,log)--------
-// const postContent = document.getElementById('post_content');
+const noPlace = document.getElementById('no_place');
 
 function getGEO(address) {
 	googleUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBF5RHa0xzEIOLhC-FUYL70lY-vh6xXbmg`;
@@ -27,10 +27,9 @@ function getGEO(address) {
 		})
 		.catch((e) => {
 			if (e instanceof TypeError) {
-				const noPlace = document.createElement('div');
-				noPlace.setAttribute('id', 'no_place');
 				noPlace.textContent = 'Sorry...No location found';
 				noPlace.className = 'no_place';
+				noPlace.style.display = 'block';
 				postForm.appendChild(noPlace);
 			}
 		});
@@ -44,6 +43,11 @@ function addPost() {
 	document.getElementById('post-title').style.display = 'block';
 	document.getElementById('bear_loader').style.display = 'none';
 	document.getElementById('loading').style.display = 'none';
+
+	document.getElementById('img_input').value = '';
+	document.getElementById('pac-input').value = '';
+	document.getElementById('caption').value = '';
+	noPlace.textContent = '';
 }
 function hidePost() {
 	modal.style.display = 'none';
