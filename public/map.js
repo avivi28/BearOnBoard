@@ -215,7 +215,9 @@ function showFriendsMarker(res) {
 
 						const imageUrl = res[i]['img_url'];
 						const imageName = imageUrl.split('/')[3];
-						document.getElementById('delete-post').style.display = 'none';
+						if (document.getElementById('delete-post')) {
+							document.getElementById('delete-post').style.display = 'none';
+						}
 
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
@@ -284,6 +286,8 @@ const commentEntireContainer = document.getElementById(
 );
 
 function showComments(postId) {
+	commentEntireContainer.textContent = ''; //reset the content
+
 	fetch(`/api/comment/${postId}`, {
 		method: 'GET',
 	})
@@ -353,26 +357,28 @@ function addComments(postId) {
 
 //---------------------delete this post---------------------
 function deleteConfirm(userId, postId, imageName) {
-	document.getElementById('yes_delete').addEventListener('click', () => {
-		const bodyData = {
-			userId: userId,
-			postId: postId,
-			imageName: imageName,
-		};
+	if (document.getElementById('yes_delete')) {
+		document.getElementById('yes_delete').addEventListener('click', () => {
+			const bodyData = {
+				userId: userId,
+				postId: postId,
+				imageName: imageName,
+			};
 
-		fetch('/api/post', {
-			method: 'DELETE',
-			headers: new Headers({
-				'Content-Type': 'application/json;charset=utf-8',
-			}),
-			body: JSON.stringify(bodyData),
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				const okData = res['ok'];
-				if (okData) {
-					location.reload();
-				}
-			});
-	});
+			fetch('/api/post', {
+				method: 'DELETE',
+				headers: new Headers({
+					'Content-Type': 'application/json;charset=utf-8',
+				}),
+				body: JSON.stringify(bodyData),
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					const okData = res['ok'];
+					if (okData) {
+						location.reload();
+					}
+				});
+		});
+	}
 }
