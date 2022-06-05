@@ -132,6 +132,7 @@ function showShock() {
 
 friendsForm.addEventListener('submit', function confirm(ev) {
 	ev.preventDefault();
+	yesButton.disabled = false;
 	confirmModal.style.display = 'block';
 	buttonContainer.style.display = 'inherit';
 	confirmIcon.style.display = 'inherit';
@@ -154,6 +155,7 @@ const yesButton = document.getElementById('yes-button');
 function sendRequest(friendsName) {
 	yesButton.addEventListener('click', function getId(ev) {
 		ev.preventDefault();
+		yesButton.disabled = true;
 
 		fetch(`/api/user?username=${friendsName}`, {
 			method: 'GET',
@@ -179,6 +181,7 @@ function postFriend(Res) {
 	};
 
 	if (userId == Res['_id']) {
+		//cannot send to youeself
 		showFailResult();
 	} else {
 		fetch('/api/friend', {
@@ -378,7 +381,57 @@ function showFriendLists(Res) {
 
 		//------------show chatroom--------------
 		const userName = userData['userName'];
+
 		friendImage.addEventListener('click', () => {
+			count = 0; //refresh page counting
+			nextPage = 1; //refresh scoll event
+
+			googleMap.style.display = 'none';
+			const chatroomStatusDot = document.createElement('p');
+			chatroomStatusDot.className = 'chatroom-online-status';
+			chatroomStatusDot.setAttribute(
+				'id',
+				`friendChatroomName${Res['friends'][j]['name']}`
+			);
+			chatroomIconContainer.appendChild(chatroomStatusDot);
+
+			showChatroomFriendsStatus();
+
+			let room = '';
+			messageBoxContainer.textContent = '';
+			const messageBox = document.createElement('div');
+			messageBoxContainer.appendChild(messageBox);
+			chatroomUser.textContent = friendStatusName;
+			const friendId = Res['friends'][j]['_id'];
+			fetch(
+				`/api/chatroom?sender=${userData['userId']}&recipient=${friendId}`,
+				{
+					method: 'GET',
+				}
+			)
+				.then((Res) => Res.json())
+				.then((Res) => {
+					const roomId = Res['roomId'];
+					creatRoom(Res);
+					sendMessage(Res, friendId, userName);
+					showHistory(roomId);
+					loadMore(roomId);
+				})
+				.catch((error) => console.log(error));
+
+			function creatRoom(Res) {
+				room = Res['roomId'];
+				//Join chatrrom
+				socket.emit('joinRoom', { userName, room });
+
+				chatroomContainer.style.display = 'block';
+				messageBox.textContent = '';
+				messageBox.className = 'message_body';
+				messageBox.setAttribute('id', `roomId:${room}`);
+			}
+		});
+
+		nameContainer.addEventListener('click', () => {
 			count = 0; //refresh page counting
 			nextPage = 1; //refresh scoll event
 

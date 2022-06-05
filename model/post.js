@@ -29,7 +29,6 @@ router.get('/', async (req, res) => {
 			return res.json(locationResult);
 		}
 	} catch (e) {
-		console.log(e);
 		res.status(500).json({ error: true, message: 'server error' });
 	}
 });

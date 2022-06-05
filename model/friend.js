@@ -88,11 +88,6 @@ router.post('/', async (req, res) => {
 			recipient: ObjectId(req.body.friendId),
 			status: 0,
 		};
-		const repeatedFriendRequest = {
-			sender: ObjectId(req.body.friendId),
-			recipient: ObjectId(req.body.userId),
-			status: 0,
-		};
 		const addedUserRequest = {
 			sender: ObjectId(req.body.userId),
 			recipient: ObjectId(req.body.friendId),
@@ -104,12 +99,7 @@ router.post('/', async (req, res) => {
 			status: 1,
 		};
 		const checkedResult = await Friend.find({
-			$or: [
-				repeatedUserRequest,
-				repeatedFriendRequest,
-				addedUserRequest,
-				addedFriendRequest,
-			],
+			$or: [repeatedUserRequest, addedUserRequest, addedFriendRequest],
 		});
 		if (checkedResult.length === 0) {
 			const userInfo = {
@@ -117,12 +107,8 @@ router.post('/', async (req, res) => {
 				recipient: ObjectId(req.body.friendId),
 				status: 0, //panding
 			};
-			const friendInfo = {
-				sender: ObjectId(req.body.friendId),
-				recipient: ObjectId(req.body.userId),
-				status: 0, //panding
-			};
-			await Friend.insertMany([userInfo, friendInfo]);
+			const newRequest = new Friend(userInfo);
+			await newRequest.save();
 			res.json({ ok: true });
 		} else {
 			res.json({ error: true, message: 'repeated requests' });
