@@ -213,11 +213,16 @@ function showFriendsMarker(res) {
 						toolTipText.textContent = `${likesNumber} likes`;
 						commentEntireContainer.textContent = ''; //reset the content
 
+						const imageUrl = res[i]['img_url'];
+						const imageName = imageUrl.split('/')[3];
+						document.getElementById('delete-post').style.display = 'none';
+
 						marker.setIcon(pickedMarker);
 						map.setCenter(geoInfo);
 						map.setZoom(18);
 
 						addLikes(postId, likesNumber);
+						deleteConfirm(userId, postId, imageName);
 						addComments(postId);
 						showComments(postId);
 					});
@@ -343,5 +348,31 @@ function addComments(postId) {
 					}
 				});
 		}
+	});
+}
+
+//---------------------delete this post---------------------
+function deleteConfirm(userId, postId, imageName) {
+	document.getElementById('yes_delete').addEventListener('click', () => {
+		const bodyData = {
+			userId: userId,
+			postId: postId,
+			imageName: imageName,
+		};
+
+		fetch('/api/post', {
+			method: 'DELETE',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				const okData = res['ok'];
+				if (okData) {
+					location.reload();
+				}
+			});
 	});
 }

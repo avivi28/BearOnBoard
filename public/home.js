@@ -170,3 +170,23 @@ const newUserConnected = () => {
 };
 
 newUserConnected();
+
+//----------Show delete posts---------
+function deletePost() {
+	document.getElementById('bin').addEventListener('click', () => {
+		document.getElementById('delete-post').style.display = 'block';
+	});
+}
+function hideDelete() {
+	document.getElementById('delete-post').style.display = 'none';
+}
+
+function showdeletePost() {
+	document.getElementById('trash_bin').src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/trash_bin_hover.svg';
+}
+
+function leavedeletePost() {
+	document.getElementById('trash_bin').src =
+		'https://d3qxlv297wj1rn.cloudfront.net/images/trash_bin.svg';
+}

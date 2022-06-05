@@ -41,4 +41,17 @@ async function generateUploadURL() {
 	return uploadURL;
 }
 
+// delete objects from s3
+async function deleteFromS3(imageName) {
+	var params = {
+		Bucket: bucketName,
+		Key: imageName,
+	};
+	s3.deleteObject(params, function (err, data) {
+		if (err) console.log(err, err.stack); // an error occurred
+		else console.log(data); // successful response
+	});
+}
+
 exports.generateUploadURL = generateUploadURL;
+exports.deleteFromS3 = deleteFromS3;

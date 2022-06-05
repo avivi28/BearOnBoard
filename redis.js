@@ -1,5 +1,6 @@
 //connect to redis
 const redis = require('redis');
+//message queue
 const Queue = require('bull');
 
 // const redisClient = redis.createClient({ url: 'redis://redis:6379' });

@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 const router = express.Router();
 const jwt_decode = require('jwt-decode');
 const { redisClient } = require('../redis');
+const { deleteFromS3 } = require('./s3');
 
 const Post = require('./dbSchema/postSchema.js');
 
@@ -90,6 +91,21 @@ router.post('/', async (req, res) => {
 		});
 		await post.save();
 		res.json({ lat: req.body.lat, lng: req.body.lng });
+	} catch (e) {
+		res.status(500).json({ error: true, message: 'server error' });
+	}
+});
+
+//-----------delete posts API-------------
+router.delete('/', async (req, res) => {
+	try {
+		const imageName = req.body.imageName;
+		await deleteFromS3(imageName);
+
+		await redisClient.del(req.body.userId);
+
+		await Post.deleteOne({ _id: ObjectId(req.body.postId) });
+		res.json({ ok: true });
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });
 	}
