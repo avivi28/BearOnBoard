@@ -19,7 +19,7 @@ Features checklist: **(compulsory)**
 (Register, Sign in, Log out, Log in with Gmail)
 - [X] Save posts on Map 
 
-(Show all posts on Map, Show posts' details when clicked, Add new posts, Locate your current location)
+(Show all posts on Map, Show posts' details when clicked, Add new posts, Delete posts, Locate your current location)
 - [X] Create Friendship system 
 
 
