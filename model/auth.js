@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('./dbSchema/userSchema.js');
+const Friend = require('./dbSchema/friendSchema.js');
 
 require('dotenv').config({ path: '.env' });
 
@@ -55,6 +56,38 @@ router.get(
 				});
 				await user.save();
 				const newUserResult = await User.findOne({ email: googleEmail });
+
+				//------adding default friend for user to test-----
+				const friendInfo = {
+					sender: '628b2e8340cb83fbf83b7c2d',
+					recipient: newUserResult['_id'],
+				};
+				const userInfo = {
+					sender: newUserResult['_id'],
+					recipient: '628b2e8340cb83fbf83b7c2d',
+				};
+				const statusUpdate = {
+					status: req.body.status, //1:accept 0:panding
+				};
+				await Friend.findOneAndUpdate(userInfo, statusUpdate, {
+					new: true,
+				});
+				await Friend.findOneAndUpdate(friendInfo, statusUpdate, {
+					new: true,
+				}); //(filter,update)
+				await User.findOneAndUpdate(
+					{
+						_id: newUserResult['_id'],
+					},
+					{ $push: { friends: ObjectId('628b2e8340cb83fbf83b7c2d') } }
+				); //add friend's id into User schema
+				await User.findOneAndUpdate(
+					{
+						_id: ObjectId('628b2e8340cb83fbf83b7c2d'),
+					},
+					{ $push: { friends: newUserResult['_id'] } }
+				);
+
 				jwt.sign(
 					{
 						userId: newUserResult['_id'],

@@ -177,9 +177,7 @@ newUserConnected();
 
 //----------Show delete posts---------
 function deletePost() {
-	document.getElementById('bin').addEventListener('click', () => {
-		document.getElementById('delete-post').style.display = 'block';
-	});
+	document.getElementById('delete-post').style.display = 'block';
 }
 function hideDelete() {
 	document.getElementById('delete-post').style.display = 'none';
