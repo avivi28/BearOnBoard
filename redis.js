@@ -1,11 +1,11 @@
 //connect to redis
 const redis = require('redis');
 //message queue
-const Queue = require('bull');
+const Bull = require('bull');
 
 // const redisClient = redis.createClient({ url: 'redis://redis:6379' });
 const redisClient = redis.createClient(6379);
-const chatroomQueue = new Queue('chatroom message');
+const chatroomQueue = new Bull('chatroom message');
 
 (async () => {
 	await redisClient.connect();

@@ -9,7 +9,7 @@ loginForm.addEventListener('submit', function login(ev) {
 	const jsonData = Object.fromEntries(signInInput.entries());
 
 	fetch('/api/user', {
-		method: 'PATCH',
+		method: 'PUT',
 		headers: new Headers({
 			'Content-Type': 'application/json;charset=utf-8',
 		}),

@@ -518,8 +518,10 @@ input:focus {
 #bear_banner {
 	width: 300px;
 	height: auto;
-	margin-top: 15px;
+	margin-top: 25px;
 	margin-left: 10px;
+	margin-bottom: 20px;
+	cursor: pointer;
 }
 
 .function_title {
@@ -538,6 +540,9 @@ input:focus {
 	display: flex;
 	margin-left: 15px;
 	margin-top: 8px;
+	transition: 0.3s ease;
+	cursor: pointer;
+	text-decoration: none;
 }
 
 .function_container:hover {
@@ -549,7 +554,6 @@ input:focus {
 	display: flex;
 	flex-direction: column;
 	margin-left: 10px;
-	margin-top: 10px;
 	width: 185px;
 }
 

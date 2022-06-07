@@ -63,7 +63,11 @@ const userId = userData['userId'];
 const editName = document.getElementById('edit_name');
 const editEmail = document.getElementById('edit_email');
 editName.textContent = userData['userName'];
-editEmail.textContent = userData['emailInput'];
+if (userData['emailInput'].length > 15) {
+	editEmail.textContent = userData['emailInput'].slice(0, 15) + '...';
+} else {
+	editEmail.textContent = userData['emailInput'];
+}
 
 //------------Friends Search Engine-------------
 const submitButton = document.getElementById('submit_newfriends');
@@ -818,7 +822,11 @@ function showHistoryMore(roomId, count) {
 function loadMore(roomId) {
 	document
 		.getElementById(`roomId:${roomId}`)
-		.addEventListener('scroll', (evt) => {
+		.addEventListener('wheel', (evt) => {
+			console.log(
+				'scroll',
+				document.getElementById(`roomId:${roomId}`).scrollTop
+			);
 			if (document.getElementById(`roomId:${roomId}`).scrollTop === 0) {
 				if (nextPage == 0) {
 					return;
@@ -826,6 +834,7 @@ function loadMore(roomId) {
 				count++;
 				showHistoryMore(roomId, count);
 			}
+			console.log(count);
 		});
 }
 

@@ -66,28 +66,51 @@ router.put('/', async (req, res) => {
 //-----------save history message into database-------------
 router.post('/', async (req, res) => {
 	try {
-		const main = async () => {
-			await chatroomQueue.add({
-				sender: req.body.sender,
-				recipient: req.body.recipient,
-				message: req.body.message,
-				time: req.body.time,
-				roomId: req.body.roomId,
-			});
-		};
-
-		chatroomQueue.process(async (job, done) => {
-			console.log(job.data);
-			const room = new chatHistory(job.data);
-			await room.save();
-			done();
+		const room = await new chatHistory({
+			sender: req.body.sender,
+			recipient: req.body.recipient,
+			message: req.body.message,
+			time: req.body.time,
+			roomId: req.body.roomId,
 		});
+		await room.save();
+		// const main = async () => {
+		// 	await chatroomQueue.add({
+		// 		sender: req.body.sender,
+		// 		recipient: req.body.recipient,
+		// 		message: req.body.message,
+		// 		time: req.body.time,
+		// 		roomId: req.body.roomId,
+		// 	});
+		// };
 
-		main().catch(console.error);
+		// const job = await chatroomQueue.add({
+		// 	sender: req.body.sender,
+		// 	recipient: req.body.recipient,
+		// 	message: req.body.message,
+		// 	time: req.body.time,
+		// 	roomId: req.body.roomId,
+		// });
 
+		// chatroomQueue.process(async (job) => {
+		// 	let progress = 0;
+		// 	for (i = 0; i < 100; i++) {
+		// 		const room = await new chatHistory(job.data);
+		// 		await room.save();
+		// 		progress += 10;
+		// 		job.progress(progress);
+		// 	}
+		// });
+
+		// chatroomQueue.on('completed', (job) => {
+		// 	console.log(`Job with id ${job.id} has been completed`);
+		// });
 		res.json({ ok: true });
 	} catch (e) {
-		res.status(500).json({ error: true, message: 'server error' });
+		res.status(500).json({
+			error: true,
+			message: 'server error',
+		});
 	}
 });
 

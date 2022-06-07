@@ -260,6 +260,7 @@ input,
 	margin-bottom: 5px;
 	position: relative;
 	margin-left: 20px;
+	transition: 0.3s ease;
 }
 
 .detail-container:hover {

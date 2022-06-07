@@ -35,7 +35,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 //---------login API-------------
-router.patch('/', async (req, res) => {
+router.put('/', async (req, res) => {
 	try {
 		const emailInput = req.body.email;
 		const passwordInput = req.body.password;

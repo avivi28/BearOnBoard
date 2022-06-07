@@ -86,20 +86,12 @@
 						</div>
 						<p class="brandname">Bear On Board</p>
 					</a>
-					<form id="search_form">
-						<input
-							type="text"
-							name="search"
-							id="search"
-							placeholder="Bear Museum"
-						/>
-						<input type="submit" id="search_submit" value="" />
-					</form>
 					<img
+						onclick="addPost()"
 						id="bear_banner"
 						src="https://d3qxlv297wj1rn.cloudfront.net/images/bear_banner.svg"
 					/>
-					<div class="function_container">
+					<div onclick="addPost()" class="function_container">
 						<img
 							id="function_icon"
 							src="https://d3qxlv297wj1rn.cloudfront.net/images/map_icon.svg"
@@ -111,7 +103,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="function_container">
+					<a href="/member" class="function_container">
 						<img
 							id="function_icon"
 							src="https://d3qxlv297wj1rn.cloudfront.net/images/friend_icon.svg"
@@ -122,8 +114,8 @@
 								You can comment on or like any posts saved from your friends.
 							</p>
 						</div>
-					</div>
-					<div class="function_container">
+					</a>
+					<a href="/member" class="function_container">
 						<img
 							id="function_icon"
 							src="https://d3qxlv297wj1rn.cloudfront.net/images/chat_icon.svg"
@@ -134,7 +126,7 @@
 								You won’t miss any news with a real-time chatroom.
 							</p>
 						</div>
-					</div>
+					</a>
 				</div>
 				<button
 					onclick="addPost()"
