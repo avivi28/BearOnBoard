@@ -97,3 +97,6 @@ Techniques used:
   - `Git`
   - `Google Maps API`
   - `socket.io`
+
+### API Doc (Swagger)
+https://app.swaggerhub.com/apis-docs/Honeypaw/Register/1.0.0
