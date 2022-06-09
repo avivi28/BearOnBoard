@@ -15,9 +15,7 @@ let userSchema = new mongoose.Schema(
 		password: {
 			type: String,
 		},
-		post: [{ type: ObjectId, ref: 'Post' }],
 		friends: [{ type: ObjectId, ref: 'User' }],
-		bios: { type: String },
 	},
 	{ collection: 'user' }
 );

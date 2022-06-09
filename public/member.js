@@ -1,5 +1,4 @@
 const socket = io();
-console.log(socket);
 
 //-----------logOut Function----------------
 function logout() {
@@ -820,22 +819,15 @@ function showHistoryMore(roomId, count) {
 
 //-------scroll event------------
 function loadMore(roomId) {
-	document
-		.getElementById(`roomId:${roomId}`)
-		.addEventListener('wheel', (evt) => {
-			console.log(
-				'scroll',
-				document.getElementById(`roomId:${roomId}`).scrollTop
-			);
-			if (document.getElementById(`roomId:${roomId}`).scrollTop === 0) {
-				if (nextPage == 0) {
-					return;
-				}
-				count++;
-				showHistoryMore(roomId, count);
+	document.getElementById(`roomId:${roomId}`).addEventListener('wheel', () => {
+		if (document.getElementById(`roomId:${roomId}`).scrollTop === 0) {
+			if (nextPage == 0) {
+				return;
 			}
-			console.log(count);
-		});
+			count++;
+			showHistoryMore(roomId, count);
+		}
+	});
 }
 
 //------------Show typing status of user--------------

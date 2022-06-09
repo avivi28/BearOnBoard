@@ -13,21 +13,23 @@ require('dotenv').config({ path: '.env' });
 router.get('/', async (req, res) => {
 	try {
 		const username = req.query.username;
-		const result = await User.findOne({ name: username }).select({ name: 1 }); //return certain fields
+		const result = await User.indOne({ name: username }).select({ name: 1 }); //return certain fields
 		res.json(result);
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });
 	}
 });
 
-//-------Get friend's info API-------
+//-------Get friendlist API-------
 router.get('/:userId', async (req, res) => {
 	try {
 		const userId = ObjectId(req.params.userId);
-		const result = await User.findOne({ _id: userId }).populate({
-			path: 'friends',
-			select: 'name',
-		});
+		const result = await User.findOne({ _id: userId })
+			.populate({
+				path: 'friends',
+				select: 'name',
+			})
+			.select({ friends: 1 });
 		res.json(result);
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });

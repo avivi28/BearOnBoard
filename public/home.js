@@ -22,6 +22,7 @@ function getGEO(address) {
 	})
 		.then((res) => res.json())
 		.then((res) => {
+			console.log(res);
 			geoInfo = res['results'][0]['geometry']['location'];
 			return geoInfo;
 		})
@@ -145,6 +146,7 @@ postForm.addEventListener('submit', async (event) => {
 	})
 		.then((res) => res.json())
 		.then((res) => {
+			console.log(res);
 			if (res != null) {
 				hidePost();
 				showMarker(res);

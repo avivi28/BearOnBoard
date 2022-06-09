@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require('./dbSchema/userSchema.js');
 const Friend = require('./dbSchema/friendSchema.js');
 
-//-----------get padding list OR friends list-------------
+//-----------get pending list OR friends list-------------
 router.get('/', async (req, res) => {
 	try {
 		const friendInfo = {
@@ -34,7 +34,7 @@ router.put('/', async (req, res) => {
 			recipient: ObjectId(req.body.friendId),
 		};
 		const statusUpdate = {
-			status: req.body.status, //1:accept 0:panding
+			status: req.body.status, //1:accept 0:pending
 		};
 		await Friend.findOneAndUpdate(userInfo, statusUpdate, {
 			new: true,

@@ -5,6 +5,7 @@ const successImage = document.querySelector('.success_image');
 const emailInput = document.getElementById('email');
 const userNameInput = document.getElementById('username');
 const pwInput = document.getElementById('password');
+const paws = document.querySelector('paws_container');
 
 registerForm.addEventListener('submit', function register(ev) {
 	ev.preventDefault();

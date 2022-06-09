@@ -1,7 +1,7 @@
 function googleAPI() {
 	initMap();
 	showMarker();
-	showFriendsMarker();
+	showAllMarker();
 }
 
 let map;
@@ -68,7 +68,7 @@ function getPosts() {
 	fetch('/api/post', { method: 'GET', credentials: 'include' })
 		.then((res) => res.json())
 		.then((res) => {
-			showFriendsMarker(res);
+			showAllMarker(res);
 		});
 }
 
@@ -79,7 +79,7 @@ function getFriendPosts(friendId) {
 	fetch(`/api/post/${friendId}`, { method: 'GET' })
 		.then((res) => res.json())
 		.then((res) => {
-			showFriendsMarker(res);
+			showAllMarker(res);
 		});
 }
 
@@ -134,6 +134,10 @@ function showMarker(res) {
 				showComments(postId);
 			});
 		});
+
+	if (typeof google == 'undefined') {
+		location.reload();
+	}
 }
 
 const postModal = document.getElementById('posts_modal');
@@ -145,7 +149,7 @@ const toolTipText = document.getElementById('tooltiptext');
 const commentInput = document.getElementById('comment-input');
 const noLocationAlert = document.getElementById('no_location_modal');
 
-function showFriendsMarker(res) {
+function showAllMarker(res) {
 	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
@@ -293,6 +297,7 @@ function showComments(postId) {
 	})
 		.then((res) => res.json())
 		.then((res) => {
+			console.log(res);
 			for (let i = 0; i < res.length; i++) {
 				const commentTextContainer = document.createElement('p');
 				commentTextContainer.className = 'comment-text-container';

@@ -43,7 +43,7 @@ router.get('/:friendId', async (req, res) => {
 	}
 });
 
-//-------------posts' likes API---------------
+//-------------add posts' likes API---------------
 router.put('/', async (req, res) => {
 	try {
 		const duplicatedInput = await Post.findOne({
@@ -65,7 +65,7 @@ router.put('/', async (req, res) => {
 				},
 				{ $pull: { likes: ObjectId(req.body.userId) } }
 			);
-			res.json({ error: true, message: 'duplicated request' });
+			res.json({ error: true, message: 'duplicated requests' });
 		}
 	} catch (e) {
 		res.status(500).json({ error: true, message: 'server error' });

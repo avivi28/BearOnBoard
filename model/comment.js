@@ -19,7 +19,7 @@ router.get('/:postId', async (req, res) => {
 	}
 });
 
-//------------get friends' comments API--------------
+//------------save friends' comments API--------------
 router.patch('/', async (req, res) => {
 	try {
 		const comment = new Comment({
