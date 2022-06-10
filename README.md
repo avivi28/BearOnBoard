@@ -59,7 +59,7 @@ Tiny stuffs:
 - [X] upload photos to S3 & pull from CDN
 - [ ] update UML diagram
 - [X] update Architecture Diagram
-- [ ] finish swagger API page
+- [X] finish swagger API page
 - [ ] debug & review
 ``` diff
 ! FINISH these in last week 
@@ -84,7 +84,7 @@ Techniques used:
   - `EJS`
 - Cache
   - `Redis`
-  - `Message Queue` (`Bull`)
+  - `Message Queue` (`RabbitMQ`)
 - Cloud Service
   - `S3`
   - `EC2`
