@@ -1,4 +1,4 @@
-# BearOnBoard 🐻🐾 
+<h1 align="center"> BearOnBoard 🐻🐾</h1>
 
 Purpose:
 - As a map-oriented social Website 🗺
@@ -6,12 +6,15 @@ Purpose:
 - Hunt the closest bears(spots) with your friends 👩🏻‍🌾
 - Share the bear's location(spots' location) ⚠️
 
-### UML diagram:
-
-![bearonboardUML drawio (1)](https://user-images.githubusercontent.com/95410966/167293150-71abd1c2-3f9c-4b31-a25a-65b15f2a21f2.svg)
+### Database Schema:
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/95410966/173153753-41e652cd-b71c-4afa-85e1-a3703a7c89bc.png">
+</p>
 
 ### Architecture Diagram:
-![Untitled presentation](https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png">
+</p>
 
 Features checklist: **(compulsory)**
 - [X] Create member System
