@@ -1,6 +1,6 @@
 <h1 align="center"> BearOnBoard 🐻🐾</h1>
 
-Purpose:
+### Purpose:
 - As a map-oriented social Website 🗺
 - Follow the paws(posts) you saved before on map 🐾 
 - Hunt the closest bears(spots) with your friends 👩🏻‍🌾
@@ -8,7 +8,7 @@ Purpose:
 
 ### Database Schema:
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/95410966/173153753-41e652cd-b71c-4afa-85e1-a3703a7c89bc.png">
+  <img src="https://user-images.githubusercontent.com/95410966/173156537-45abfd6b-dab4-4e58-befa-22d120a51055.png">
 </p>
 
 ### Architecture Diagram:
@@ -75,7 +75,7 @@ Suggestions from TONY:
 - [X] upload docker image to ECR(elastic container registry)
 
 
-Techniques used:
+### Techniques used:
 - Member system
   - `JWT`
   - `Bcrypt`
