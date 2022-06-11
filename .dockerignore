@@ -4,3 +4,4 @@ Dockerfile*
 docker-compose*
 .dockerignore
 **/public/images
+README.md

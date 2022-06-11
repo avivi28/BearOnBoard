@@ -67,7 +67,7 @@ router.put('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		// Create a connection
-		amqplib.connect('amqp://localhost', (err, con) => {
+		amqplib.connect('amqp://root:admin1234@rabbitmq:5672', (err, con) => {
 			if (err) throw err;
 
 			// Create a channel
