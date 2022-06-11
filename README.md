@@ -62,7 +62,7 @@
 ### Architecture Diagram 🏰:
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png">
+  <img src="https://user-images.githubusercontent.com/95410966/173164822-f31eb138-cde2-40da-a479-95d8535e40e9.png">
 </p>
 
 ### API Doc 📃:
