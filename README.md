@@ -11,6 +11,8 @@
 ### Main Features:
 - Log in locally or log in with Gmail
 - Authenticate user with `JWT`
+
+![ezgif-4-7b9160e532](https://user-images.githubusercontent.com/95410966/173206834-721aa46f-1716-4729-89f0-cb0bfcb03c7d.gif)
 - Find saved posts on map
 - Add new posts on map
 - Comment on or like the post
