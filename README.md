@@ -56,7 +56,7 @@
 ### Database Schema 💾:
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/95410966/173156537-45abfd6b-dab4-4e58-befa-22d120a51055.png">
+  <img src="https://user-images.githubusercontent.com/95410966/173165823-bce67604-e7e2-44ba-86bb-0088aa4da881.png">
 </p>
 
 ### Architecture Diagram 🏰:
