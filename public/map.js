@@ -87,6 +87,7 @@ function getFriendPosts(friendId) {
 const locationContent = document.getElementById('location_content');
 const caption = document.getElementById('caption_content');
 const postPhoto = document.getElementById('post_image');
+const postIdContainer = document.querySelector('.friends-photo-container');
 
 function showMarker(res) {
 	const newGeo = {
@@ -127,10 +128,13 @@ function showMarker(res) {
 				friendsPhotos.src = res[lastPost]['img_url'];
 				locationFriendContent.textContent = res[lastPost]['location'];
 
+				postIdContainer.setAttribute('id', `${postId}`);
+				commentEntireContainer.textContent = ''; //reset the content
+
 				const likesNumber = res[lastPost]['likes'].length;
 				toolTipText.textContent = `${likesNumber} likes`;
 				addLikes(postId, likesNumber);
-				addComments(postId);
+				// addComments(postId);
 				showComments(postId);
 			});
 		});
@@ -215,6 +219,8 @@ function showAllMarker(res) {
 						locationFriendContent.textContent = res[i]['location'];
 						const likesNumber = res[i]['likes'].length;
 						toolTipText.textContent = `${likesNumber} likes`;
+
+						postIdContainer.setAttribute('id', `${postId}`);
 						commentEntireContainer.textContent = ''; //reset the content
 
 						const imageUrl = res[i]['img_url'];
@@ -229,7 +235,7 @@ function showAllMarker(res) {
 
 						addLikes(postId, likesNumber);
 						deleteConfirm(userId, postId, imageName);
-						addComments(postId);
+						// addComments(postId);
 						showComments(postId);
 					});
 
@@ -297,7 +303,6 @@ function showComments(postId) {
 	})
 		.then((res) => res.json())
 		.then((res) => {
-			console.log(res);
 			for (let i = 0; i < res.length; i++) {
 				const commentTextContainer = document.createElement('p');
 				commentTextContainer.className = 'comment-text-container';
@@ -323,42 +328,42 @@ function showComments(postId) {
 		});
 }
 
+//---------------------add comments---------------------
 const commentForm = document.getElementById('comment-form');
-function addComments(postId) {
-	commentInput.addEventListener('keypress', function (event) {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-			let formData = new FormData(commentForm);
-			const formInput = new URLSearchParams(formData);
-			const jsonData = Object.fromEntries(formInput.entries());
-			const comment = jsonData['comment'];
+commentInput.addEventListener('keypress', function (event) {
+	if (event.key === 'Enter') {
+		event.preventDefault();
+		// commentEntireContainer.textContent = ''; //reset the content
+		let formData = new FormData(commentForm);
+		const formInput = new URLSearchParams(formData);
+		const jsonData = Object.fromEntries(formInput.entries());
+		const comment = jsonData['comment'];
 
-			const bodyData = {
-				userId: userId,
-				postId: postId,
-				comment: comment,
-			};
+		const bodyData = {
+			userId: userId,
+			postId: postIdContainer.id,
+			comment: comment,
+		};
 
-			fetch('/api/comment', {
-				method: 'PATCH',
-				headers: new Headers({
-					'Content-Type': 'application/json;charset=utf-8',
-				}),
-				body: JSON.stringify(bodyData),
-			})
-				.then((res) => res.json())
-				.then((res) => {
-					const okData = res['ok'];
-					if (okData == true) {
-						commentEntireContainer.textContent = '';
-						commentInput.value = '';
-						commentInput.textContent = '';
-						showComments(postId);
-					}
-				});
-		}
-	});
-}
+		fetch('/api/comment', {
+			method: 'PATCH',
+			headers: new Headers({
+				'Content-Type': 'application/json;charset=utf-8',
+			}),
+			body: JSON.stringify(bodyData),
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				const okData = res['ok'];
+				if (okData == true) {
+					commentEntireContainer.textContent = '';
+					commentInput.value = '';
+					commentInput.textContent = '';
+					showComments(postIdContainer.id);
+				}
+			});
+	}
+});
 
 //---------------------delete this post---------------------
 function deleteConfirm(userId, postId, imageName) {
