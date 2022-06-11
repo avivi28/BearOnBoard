@@ -1,10 +1,12 @@
 <h1 align="center"> BearOnBoard 🐻</h1>
 
-<p align="center">🐾 <i>"Take only memories, leave only footprints."</i></p>
-</br>
+<p align="center"> <i>"Take only memories, leave only footprints."</i> 🐾</p>
+
 🗺️ BearOnBoard is a map-oriented social website.
 
 🔗 Website URL: https://bearonboard.online/
+
+🤖 Display account: `mongo@mongo.com`/`mongo`
 
 ### Main Features:
 - Follow the paws(posts) you saved before on map 
@@ -25,7 +27,7 @@
   - `CloudFront`
 - Cache
   - `Redis`
-  - `Message Queue (RabbitMQ)`
+  - `Message Broker (RabbitMQ)`
 - Networking
   - `HTTPS`
   - `socket.io`
@@ -33,16 +35,23 @@
   - `Nginx`
   - `SSL (Let's Encrypt)`
 - Authentication
-  - `passport.js`
+  - `Google OAuth (passport.js)`
   - `bcrypt`
   - `JSON Web Token (JWT)`
 - Version Control
   - `Git/Github`
-- Others
-  - `Google Maps API`
-  - `Figma`
-  - `Swagger`
-  - `UserGuiding`
+
+### Frontend Techniques 🖼️:
+- `EJS`
+- `Javascipt`
+- `HTML`
+- `CSS`
+- `Google Maps API`
+
+### Other Techniques ⚙️:
+- `Figma`
+- `Swagger`
+- `UserGuiding`
 
 ### Database Schema 💾:
 
@@ -56,7 +65,7 @@
   <img src="https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png">
 </p>
 
-### API Doc (`Swagger`) 📃:
+### API Doc 📃:
 
 https://app.swaggerhub.com/apis-docs/Honeypaw/Register/1.0.0
 
