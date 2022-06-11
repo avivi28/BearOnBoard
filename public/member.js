@@ -634,6 +634,7 @@ const addNewMessage = ({ userName, message }, room) => {
 	).scrollHeight;
 };
 
+//---------------send messages----------------
 messageForm.addEventListener('click', (e) => {
 	e.preventDefault();
 	const roomNumber = document.querySelector('.message_body');
