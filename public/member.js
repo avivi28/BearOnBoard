@@ -357,6 +357,9 @@ const chatroomIconContainer = document.getElementById(
 );
 const chatroomContainer = document.getElementById('chatroom_container');
 const messageBoxContainer = document.getElementById('message_body_container');
+const friendNameContainerInChat = document.querySelector(
+	'.name-and-status__container'
+);
 
 function showFriendLists(Res) {
 	for (let j = 0; j < Res['friends'].length; j++) {
@@ -416,7 +419,7 @@ function showFriendLists(Res) {
 				.then((Res) => {
 					const roomId = Res['roomId'];
 					creatRoom(Res);
-					sendMessage(Res, friendId, userName);
+					friendNameContainerInChat.setAttribute('id', `${Res['recipient']}`);
 					showHistory(roomId);
 					loadMore(roomId);
 				})
@@ -465,7 +468,7 @@ function showFriendLists(Res) {
 				.then((Res) => {
 					const roomId = Res['roomId'];
 					creatRoom(Res);
-					sendMessage(Res, friendId, userName);
+					friendNameContainerInChat.setAttribute('id', `${Res['recipient']}`);
 					showHistory(roomId);
 					loadMore(roomId);
 				})
@@ -538,8 +541,10 @@ function showFriendsStatus() {
 			'rgb(85 228 82)';
 	}
 	function showOffline(userName) {
-		document.getElementById(`friendName${userName}`).style.background =
-			'rgb(220 213 231)';
+		if (document.getElementById(`friendName${userName}`)) {
+			document.getElementById(`friendName${userName}`).style.background =
+				'rgb(220 213 231)';
+		}
 	}
 
 	// new user is created so we generate nickname and emit event
@@ -629,54 +634,49 @@ const addNewMessage = ({ userName, message }, room) => {
 	).scrollHeight;
 };
 
-function sendMessage(Res, friendId, userName) {
-	messageForm.addEventListener('submit', (e) => {
-		e.preventDefault();
-		if (!inputField.value) {
-			return;
-		}
+messageForm.addEventListener('click', (e) => {
+	e.preventDefault();
+	const roomNumber = document.querySelector('.message_body');
 
-		//-------input into database as chat history--------
-		const time = new Date();
-		const formattedTime = time.toLocaleString('en-US', {
-			hour: 'numeric',
-			minute: 'numeric',
-		});
-
-		const room = Res['roomId'];
-		let formData = new FormData(messageForm);
-		const messageInput = new URLSearchParams(formData);
-		const jsonData = Object.fromEntries(messageInput.entries());
-
-		let bodyData = {
-			message: jsonData['message'],
-			roomId: room,
-			time: formattedTime,
-			sender: userId,
-			recipient: friendId,
-		};
-
-		fetch('/api/chatroom', {
-			method: 'POST',
-			headers: new Headers({
-				'Content-Type': 'application/json;charset=utf-8',
-			}),
-			body: JSON.stringify(bodyData),
-		})
-			.then((Res) => Res.json())
-			.then((Res) => {
-				console.log(Res);
-			})
-			.catch((error) => console.log(error));
-
-		socket.emit('chatMessage', {
-			message: inputField.value,
-			name: userName,
-		});
-
-		inputField.value = '';
+	if (!inputField.value) {
+		return;
+	}
+	//-------input into database as chat history--------
+	const time = new Date();
+	const formattedTime = time.toLocaleString('en-US', {
+		hour: 'numeric',
+		minute: 'numeric',
 	});
-}
+
+	let formData = new FormData(messageForm);
+	const messageInput = new URLSearchParams(formData);
+	const jsonData = Object.fromEntries(messageInput.entries());
+	let bodyData = {
+		message: jsonData['message'],
+		roomId: roomNumber.id.split(':')[1],
+		time: formattedTime,
+		sender: userId,
+		recipient: friendNameContainerInChat.id,
+	};
+
+	fetch('/api/chatroom', {
+		method: 'POST',
+		headers: new Headers({
+			'Content-Type': 'application/json;charset=utf-8',
+		}),
+		body: JSON.stringify(bodyData),
+	})
+		.then((Res) => Res.json())
+		.then((Res) => {
+			console.log(Res);
+		})
+		.catch((error) => console.log(error));
+	socket.emit('chatMessage', {
+		message: inputField.value,
+		name: userName,
+	});
+	inputField.value = '';
+});
 
 //Get message from server
 socket.on('message', (data, room) => {
