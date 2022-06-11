@@ -10,18 +10,13 @@
 
 ### Main Features:
 - Log in locally or log in with Gmail
-- Authenticate user with JWT
+- Authenticate user with `JWT`
 - Find saved posts on map
 - Add new posts on map
-
-Use socket.io for real time co-editing.
-Supports English and Chinese.
-Setup CICD pipeline with cloudbuild cloud pub/sub.
-Differentiate every user with different colors in editor.
-Supports mobile devices so you can update content anytime anywhere.
-Only host can grant or remove access to your documents.
-Supports exporting your documents as PDF files.
-Hosting images on firebase storage.
+- Comment on or like the post
+- Search friends and send friend requests
+- Add friends or delete friends
+- Use `socket.io` for real-time chatroom
 
 ### Backend Techniques 📦:
 - Infrastructure
