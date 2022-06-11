@@ -9,9 +9,19 @@
 🤖 Display account: `mongo@mongo.com`/`mongo`
 
 ### Main Features:
-- Follow the paws(posts) you saved before on map 
-- Hunt the closest bears(spots) with your friends 
-- Share the bear's location(spots' location) 
+- Log in locally or log in with Gmail
+- Authenticate user with JWT
+- Find saved posts on map
+- Add new posts on map
+
+Use socket.io for real time co-editing.
+Supports English and Chinese.
+Setup CICD pipeline with cloudbuild cloud pub/sub.
+Differentiate every user with different colors in editor.
+Supports mobile devices so you can update content anytime anywhere.
+Only host can grant or remove access to your documents.
+Supports exporting your documents as PDF files.
+Hosting images on firebase storage.
 
 ### Backend Techniques 📦:
 - Infrastructure
@@ -30,13 +40,13 @@
   - `Message Broker (RabbitMQ)`
 - Networking
   - `HTTPS`
-  - `socket.io`
+  - `Socket.io`
   - `Domain Name System (DNS)`
   - `Nginx`
   - `SSL (Let's Encrypt)`
 - Authentication
   - `Google OAuth (passport.js)`
-  - `bcrypt`
+  - `Bcrypt`
   - `JSON Web Token (JWT)`
 - Version Control
   - `Git/Github`
