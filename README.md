@@ -30,20 +30,21 @@
 
 ### Backend Techniques 📦:
 
-- Infrastructure
+- Containerization
   - `Docker`
   - `Docker-compose`
-- Environment
+- Web Framwork
   - `Node.js`/ `Express.js`
 - Database
   - `MongoDB Atlas (Mongoose)`
-- Cloud Services (AWS)
+- Cloud Services (**AWS**)
   - `EC2`
-  - `S3 Bucket`
+  - `S3`
   - `CloudFront`
 - Cache
   - `Redis`
-  - `Message Broker (RabbitMQ)`
+- Message Broker
+  - `RabbitMQ`
 - Networking
   - `HTTPS`
   - `Socket.io`
