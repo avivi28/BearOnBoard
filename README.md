@@ -59,6 +59,7 @@
 - `Javascipt`
 - `HTML`
 - `CSS`
+- `AJAX`
 - `Google Maps API`
 
 ### Other Techniques ⚙️:
