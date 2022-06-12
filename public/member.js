@@ -141,6 +141,9 @@ friendsForm.addEventListener('submit', function confirm(ev) {
 	confirmIcon.style.display = 'inherit';
 	newIcon.style.display = 'none';
 	reasonText.style.display = 'none';
+	confirmText.style.display = 'none';
+	reasonText.style.display = 'none';
+	newIcon.style.display = 'none';
 
 	let formData = new FormData(friendsForm);
 	const NameInput = new URLSearchParams(formData);
@@ -207,6 +210,7 @@ function postFriend(Res) {
 					newIcon.style.display = 'block';
 					bearContainer.appendChild(newIcon);
 					buttonContainer.style.display = 'none';
+					confirmText.style.display = 'block';
 					confirmText.textContent = 'Request has been sent!';
 				}
 			})
@@ -220,7 +224,9 @@ function showFailResult() {
 	newIcon.style.display = 'block';
 	bearContainer.appendChild(newIcon);
 	buttonContainer.style.display = 'none';
+	confirmText.style.display = 'block';
 	confirmText.textContent = `Sorry, you can't send this request!`;
+	reasonText.style.display = 'block';
 	reasonText.style =
 		'font-size: 12px;font-weight: 500;padding: 0px 25px;display:block;';
 	reasonText.textContent =
