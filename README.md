@@ -17,7 +17,7 @@
 - Add new posts on map
 - Comment on or like the post
 
-![ezgif-5-ac24ef6164](https://user-images.githubusercontent.com/95410966/173208860-c376ac40-ebe8-423c-bd3f-8acc2572e17d.gif)
+![ezgif-3-06d845ef01](https://user-images.githubusercontent.com/95410966/173212695-7350906c-0743-452a-b3fd-0f24f9c8dc58.gif)
 - Search friends and send friend requests
 - Add friends or delete friends
 - Use `socket.io` for real-time chatroom
