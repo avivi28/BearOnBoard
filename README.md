@@ -1,16 +1,29 @@
 <h1 align="center"> BearOnBoard 🐻</h1>
 
-<p align="center">🐾 <i>"Take only memories, leave only footprints."</i></p>
-</br>
+<p align="center"> <i>"Take only memories, leave only footprints."</i> 🐾</p>
+
 🗺️ BearOnBoard is a map-oriented social website.
 
 🔗 Website URL: https://bearonboard.online/
 
+🤖 Display account: `mongo@mongo.com`/`mongo`
+
 ### Main Features:
 
-- Follow the paws(posts) you saved before on map
-- Hunt the closest bears(spots) with your friends
-- Share the bear's location(spots' location)
+- Log in locally or log in with Gmail
+- Authenticate user with `JWT`
+
+![ezgif-4-7b9160e532](https://user-images.githubusercontent.com/95410966/173206834-721aa46f-1716-4729-89f0-cb0bfcb03c7d.gif)
+
+- Find saved posts on map
+- Add new posts on map
+- Comment on or like the post
+
+![ezgif-5-ac24ef6164](https://user-images.githubusercontent.com/95410966/173208860-c376ac40-ebe8-423c-bd3f-8acc2572e17d.gif)
+
+- Search friends and send friend requests
+- Add friends or delete friends
+- Use `socket.io` for real-time chatroom
 
 ### Backend Techniques 📦:
 
@@ -27,38 +40,47 @@
   - `CloudFront`
 - Cache
   - `Redis`
-  - `Message Queue (RabbitMQ)`
+  - `Message Broker (RabbitMQ)`
 - Networking
   - `HTTPS`
-  - `socket.io`
+  - `Socket.io`
   - `Domain Name System (DNS)`
   - `Nginx`
   - `SSL (Let's Encrypt)`
 - Authentication
-  - `passport.js`
-  - `bcrypt`
+  - `Google OAuth (passport.js)`
+  - `Bcrypt`
   - `JSON Web Token (JWT)`
 - Version Control
   - `Git/Github`
-- Others
-  - `Google Maps API`
-  - `Figma`
-  - `Swagger`
-  - `UserGuiding`
+
+### Frontend Techniques 🖼️:
+
+- `EJS`
+- `Javascipt`
+- `HTML`
+- `CSS`
+- `Google Maps API`
+
+### Other Techniques ⚙️:
+
+- `Figma`
+- `Swagger`
+- `UserGuiding`
 
 ### Database Schema 💾:
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/95410966/173156537-45abfd6b-dab4-4e58-befa-22d120a51055.png">
+  <img src="https://user-images.githubusercontent.com/95410966/173165823-bce67604-e7e2-44ba-86bb-0088aa4da881.png">
 </p>
 
 ### Architecture Diagram 🏰:
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/95410966/172022290-3e20de09-b441-4f64-9b6c-70977274eb69.png">
+  <img src="https://user-images.githubusercontent.com/95410966/173164822-f31eb138-cde2-40da-a479-95d8535e40e9.png">
 </p>
 
-### API Doc (`Swagger`) 📃:
+### API Doc 📃:
 
 https://app.swaggerhub.com/apis-docs/Honeypaw/Register/1.0.0
 
