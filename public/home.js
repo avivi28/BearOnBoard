@@ -22,7 +22,6 @@ function getGEO(address) {
 	})
 		.then((res) => res.json())
 		.then((res) => {
-			console.log(res);
 			geoInfo = res['results'][0]['geometry']['location'];
 			return geoInfo;
 		})
@@ -120,8 +119,6 @@ postForm.addEventListener('submit', async (event) => {
 			'Content-Type': 'multipart/form-data',
 		},
 		body: file,
-	}).then((res) => {
-		console.log(res);
 	});
 
 	const imageUrl = url.split('?')[0];
@@ -146,7 +143,6 @@ postForm.addEventListener('submit', async (event) => {
 	})
 		.then((res) => res.json())
 		.then((res) => {
-			console.log(res);
 			if (res != null) {
 				hidePost();
 				showMarker(res);
@@ -165,7 +161,6 @@ function heartStop() {
 
 //----------socke.io----------
 const socket = io();
-console.log(socket);
 
 let userName = '';
 

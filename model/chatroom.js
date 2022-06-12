@@ -93,12 +93,10 @@ router.post('/', async (req, res) => {
 						})
 					)
 				);
-				console.log(`Message send ${QUEUE}`);
 
 				//Receive messages
 				channel.consume(QUEUE, async (msg) => {
 					if (msg !== null) {
-						console.log(JSON.parse(msg.content));
 						const room = await new chatHistory(JSON.parse(msg.content));
 						await room.save();
 						channel.ack(msg);

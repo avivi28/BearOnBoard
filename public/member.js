@@ -392,6 +392,9 @@ function showFriendLists(Res) {
 			count = 0; //refresh page counting
 			nextPage = 1; //refresh scoll event
 
+			document.getElementById('bear_loader').style.display = 'block';
+			document.getElementById('loading').style.display = 'block';
+
 			googleMap.style.display = 'none';
 			const chatroomStatusDot = document.createElement('p');
 			chatroomStatusDot.className = 'chatroom-online-status';
@@ -440,6 +443,9 @@ function showFriendLists(Res) {
 		nameContainer.addEventListener('click', () => {
 			count = 0; //refresh page counting
 			nextPage = 1; //refresh scoll event
+
+			document.getElementById('bear_loader').style.display = 'block';
+			document.getElementById('loading').style.display = 'block';
 
 			googleMap.style.display = 'none';
 			const chatroomStatusDot = document.createElement('p');
@@ -668,9 +674,6 @@ messageForm.addEventListener('click', (e) => {
 		body: JSON.stringify(bodyData),
 	})
 		.then((Res) => Res.json())
-		.then((Res) => {
-			console.log(Res);
-		})
 		.catch((error) => console.log(error));
 	socket.emit('chatMessage', {
 		message: inputField.value,
@@ -712,6 +715,8 @@ function showHistory(roomId) {
 	})
 		.then((Res) => Res.json())
 		.then((Res) => {
+			document.getElementById('bear_loader').style.display = 'none';
+			document.getElementById('loading').style.display = 'none';
 			for (let i = Res.length - 1; i >= 0; i--) {
 				const receivedMsg = `
 				<div class="incoming__message">

@@ -63,8 +63,5 @@ function addFriendBot(idData) {
 		body: JSON.stringify(bodyData),
 	})
 		.then((Res) => Res.json())
-		.then((Res) => {
-			console.log(Res);
-		})
 		.catch((error) => console.log(error));
 }

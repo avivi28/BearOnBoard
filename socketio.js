@@ -12,7 +12,6 @@ module.exports = {
 		const activeUsers = new Set();
 		io.on('connection', (socket) => {
 			//connect to socket io server
-			console.log('socket connected');
 			socket.on('newUser', function (data) {
 				//listen event
 				socket.userId = data;
@@ -31,7 +30,6 @@ module.exports = {
 				io.emit('user disconnected', socket.userId);
 
 				const user = userLeave(socket.id);
-				console.log('socket disconnected');
 				if (user) {
 					io.to(user.room).emit(
 						'leftMessage',

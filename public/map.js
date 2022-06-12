@@ -133,6 +133,7 @@ function showMarker(res) {
 
 				const likesNumber = res[lastPost]['likes'].length;
 				toolTipText.textContent = `${likesNumber} likes`;
+				likes.src = 'https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg';
 				addLikes(postId, likesNumber);
 				// addComments(postId);
 				showComments(postId);
@@ -234,6 +235,8 @@ function showAllMarker(res) {
 						map.setZoom(18);
 
 						addLikes(postId, likesNumber);
+						likes.src =
+							'https://d3qxlv297wj1rn.cloudfront.net/images/unlikes.svg';
 						deleteConfirm(userId, postId, imageName);
 						// addComments(postId);
 						showComments(postId);

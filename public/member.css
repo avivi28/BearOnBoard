@@ -858,3 +858,20 @@ input:focus,
 	padding: 5px;
 	margin-top: 10px;
 }
+
+#bear_loader {
+	width: 200px;
+	position: absolute;
+	top: 200px;
+	left: 200px;
+}
+
+#loading {
+	font-weight: 700;
+	font-size: 25px;
+	color: #674115;
+	margin-top: 235px;
+	position: absolute;
+	right: 205px;
+	top: 175px;
+}
