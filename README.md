@@ -24,6 +24,7 @@
 - Search friends and send friend requests
 - Add friends or delete friends
 - Use `socket.io` for real-time chatroom
+- Interact friends by getting their posts
 
 ### Backend Techniques 📦:
 
