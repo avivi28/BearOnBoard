@@ -32,7 +32,7 @@
 - Web Framwork
   - `Node.js`/ `Express.js`
 - Database
-  - `MongoDB Atlas (Mongoose)`
+  - `MongoDB Atlas`/ `Mongoose`
 - Cloud Services (**AWS**)
   - `EC2`
   - `S3`
@@ -42,13 +42,13 @@
 - Message Broker
   - `RabbitMQ`
 - Networking
-  - `HTTPS`
+  - `HTTP & HTTPS`
   - `Socket.io`
   - `Domain Name System (DNS)`
   - `Nginx`
   - `SSL (Let's Encrypt)`
 - Authentication
-  - `Google OAuth (passport.js)`
+  - `Google OAuth`/ `passport.js`
   - `Bcrypt`
   - `JSON Web Token (JWT)`
 - Version Control
@@ -57,7 +57,6 @@
 ### Frontend Techniques 🖼️:
 - `EJS`
 - `Javascipt`
-- `HTML`
 - `CSS`
 - `AJAX`
 - `Google Maps API`
