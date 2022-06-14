@@ -55,6 +55,8 @@
   - `Google OAuth`/ `passport.js`
   - `Bcrypt`
   - `JSON Web Token (JWT)`
+- CICD
+  - Jenkins
 - Version Control
   - `Git/Github`
 
