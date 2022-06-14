@@ -56,7 +56,7 @@
   - `Bcrypt`
   - `JSON Web Token (JWT)`
 - CICD
-  - Jenkins
+  - `Jenkins`
 - Version Control
   - `Git/Github`
 
