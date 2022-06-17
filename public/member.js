@@ -141,7 +141,6 @@ friendsForm.addEventListener('submit', function confirm(ev) {
 	confirmIcon.style.display = 'inherit';
 	newIcon.style.display = 'none';
 	reasonText.style.display = 'none';
-	confirmText.style.display = 'none';
 	reasonText.style.display = 'none';
 	newIcon.style.display = 'none';
 
