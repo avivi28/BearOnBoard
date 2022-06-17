@@ -36,7 +36,7 @@
 - Web Framwork
   - `Node.js`/ `Express.js`
 - Database
-  - `MongoDB Atlas`/ `Mongoose`
+  - `MongoDB`/ `Mongoose`
 - Cloud Services (**AWS**)
   - `EC2`
   - `S3`
@@ -55,6 +55,8 @@
   - `Google OAuth`/ `passport.js`
   - `Bcrypt`
   - `JSON Web Token (JWT)`
+- SSR
+  - `EJS`
 - CICD
   - `Jenkins`
 - Version Control
@@ -62,7 +64,6 @@
 
 ### Frontend Techniques 🖼️:
 
-- `EJS`
 - `Javascipt`
 - `CSS`
 - `AJAX`
@@ -88,7 +89,8 @@
 
 ### API Doc 📃:
 
-https://app.swaggerhub.com/apis-docs/Honeypaw/Register/1.0.0
+- `Restful APIs`
+  https://app.swaggerhub.com/apis-docs/Honeypaw/Register/1.0.0
 
 ### Contact Me:
 
